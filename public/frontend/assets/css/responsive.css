@@ -1,0 +1,168 @@
+/* For mobile phones: */
+@media only screen and (max-width: 480px) {
+    /* Home Page */
+    #last_footer_img{
+      width: 92%;
+      height: 350px;
+      margin: 10px 10px 10px 10px; 
+    }
+    .crops_text, .farmers_text, .farmers_service_text {
+      margin: 10px 5px;
+    }
+    .crops-parallax-window, .farmers-service-parallax-window, .farmers-parallax-window, .career-parallax-window {
+      min-height: 183px;
+      background: transparent;
+    }
+    #farmer_desktop{
+      display: none;
+    }
+    #farmer_mobile{
+      display: block;
+    }
+
+    /* company-profile */
+    .info p {
+        padding: 50px 15px;
+    }
+    /* dept-distribution */
+    .icon_box{
+        display: none;
+    }
+    /* corporate-structure */
+    .corporate-parallax-window {
+        min-height: 180px;
+    }
+    .employee_box img {
+        width: 100%;
+    }
+    /* quality-control */
+    .quality_slider {
+        margin: -15px -10px;
+    }
+    #quality_img {
+        margin-top: 10px;
+        width: 100%;
+    }
+    /* support-functions */
+    #comp-jher6p2i,#comp-jher6p2m,#comp-jher6p2t,#comp-jher6p2s,#comp-jher6p2p{
+        display: none;
+    }
+    .support p{
+        margin: 15px 68px 15px -45px
+    }
+    #support_slider
+    {
+        width: 100%;
+        margin-left: 0px;
+    }
+    #support_btn {
+        margin-left: -18px;
+        margin-right: 87px;
+    }
+    /* unit page */
+    #unit_icon_for_mobile{
+      display: none;
+    }
+    #unit_img_for_mobile{
+      width: 100%;
+    }
+    #unit_btn_for_mobile{
+      margin-bottom: 10px;
+     text-align: center;
+    }
+    #pesticide_details_img{
+      width: 100%;
+    }
+    /* careers */
+    #career_img
+    {
+      width: 100%;
+    }
+    .contact_icon{
+      display: none;
+    }
+    /* cart item */
+    #cart_item_btn{
+      margin-top: 5px;
+      float: left;
+    }
+    /* footer */
+    #footer_icon {
+      width: 80px;
+      margin-top: -70px;
+      margin-left: 120px;
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    #last_footer_img{
+      width: 94%;
+      height: 350px;
+      margin: 10px 10px 10px 10px; 
+    }
+    .farmers_text {
+      margin: 82px 7px;
+  }
+    .crops-parallax-window, .farmers-service-parallax-window, .farmers-parallax-window, .career-parallax-window {
+      min-height: 290px;
+      background: transparent;
+    }
+    #farmer_desktop{
+      display: none;
+    }
+    #farmer_mobile{
+      display: block;
+    }
+    /* company-profile */
+    .info p {
+        padding: 50px 15px;
+    }
+    /* dept-distribution */
+    .icon_box{
+        display: none;
+    }
+    /* corporate-structure */
+    .corporate-parallax-window {
+        min-height: 180px;
+    }
+    .employee_box img {
+        width: 100%;
+    }
+    /* quality-control */
+    .quality_slider {
+        margin: -15px -10px;
+    }
+    #quality_img {
+        margin-top: 10px;
+    }
+    /* support-functions */
+    #comp-jher6p2i,#comp-jher6p2m,#comp-jher6p2t,#comp-jher6p2s,#comp-jher6p2p{
+        display: none;
+    }
+    .support p{
+        margin: 15px 68px 15px -45px;
+    }
+     /* unit page */
+    #unit_icon_for_mobile{
+      display: none;
+    }
+    #unit_img_for_mobile{
+      width: 100%;
+    }
+    #unit_btn_for_mobile{
+      margin-bottom: 10px;
+     text-align: center;
+    }
+    #pesticide_details_img{
+      width: 100%;
+    }
+    /* careers */
+    #career_img
+    {
+      width: 100%;
+    }
+    .contact_icon{
+      display: none;
+    }
+   
+  }
