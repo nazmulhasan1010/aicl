@@ -11,6 +11,7 @@
 |
 */
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
@@ -96,7 +97,7 @@ Route::group(['middleware' => 'language'], function () {
     });
 
 });
-
+Route::post('admin/getProduct', 'getproductController@getProduct');
 
 // admin
 Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'admin', 'middleware' => ['auth', 'admin']], function () {
