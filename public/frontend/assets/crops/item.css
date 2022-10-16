@@ -1,0 +1,407 @@
+.item-main-row {
+    border-top: 1px solid black;
+}
+
+.cat-div {
+    border-right: 1px solid black;
+}
+
+.cat-ul ul li a {
+    text-decoration: none;
+    color: black;
+}
+
+.checkBox {
+    margin-top: 1em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid black;
+}
+
+.accordion {
+    background-color: #fff;
+    color: #000;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+    border-bottom: 1px solid black;
+}
+
+.accordion:after {
+    content: '\002B';
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212";
+}
+
+.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.panel ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    line-height: 2;
+    overflow: scroll;
+}
+
+.search1 {
+    margin-bottom: 5px;
+    margin-top: 5px;
+    width: 100%;
+    height: auto;
+    padding: 3px;
+    border: 1px solid #555;
+    background-color: white;
+    position: relative;
+}
+
+.panel .button1 {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    right: 0;
+    top: 9px;
+    color: black;
+}
+
+.panel .form-check {
+    margin-bottom: 15px;
+}
+
+.star {
+    font-size: 14px;
+}
+
+.atv {
+    color: orange;
+}
+
+.info-div a {
+    text-decoration: none;
+}
+
+.details:hover {
+    text-decoration: underline;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.details {
+    margin: 0;
+    max-width: 100%;
+    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2 !important;
+    color: #000;
+    font-weight: 500;
+    height: auto;
+    font-size: 15px
+}
+
+.footer {
+    margin-top: 20px;
+    padding-top: 20px;
+    background-color: #f0f0f0;
+    padding-bottom: 80px;
+    position: sticky;
+}
+
+.arrow {
+    list-style-type: none;
+    color: #2979ff;
+    font-size: 14px;
+}
+
+.soci {
+    padding: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 35px;
+    color: #1976d2;
+}
+
+.arrow i {
+    color: #2979ff;
+    font-size: 10px;
+    margin-right: 10px;
+}
+
+.arrow a {
+    text-decoration: none;
+    color: #2979ff;
+    font-weight: bold;
+}
+
+.arrow2 {
+    list-style-type: none;
+}
+
+.footer2 {
+    height: 50px;
+    overflow: hidden;
+}
+
+.arrow2 a {
+    font-size: 14px;
+    margin-right: 10px;
+    padding-right: 5px;
+    text-decoration: none;
+    color: white;
+    font-weight: light;
+}
+
+.arrow2 i {
+    color: #fff;
+    font-size: 12px;
+}
+
+.arrow a:hover {
+    text-decoration: underline;
+}
+
+.arrow2 a:hover {
+    text-decoration: underline;
+}
+
+.product button {
+    border: none;
+    background: rgb(8, 128, 241);
+    color: #fff;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: light;
+    text-align: center;
+    border-radius: 20px;
+    width: 80%;
+    transition: 0.3s ease;
+}
+
+.product button:hover {
+    background-color: #0f0f0f;
+}
+
+.sub-details {
+    margin: 0;
+    max-width: 100%;
+    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1 !important;
+    color: #000;
+    font-weight: 400;
+    height: auto;
+    font-size: 12px
+}
+
+.prod-list-div {
+    display: grid;
+    grid-template-columns: 3fr 3fr 3fr 3fr;
+    grid-column-gap: 3rem;
+}
+
+.prod-main {
+    position: relative;
+    display: grid;
+    z-index: 0;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.product {
+    position: relative;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 2rem;
+    margin-top: 4rem;
+    padding: 8px;
+}
+
+.product-img {
+    position: absolute;
+    width: 180px;
+    z-index: 10;
+}
+
+.info-div {
+    margin-top: 12rem;
+}
+
+.offer {
+    width: 100px;
+    height: 25px;
+    padding: 5px;
+    font-size: 12px;
+    color: white;
+    border-radius: 0 0 50px 0;
+    background-color: rgb(238, 29, 6, 0.8);
+    border: 1px solid rgb(8, 128, 241);
+    font-weight: light;
+    position: absolute;
+    top: -10px;
+    z-index: 11;
+}
+
+.cat-footer {
+    padding-top: 10px;
+    margin-left: 5px;
+    border-top: 1px solid black;
+}
+
+.cat-search {
+    position: relative;
+}
+
+.mobile-footer {
+    display: none;
+}
+
+.seb input {
+    border: none;
+    border-bottom: 1px solid black;
+    font-size: 12px;
+    padding: 10px;
+    width: 70%;
+    background-color: white;
+}
+
+.seb input::placeholder {
+    color: #000;
+    font-weight: light;
+}
+
+.seb button {
+    border: none;
+    background: #fb8c00;
+    color: black;
+    opacity: 0.5;
+    font-size: 12px;
+    padding: 10px;
+}
+
+.seb button:hover {
+    border: none;
+    background: #616161;
+    color: white;
+    opacity: 0.5;
+    font-size: 12px;
+    padding: 10px;
+}
+
+.sl {
+    width: 70%;
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+@media (max-width:960px) {
+    .prod-main {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .cat-div {
+        display: none;
+    }
+    .mobile-footer {
+        display: block;
+    }
+    .footer {
+        display: none;
+    }
+    .copyrigh {
+        display: none !important;
+    }
+    .soci i {
+        font-size: 50px;
+        margin-left: 10px;
+    }
+}
+/*  */
+
+.description h5 {
+    color: green;
+}
+
+.description p {
+    color: green;
+    font-size: 15px;
+    margin-top: 15px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.description span {
+    font-size: 15px;
+}
+
+.detailBTN a {
+    padding: 10px 16px;
+    background-color: green;
+    color: white;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+.detailBTN {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.prod-img {
+    width: 100%;
+    height: 260px;
+    margin-bottom: 10px;
+}
+
+.prod-img img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 260px;
+    height: 260px;
+}
+
+.detailBTN a:hover {
+    color: white;
+    background-color: rgb(7, 218, 56);
+}
+
+.crose {
+    position: absolute;
+    top: 0px;
+    font-size: 20px;
+    background-color: #fff;
+    right: 0px;
+}
+
+.crose i {
+    border: 1px solid black;
+    padding: 2px 5px;
+    border-radius: 5px;
+}
+
+.crose i:hover {
+    background-color: #1976d2;
+    color: #f0f0f0;
+}
+
+#check:checked~.details-show {
+    display: block !important;
+}

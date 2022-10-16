@@ -12,15 +12,26 @@ function getProductCategory()
 function getProduct($id)
 {
     if ($id != 'all') {
-        return Product::where('category_id','=', $id)->get();
+        return Product::where('category_id', '=', $id)->get();
     } else {
         return Product::get();
     }
 
 }
 
-function getCrops()
+function getCropsData($limit, $start, $cropsid)
 {
-    return Cropscat::get();
+    if ($cropsid == 'all') {
+        return Cropscat::get();
+    } elseif ($cropsid == 'spe') {
+        return Cropscat::where('id', '<', $start)->take($limit)->get();
+    } else {
+        return Cropscat::where('id', '=', $cropsid)->get();
+    }
+}
+
+function getProductById($id)
+{
+    return Product:: where('id', '=', $id)->get();
 }
 

@@ -75,7 +75,7 @@ class cropsController extends Controller
 
         }
         $cropCat = new Cropscat();
-        $cropCat->auto_code = time();
+        $cropCat->auto_code = random_int(10000,9999999);
         $cropCat->category_name = $request->name;
         $cropCat->category_name_bn = $request->name_bn;
         $cropCat->slug = Str::slug($request->name);

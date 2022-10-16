@@ -13,7 +13,46 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
 @endpush
 @push('page_css')
+    <style>
+        #productModal {
+            padding: 2px 10px;
+            display: flex;
+            align-items: center;
+            min-height: 40px;
+            max-height: 150px;
+            flex-wrap: wrap;
+            border: 1px solid rgba(0, 0, 0, 0.16);
+            border-radius: 5px
+        }
 
+        #productModal:focus {
+            border: 1px solid #5369f8;
+        }
+
+        #productModal .item .fa-circle-xmark {
+            color: rgba(255, 255, 255, 0.37);
+            margin-left: 5px;
+        }
+
+        #productModal .item .fa-circle-xmark:hover {
+            color: #fff;
+        }
+
+        #productModal .item {
+            height: auto;
+            border-radius: 5px;
+            color: rgba(255, 255, 255, 0.78);
+            margin: 5px;
+            padding: 2px 10px;
+            background-color: rgba(0, 0, 0, 0.51);
+        }
+
+        #productName {
+            max-width: 100%;
+            height: 100%;
+            border: none
+        }
+    </style>
 @endpush
 @section('content')
     <!-- Start Content-->
@@ -57,22 +96,18 @@
                             @php
                                 $i= 1;
                             @endphp
-                            @foreach ($disorder as $key=> $product)
+                            @foreach ($disorder as $key=> $disorder)
                                 <tr>
-                                    <td>{{$key+i}}</td>
-                                    <td>{{$product->disorder_name}}</td>
-                                    <td></td>
-                                    <td>{{ $product->affect }}</td>
-                                    {{--                                    <td style="text-align: center">--}}
-                                    {{--                                        @if ($product->status == true)--}}
-                                    {{--                                            Active--}}
-                                    {{--                                        @else--}}
-                                    {{--                                            Inactive--}}
-                                    {{--                                        @endif--}}
-                                    {{--                                    </td>--}}
+                                    <td>{{$key+1}}</td>
+                                    <td>{{$disorder->disorder_name}}</td>
+                                    @php
+                                        $crops = getCropsData('','',$disorder->crops_id);
+                                    @endphp
+                                    <td>{{$crops[0]->category_name}}</td>
+                                    <td>{{ $disorder->affect }}</td>
 
                                     <td style="text-align: center">
-                                        <a href="{{ route('admin.disorder.show',$product->id)}}"
+                                        <a href="{{ route('admin.disorder.show',$disorder->disorder_id)}}"
                                            class="btn btn-info btn-sm">
                                             <div class="icon-item">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -85,7 +120,7 @@
 
                                             </div>
                                         </a>
-                                        <a href="{{ route('admin.disorder.edit',$product->id)}}"
+                                        <a href="{{ route('admin.disorder.edit',$disorder->id)}}"
                                            class="btn btn-info btn-sm">
                                             <div class="icon-item">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -101,7 +136,7 @@
                                         </a>
 
                                         <button class="btn btn-danger btn-xs" type="button"
-                                                onclick="deleteItem({{$product->id }})">
+                                                onclick="deleteItem({{$disorder->id }})">
                                             <div class="icon-item">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
                                                      viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -116,8 +151,8 @@
 
                                             </div>
                                         </button>
-                                        <form id="delete-form-{{$product->id }}"
-                                              action="{{ route('admin.disorder.destroy',$product->id) }}" method="POST"
+                                        <form id="delete-form-{{$disorder->id }}"
+                                              action="{{ route('admin.disorder.destroy',$disorder->id) }}" method="POST"
                                               style="display: none;">
                                             @csrf
                                             @method('DELETE')
@@ -165,7 +200,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     @php
-                                                        $crops = getCrops();
+                                                        $crops = getCropsData('','','all');
                                                     @endphp
                                                     <label for="crops">Select crops</label>
                                                     <select name="crops" id="crops"
@@ -173,7 +208,7 @@
                                                         <option value="">--select crops--</option>
                                                         @foreach ($crops as $crop)
                                                             <option
-                                                                value="{{ $crop->auto_code}}">{{ $crop->category_name }}</option>
+                                                                value="{{ $crop->id}}">{{ $crop->category_name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -198,12 +233,17 @@
                                                     @php
                                                         $products = getProduct('all');
                                                     @endphp
+                                                    <input type="hidden" value="" name="products" id="disProducts">
                                                     <label for="product">Select Product </label>
                                                     <div class="dropdown">
-                                                        <input type="text" class="form-control" type="button"
-                                                               id="productName" data-toggle="dropdown"
-                                                               aria-haspopup="true" aria-expanded="false"
-                                                               placeholder="--select product--">
+                                                        <div data-toggle="dropdown" id="productModal"
+                                                             aria-haspopup="true" aria-expanded="false">
+
+                                                            <input type="text" type="button"
+                                                                   id="productName"
+                                                                   placeholder="--select product--"
+                                                                   autocomplete="off">
+                                                        </div>
                                                         <div class="dropdown-menu" style="width: 100%;"
                                                              aria-labelledby="dropdownMenuButton" id="productList">
                                                             @foreach($products as $product)
@@ -213,10 +253,9 @@
                                                                         <input class="form-check-input"
                                                                                style="margin: 5px"
                                                                                type="checkbox"
-                                                                               value="product{{$product->id}}"
+                                                                               value="{{$product->id}}"
                                                                                id="product{{$product->id}}"
-                                                                               data-name="{{ $product->product_name }}"
-                                                                               name="product{{$product->id}}">
+                                                                               data-name="{{ $product->product_name }}">
                                                                         <label class="form-check-label"
                                                                                style="margin-left: 25px"
                                                                                for="product{{$product->id}}">
@@ -286,6 +325,15 @@
                                                 </div>
                                             </div>
 
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label for="image">Image<span style="color: red">*</span></label>
+                                                    <div class="form-group">
+                                                        <input type="file" class="form-control" name="image">
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="form-group mt-3">
                                                 <button type="button" data-dismiss="modal"
                                                         class=" btn btn-secondary waves-effect">Cancel
@@ -326,8 +374,151 @@
 @endpush
 @push('page_js')
     <script type="text/javascript">
+        const product = [];
+        $("#product_group").change(function () {
+            axios.post('getProduct', {
+                id: $(this).val()
+            }).then(function (response) {
+                let products = response.data;
+                $('#productList').empty();
+                var itemsValue = document.querySelectorAll('.item');
+                var existItem = [];
+                for (var i = 0; i < itemsValue.length; i++) {
+                    existItem.push(itemsValue[i].innerText);
+                }
+                $.each(products, function (i, item) {
+                    const target = products[i].product_name;
+                    var checked;
+                    if (existItem.indexOf(target) !== -1) {
+                        checked = 'checked';
+                    } else {
+                        checked = '';
+                    }
+                    $("<div class='form-check' >").html("" +
+                        "<div class='selectList' data-id='" + products[i].product_name + "'" + ">" +
+                        "<input class='form-check-input chacked- ' style='margin: 5px' type ='checkbox' value ='" + products[i].id + "'" +
+                        "data-name = " + products[i].product_name +
+                        " id = 'product" + products[i].id + "' " + checked + " >" +
+                        "<label class= 'form-check-label'" +
+                        "style = 'margin-left: 25px'" +
+                        "for= 'product" + products[i].id + "' >" + products[i].product_name + "</label>" +
+                        "</div>"
+                    ).appendTo('#productList');
+                });
+                $(".form-check .selectList .chacked-").click(function () {
+                    if ($(this).is(':checked')) {
+                        let oldVal = $('#productModal').html();
 
-        $('#productName').keyup(function () {
+                        $('#productModal').html("" +
+                            "<div class='item' id='" + $(this).val() + "'>" +
+                            $(this).data('name') + "<i class='fa-regular fa-circle-xmark product-cancel' data-id='" + $(this).attr('id') + "'></i>" +
+                            " </div>" + "  " + oldVal);
+
+                        $(".product-cancel").click(function () {
+                            $("#" + $(this).data('id')).prop("checked", false);
+                            $(this).parent(".item").css('display', 'none');
+
+                            const target = $("#" + $(this).data('id')).val();
+                            var i = 0;
+                            while (i < product.length) {
+                                if (product[i] === target) {
+                                    product.splice(i, 1);
+                                } else {
+                                    ++i;
+                                }
+                            }
+                            $("#disProducts").val(product);
+                        });
+
+                        $('#productModal #productName').keyup(function () {
+                            let input = $(this).val().toUpperCase();
+                            let list = $('.selectList');
+                            for (var i = 0; i < list.length; i++) {
+                                let txtValue = list[i].innerText;
+                                if (txtValue.toUpperCase().indexOf(input) > -1) {
+                                    list[i].style.display = "";
+                                } else {
+                                    list[i].style.display = "none";
+                                }
+                            }
+                        })
+                        product.push($(this).val());
+                        $("#disProducts").val(product);
+                    } else {
+                        $('#' + $(this).val()).css('display', 'none');
+                        const target = $(this).val();
+                        var i = 0;
+                        while (i < product.length) {
+                            if (product[i] === target) {
+                                product.splice(i, 1);
+                            } else {
+                                ++i;
+                            }
+                        }
+                        $("#disProducts").val(product);
+                    }
+                });
+
+            }).catch(function (error) {
+                alert(error);
+            });
+        });
+
+        $(".form-check-input").change(function () {
+            if ($(this).is(':checked')) {
+                let oldVal = $('#productModal').html();
+                // $("#productModal").attr('data-toggle', '')
+                $('#productModal').html("" +
+                    "<div class='item' id='" + $(this).val() + "'>" +
+                    $(this).data('name') + "<i class='fa-regular fa-circle-xmark product-cancel' data-id='" + $(this).attr('id') + "'></i>" +
+                    " </div>" + "  " + oldVal);
+
+                $(".product-cancel").click(function () {
+                    $("#" + $(this).data('id')).prop("checked", false);
+                    $(this).parent(".item").css('display', 'none');
+
+                    const target = $("#" + $(this).data('id')).val();
+                    var i = 0;
+                    while (i < product.length) {
+                        if (product[i] === target) {
+                            product.splice(i, 1);
+                        } else {
+                            ++i;
+                        }
+                    }
+                    $("#disProducts").val(product);
+                });
+
+                $('#productModal #productName').keyup(function () {
+                    let input = $(this).val().toUpperCase();
+                    let list = $('.selectList');
+                    for (var i = 0; i < list.length; i++) {
+                        let txtValue = list[i].innerText;
+                        if (txtValue.toUpperCase().indexOf(input) > -1) {
+                            list[i].style.display = "";
+                        } else {
+                            list[i].style.display = "none";
+                        }
+                    }
+                })
+                product.push($(this).val());
+                $("#disProducts").val(product);
+            } else {
+                $('#' + $(this).val()).css('display', 'none');
+                const target = $(this).val();
+                var i = 0;
+                while (i < product.length) {
+                    if (product[i] === target) {
+                        product.splice(i, 1);
+                    } else {
+                        ++i;
+                    }
+                }
+                $("#disProducts").val(product);
+            }
+        });
+
+        $('#productModal #productName').keyup(function () {
             let input = $(this).val().toUpperCase();
             let list = $('.selectList');
             for (var i = 0; i < list.length; i++) {
@@ -339,38 +530,6 @@
                 }
             }
         })
-
-        $("#product_group").change(function () {
-            axios.post('getProduct', {
-                id: $(this).val()
-            }).then(function (response) {
-                let products = response.data;
-                $('#productList').empty();
-                $.each(products, function (i, item) {
-                    $("<div class='form-check' >").html("" +
-                        "<div class='selectList' data-id='" + products[i].product_name + "'" + ">" +
-                        "<input class='form-check-input chacked- ' style='margin: 5px' type ='checkbox' value ='product" + products[i].id + "'" +
-                        "data-name = " + products[i].product_name +
-                        " id = 'product" + products[i].id + "' name = 'product" + products[i].id + "' >" +
-                        "<label class= 'form-check-label'" +
-                        "style = 'margin-left: 25px'" +
-                        "for= 'product" + products[i].id + "' >" + products[i].product_name + "</label>" +
-                        "</div>"
-                    ).appendTo('#productList');
-                });
-                $(".form-check .selectList .chacked-").click(function () {
-                    let oldVal = $('#productName').val();
-                    $('#productName').val(oldVal +"  "+ $(this).data('name'));
-                });
-
-            }).catch(function (error) {
-                alert(error);
-            });
-        });
-        $(".form-check-input").change(function () {
-            let oldVal = $('#productName').val();
-            $('#productName').val(oldVal +"  "+ $(this).data('name'));
-        });
 
     </script>
 @endpush

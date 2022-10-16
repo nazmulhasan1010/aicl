@@ -18,10 +18,16 @@ class CreateDisordersTable extends Migration
             $table->string('disorder_id',20);
             $table->string('crops_id',20);
             $table->string('disorder_name');
-            $table->string('symptoms');
-            $table->string('affect');
+            $table->string('disorder_name_bn');
+            $table->string('image');
+            $table->longText('symptoms');
+            $table->longText('symptoms_bn');
+            $table->longText('affect');
+            $table->longText('affect_bn');
             $table->string('soil_drip');
-            $table->string('Benefit');
+            $table->string('soil_drip_bn');
+            $table->longText('benefit');
+            $table->longText('benefit_bn');
             $table->timestamps();
         });
     }

@@ -1,0 +1,263 @@
+.logo {
+    height: 70px;
+}
+
+.logosection {
+    display: flex;
+}
+
+.ser {
+    width: 600px;
+    padding: 10px;
+    margin-left: 50px;
+    border: 2px solid #1976d2;
+}
+
+.srbtn {
+    padding: 5px;
+    width: 50px;
+    height: 50px;
+    font-weight: bold;
+    color: white;
+    font-size: 1.5em;
+    border: none;
+}
+
+nav {
+    position: relative;
+    border-bottom: 2px;
+    border-color: #1976d2;
+}
+
+.dropcl {
+    color: white;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.fcolor {
+    color: #1976d2;
+    font-weight: light;
+}
+
+.fcolor:hover {
+    color: #1976d2;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.fcolic i {
+    font-size: 25px;
+    margin-right: 5px;
+}
+
+.fcolic:hover {
+    text-decoration: underline;
+}
+
+.fcolic .cart {
+    color: #1976d2;
+}
+
+.hoverCircle {
+    text-align: center;
+}
+
+.categury {
+    height: auto;
+    width: 600px;
+    position: absolute;
+    left: -100%;
+    display: none;
+    z-index: 20;
+    background-color: #1976d2;
+    border-radius: 0 0 20px 20px;
+    transition: 0.4s;
+}
+
+#click {
+    display: none;
+}
+
+#click:checked~.categury {
+    left: 0%;
+    display: block;
+}
+
+.hoverCircle img {
+    height: 270px;
+    width: 270px;
+    padding: 10px;
+    border-radius: 100%;
+    border: none;
+    margin-bottom: 5px;
+}
+
+.hoverCircle:hover img {
+    height: 265px;
+    width: 265px;
+    padding: 10px;
+    border-radius: 100%;
+    border: 2px solid #000;
+}
+
+.hoverCircle a {
+    color: #000;
+}
+
+.catrItem {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 10px;
+    text-align: center;
+    justify-content: space-between;
+}
+
+.itemSize {
+    height: 150px;
+    width: 150px;
+}
+
+.itemSize img {
+    border-radius: 100%;
+}
+
+.catrItem label {
+    color: #f0f0f0;
+}
+
+.product-div {
+    margin-top: 10px;
+    padding-top: 20px;
+    border-top: 1px solid black;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.product-div2 {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr)
+}
+
+.text-shop-dep {
+    background: white;
+    padding: 10px;
+    top: -21px;
+    right: 43%;
+    position: absolute;
+}
+
+.dep-img {
+    width: 100px;
+    border-radius: 50%;
+}
+
+.cat-item-div {
+    padding: 5px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.cat-item-div a {
+    text-decoration: none;
+    color: #1976d2;
+}
+
+@media (max-width:960px) {
+    .ser {
+        width: 70%;
+        height: 40px;
+        padding: 10px;
+        border: 2px solid #1976d2;
+    }
+    .srbtn {
+        padding: 5px;
+        width: 40px;
+        height: 40px;
+        font-weight: bold;
+        color: white;
+        font-size: 1.5em;
+        border: none;
+    }
+    .logo {
+        margin-left: 20px;
+        height: 50px;
+    }
+    .logosection {
+        margin-left: 20px;
+        position: relative;
+    }
+    .meun-btn {
+        position: absolute;
+        left: -20px;
+        height: 40px;
+        width: 40px;
+        text-align: center;
+    }
+    .hoverCircle {
+        height: 200px;
+        text-align: center;
+        font-size: 12px;
+    }
+    .hoverCircle img {
+        height: 120px;
+        width: 120px;
+        padding: 5px;
+        border-radius: 100%;
+        border: none;
+        margin-bottom: 5px;
+    }
+    .hoverCircle:hover img {
+        height: 122px;
+        width: 122px;
+        padding: 5px;
+        border-radius: 100%;
+        border: none;
+        margin-bottom: 5px;
+        border: 2px solid #000;
+    }
+}
+
+.description h5 {
+    color: green;
+}
+
+.description p {
+    color: green;
+    font-size: 15px;
+    margin-top: 15px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.description span {
+    font-size: 15px;
+}
+
+.detailBTN a {
+    padding: 10px 16px;
+    background-color: green;
+    color: white;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+.detailBTN {
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.prod-img {
+    width: 260px;
+    height: 260px;
+}
+
+.discrip-row {
+    border-bottom: 1px solid rgb(200, 199, 199);
+}
+
+.detailBTN a:hover {
+    color: white;
+    background-color: rgb(7, 218, 56);
+}

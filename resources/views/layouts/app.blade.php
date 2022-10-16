@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
@@ -16,50 +16,106 @@
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/font-awesome.css')}} ">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noticia+Text:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noticia+Text:ital,wght@0,400;0,700;1,700&display=swap"
+          rel="stylesheet">
     <script src="{{ asset('frontend/assets/js/bundle.js')}}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
     <!-- responsive style -->
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/responsive.css')}}">
     <!-- laravel-toastr css -->
-    <link href="{{ asset('backend/assets/css/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('backend/assets/css/toastr.min.css')}}" rel="stylesheet" type="text/css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="{{ asset('frontend/assets/js/parallax.min.js')}}"></script>
     <!-- Custom style -->
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css')}}">
+    <script src="https://kit.fontawesome.com/2e7d7272e8.js" crossorigin="anonymous"></script>
+    <style>
+        .nav-hover {
+            position: relative;
+        }
+
+        .nav-hover .nav-drop-item {
+            display: none;
+            position: absolute;
+            top: 45px;
+            background-color: #fff;
+            border: 1px solid rgba(51, 51, 51, 0.35);
+            border-radius: 5px;
+            text-transform: uppercase;
+            font-size: .8rem;
+        }
+
+        #cropDropMenu .cropsMain {
+            background-color: tomato;
+            /*min-width: 250px;*/
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            height: 170px;
+            display: flex;
+
+            flex-wrap: wrap;
+        }
+    </style>
     @stack('vendor_css')
     @stack('page_css')
 </head>
 <body>
-    <!-- nav bar -->
-    @include('layouts.partials.navbar')
-    <div class="top_space">
+<!-- nav bar -->
+@include('layouts.partials.navbar')
+<div class="top_space">
     <!-- main content -->
     @yield('content')
-    </div>
-    <!-- footer -->
-    @include('layouts.partials.footer')
-    <!-- Optional JavaScript; choose one of the two! -->
-    {{-- <script src="{{ asset('frontend/assets/css/custom.js')}}"></script> --}}
-    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    {{-- <script src="{{ asset('frontend/assets/js/jquery-3.5.1.slim.min.js')}}"></script> --}}
-    <script src="{{ asset('frontend/assets/js/bootstrap.bundle.min.js')}}"></script>
-    <!-- laravel-toastr css -->
-    <script src="{{ asset('backend/assets/js/toastr.min.js')}}"> </script>
-    {!! Toastr::message() !!}
-        <script>
-            @if($errors->any())
-                @foreach($errors->all() as $error)
-                    toastr.error('{{ $error }}','Error',{
-                    closeButton:true,
-                    progressBar: true,
-                });
-                @endforeach
-            @endif
-        </script>
-    @stack('vendor_js')
-    @stack('page_js')
+</div>
+<!-- footer -->
+@include('layouts.partials.footer')
+<!-- Optional JavaScript; choose one of the two! -->
+{{-- <script src="{{ asset('frontend/assets/css/custom.js')}}"></script> --}}
+<!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+{{-- <script src="{{ asset('frontend/assets/js/jquery-3.5.1.slim.min.js')}}"></script> --}}
+<script src="{{ asset('frontend/assets/js/bootstrap.bundle.min.js')}}"></script>
+<!-- laravel-toastr css -->
+<script src="{{ asset('backend/assets/js/toastr.min.js')}}"></script>
+{!! Toastr::message() !!}
+<script>
+    @if($errors->any())
+    @foreach($errors->all() as $error)
+    toastr.error('{{ $error }}', 'Error', {
+        closeButton: true,
+        progressBar: true,
+    });
+    @endforeach
+    @endif
+
+    $('#cropsDrop').mouseover(function () {
+        $('#cropDropMenu').css('display', 'block')
+    })
+    $('.nav-drop-item').mouseleave(function () {
+        $('.nav-drop-item').css('display', 'none')
+    })
+
+    // var cropsCatItem = $('.cropsCatItem');
+    // if (cropsCatItem.length > 5) {
+    //     let colLen = Math.ceil(cropsCatItem.length / 5);
+    //     var i, j, col, itemLen = 5, item = 4, items;
+    //     for (j = 0; j < colLen; j++) {
+    //         for (i = 0; i < itemLen; i++) {
+    //             items = cropsCatItem[i]
+    //             if (i == item) {
+    //                 itemLen = itemLen + 5;
+    //             }
+    //             console.log(items)
+    //         }
+    //         col = ""
+    //     }
+    //
+    //
+    // }
+
+</script>
+@stack('vendor_js')
+@stack('page_js')
 
 </body>
 </html>

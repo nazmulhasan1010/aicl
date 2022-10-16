@@ -95,7 +95,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/address', 'CustomerController@address')->name('address');
         Route::post('/update-address', 'CustomerController@updateAddress')->name('address-update');
     });
-
+    Route::get('cropsCat', 'cropsUserController@cropscat');
 });
 Route::post('admin/getProduct', 'getproductController@getProduct');
 
