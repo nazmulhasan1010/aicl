@@ -56,6 +56,7 @@
         .company_logo_p {
             margin-bottom: -8px;
         }
+
     </style>
     <!-- nav bar -->
     @php
@@ -178,33 +179,85 @@
                         @lang('messages.crops') <i class="fa-solid fa-caret-down"></i>
                     </a>
                     <div class="nav-drop-item" id="cropDropMenu">
-                        @php
-                            $cropsCat = getCropsData('','','all');
-                            $col = ceil(count($cropsCat)/5) ;
-                        @endphp
-                        @for($i=0;$i<$col;$i++)
-                            <div class='cropsMain'>
-                                @php
-                                    $limit = 5;
-                                    $start = 0;
-                                    if ($i>0){
-                                        $start = $i*5;
-                                    }
-                                    $cropsCat = getCropsData($limit,$start,'spe');
-                                @endphp
-                                @foreach ($cropsCat as $category)
-                                    <a class="dropdown-item menuHover cropsCatItem"
-                                       href="{{ route('product-by-category',$category->id)}}">
-                                        @if (\Session::get('locale')== "bn")
-                                            {{ $category->category_name_bn}}
-                                        @else
-                                            {{ $category->category_name}}
-                                        @endif
-                                    </a>
-                                @endforeach
-                            </div>
-                        @endfor
-
+                        <div class="crops-items-modal">
+                            @php
+                                $cropsCat = getCropsData('','','all');
+                                $col = ceil(count($cropsCat)/5) ;
+                                $limit = 5;
+                                $start = 0;
+                            @endphp
+                            @if($col>0)
+                                <div class='cropsMain'>
+                                    @php
+                                        $cropsCatCol_1 = getCropsData($limit,$start,'spe');
+                                    @endphp
+                                    @foreach ($cropsCatCol_1 as $category)
+                                        <a class="dropdown-item menuHover cropsCatItem"
+                                           href="{{ route('disorder',$category->id)}}">
+                                            @if (\Session::get('locale')== "bn")
+                                                {{ $category->category_name_bn}}
+                                            @else
+                                                {{ $category->category_name}}
+                                            @endif
+                                        </a>
+                                    @endforeach
+                                </div>
+                            @endif
+                            @if($col>1)
+                                <div class='cropsMain'>
+                                    @php
+                                        $start = $cropsCatCol_1[4]->id;
+                                        $cropsCatCol_2 = getCropsData($limit,$start,'spe');
+                                    @endphp
+                                    @foreach ($cropsCatCol_2 as $category)
+                                        <a class="dropdown-item menuHover cropsCatItem"
+                                           href="{{ route('disorder',$category->id)}}">
+                                            @if (\Session::get('locale')== "bn")
+                                                {{ $category->category_name_bn}}
+                                            @else
+                                                {{ $category->category_name}}
+                                            @endif
+                                        </a>
+                                    @endforeach
+                                </div>
+                            @endif
+                            @if($col>2)
+                                <div class='cropsMain'>
+                                    @php
+                                        $start = $cropsCatCol_2[4]->id;
+                                        $cropsCatCol_3 = getCropsData($limit,$start,'spe');
+                                    @endphp
+                                    @foreach ($cropsCatCol_3 as $category)
+                                        <a class="dropdown-item menuHover cropsCatItem"
+                                           href="{{ route('disorder',$category->id)}}">
+                                            @if (\Session::get('locale')== "bn")
+                                                {{ $category->category_name_bn}}
+                                            @else
+                                                {{ $category->category_name}}
+                                            @endif
+                                        </a>
+                                    @endforeach
+                                </div>
+                            @endif
+                            @if($col>3)
+                                <div class='cropsMain'>
+                                    @php
+                                        $start = $cropsCatCol_3[4]->id;
+                                         $cropsCatCol_4 = getCropsData($limit,$start,'spe');
+                                    @endphp
+                                    @foreach ($cropsCatCol_4 as $category)
+                                        <a class="dropdown-item menuHover cropsCatItem"
+                                           href="{{ route('disorder',$category->id)}}">
+                                            @if (\Session::get('locale')== "bn")
+                                                {{ $category->category_name_bn}}
+                                            @else
+                                                {{ $category->category_name}}
+                                            @endif
+                                        </a>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
                     </div>
                 </li>
 

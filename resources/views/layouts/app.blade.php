@@ -42,21 +42,25 @@
             background-color: #fff;
             border: 1px solid rgba(51, 51, 51, 0.35);
             border-radius: 5px;
-            text-transform: uppercase;
             font-size: .8rem;
         }
 
+        .nav-hover .nav-drop-item .crops-items-modal {
+            display: flex;
+        }
+
         #cropDropMenu .cropsMain {
-            background-color: tomato;
-            /*min-width: 250px;*/
             justify-content: center;
             align-items: center;
-            padding: 10px 0;
+            padding: 15px 0;
             height: 170px;
-            display: flex;
-
-            flex-wrap: wrap;
+            width: 180px;
         }
+        .nav-drop-item .crops-items-modal .cropsMain  {
+            text-transform: capitalize;
+            color: red;
+        }
+
     </style>
     @stack('vendor_css')
     @stack('page_css')
@@ -95,23 +99,10 @@
         $('.nav-drop-item').css('display', 'none')
     })
 
-    // var cropsCatItem = $('.cropsCatItem');
-    // if (cropsCatItem.length > 5) {
-    //     let colLen = Math.ceil(cropsCatItem.length / 5);
-    //     var i, j, col, itemLen = 5, item = 4, items;
-    //     for (j = 0; j < colLen; j++) {
-    //         for (i = 0; i < itemLen; i++) {
-    //             items = cropsCatItem[i]
-    //             if (i == item) {
-    //                 itemLen = itemLen + 5;
-    //             }
-    //             console.log(items)
-    //         }
-    //         col = ""
-    //     }
-    //
-    //
-    // }
+    $(document).ready(function () {
+        let width = $('.nav-hover .nav-drop-item').width() / 2 - 50;
+        $('.nav-hover .nav-drop-item').css('left', '-' + width + 'px')
+    })
 
 </script>
 @stack('vendor_js')

@@ -29,7 +29,7 @@
             @endphp
             @foreach($cropsCat as $categories)
                 <div class="col-3 hoverCircle">
-                    <a href="{{url('cropsItem/'.$categories->id)}}">
+                    <a href="{{route('disorder',$categories->id)}}">
                         <img src="{{asset('storage/cropcat/'.$categories->image)}}" alt="" class="img-fluid"><br>
                         <label><strong>{{$categories->category_name}}</strong> </label>
                     </a>

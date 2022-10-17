@@ -236,7 +236,7 @@
 
 .product-img {
     position: absolute;
-    width: 180px;
+    width: 100%;
     z-index: 10;
 }
 
@@ -322,6 +322,12 @@
     .mobile-footer {
         display: block;
     }
+    .prod-list-div {
+        display: grid;
+        grid-template-columns:6fr 6fr;
+        grid-column-gap: 2rem;
+    }
+
     .footer {
         display: none;
     }
