@@ -67,7 +67,6 @@
             <div class="d-flex justify-content-between">
                 <img src="{{ asset('frontend/assets/images/logo.webp')}}" style="margin-left: 14px;" alt="logo"/>
                 <div class="company_logo_title">
-
                     <p class="company_logo_p">ATHERTON</p>
                     <p class="company_logo_p">GROUP</p>
                 </div>
@@ -79,21 +78,14 @@
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
-
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-
                 <a class="btn top_btn m-auto border border-warning app_login_btn" href="https://203.82.193.74/aicl/"
                    target="_blank"> @lang('messages.Login') </a>&nbsp;
                 <a class="btn top_btn m-auto border border-dark order_form_btn"
                    href="{{ route('order-form')}}"> @lang('messages.Order-form') </a>&nbsp;&nbsp;
-
-                @if(\Session::get('locale')== "en")
-                @else
-                @endif
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="btn-group btn_group rounded" role="group" aria-label="Basic example">
+                <div class="btn-group btn_group rounded" role="group" aria-label="Basic example" style="margin-left:-20px">
                     <a href="{{ url('/setlocale/en')}}"
                        class="btn top_btn {{ \Session::get('locale')== "en" ? 'lang_active' :'' }} m-auto">English <img
                             class="flag_img" src="{{ asset('frontend/assets/images/CAN.png')}}" alt="can flag"/></a>
@@ -101,23 +93,11 @@
                        class="btn top_btn {{ \Session::get('locale')== "bn" ? 'lang_active' :'' }} m-auto"> @lang('messages.Bangla')
                         <img class="flag_img" src="{{ asset('frontend/assets/images/BGD.png')}}" alt="bd flag"/></a>
                 </div>
-
-
                 <div class="m-auto">
                     <img src="{{ asset('frontend/assets/images/27_years.webp')}}" class="nav_img " alt="27 Years"/>&nbsp;&nbsp;&nbsp;
                 </div>
-                {{-- @if (\Request::is('home'))
-                    Home
-                @else
-                    Others
-                @endif --}}
-                {{-- <a class="nav-link {{ Request::is('home') ? 'active' : ''}}" href="{{ route('home')}}" --}}
-                <a class="nav-link {{ ($routrName == 'home' || Request::is('home')) ? 'active' : ''}}"
-                   href="{{ route('home')}}"
-                   @if (\Session::get('locale')== "bn")
-                       style="margin-left: 20px;"
-                    @endif
-                > @lang('messages.Home') <span class="sr-only">(current)</span></a>
+                <a class="nav-link  {{ ($routrName == 'home' || Request::is('home')) ? 'active' : ''}}"
+                   href="{{ route('home')}}"> @lang('messages.Home')</a>
                 @php
                     $aboutActive = '';
                     if( Request::is('company-profile') || Request::is('financial-partners') || Request::is('dept-distribution') || Request::is('dept-distribution-image') || Request::is('corporate-structure') || Request::is('quality-control') ) {

@@ -47,7 +47,7 @@
     border: none;
     margin-left: 10px;
     font-size: 15px;
-    font-weight: light;
+
 }
 
 .buton4 {
@@ -58,7 +58,6 @@
     color: aliceblue;
     border: none;
     font-size: 15px;
-    font-weight: light;
 }
 
 
@@ -159,10 +158,11 @@
     display: none;
 }
 
-@media (max-width:960px) {
+@media (max-width: 960px) {
     .rightmenu2 {
         display: none !important;
     }
+
     .buttom-btn {
         display: block;
         position: fixed;
@@ -171,22 +171,28 @@
         z-index: 15;
         text-align: center;
     }
+
     .copyrigh {
         display: none !important;
     }
+
     .footer2 {
         margin-bottom: 50px;
     }
+
     .product-info {
         width: 100%;
     }
+
     .soci i {
         font-size: 50px;
         margin-left: 10px;
     }
+
     .mobile-footer {
         display: block;
     }
+
     .foter {
         display: none;
     }
@@ -219,7 +225,6 @@
 
 .seb input::placeholder {
     color: #000;
-    font-weight: light;
 }
 
 .seb button {
@@ -279,7 +284,6 @@
     font-size: 14px;
     text-decoration: none;
     color: white;
-    font-weight: light;
 }
 
 .arrow2 i {
@@ -405,42 +409,38 @@ body {
 }
 
 
+.pdp-image-gallery-block {
+    display: flex;
+}
+
+.pdp-image-gallery-block .gallery-viewer {
+    width: 80%;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+.pdp-image-gallery-block .gallery-viewer img{
+   height: 500px;
+}
+.pdp-image-gallery-block .gallery_pdp_container {
+    width: 20%;
+
+}
+
+.pdp-image-gallery-block .gallery_pdp_container #gallery_pdp {
+    display: flex;
+    flex-direction: column;
+}
+
+.pdp-image-gallery-block .gallery_pdp_container #gallery_pdp a img {
+    height: 100px;
+    width: 70px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.pdp-image-gallery-block .gallery_pdp_container #gallery_pdp a img:hover {
+    transform: scale(1.05)
+}
+
 /* mobile view footer */
-
-.accord {
-    background-color: #fff;
-    color: #000;
-    cursor: pointer;
-    padding: 10px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 15px;
-    transition: 0.4s;
-    border-bottom: 1px solid black;
-}
-
-.activ,
-.accord:hover {
-    background-color: #fff;
-}
-
-.accord:after {
-    content: '\002B';
-    font-weight: bold;
-    float: right;
-    margin-left: 5px;
-}
-
-.activ:after {
-    content: "\2212";
-}
-
-.panel4 {
-    padding: 0 18px;
-    background-color: white;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.2s ease-out;
-}

@@ -115,5 +115,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="2a7bedc40f" level="application" />
+    <orderEntry type="library" name="js-image-zoom" level="application" />
   </component>
 </module>

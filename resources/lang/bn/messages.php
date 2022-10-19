@@ -17,7 +17,7 @@ return [
     'Quality' => "মান নিয়ন্ত্রণ",
     'Business' => "ব্যবসায় সমূহ",
     'Login' => 'লগিন',
-    'Admin-login' => 'অ্যাডমিন লগিন',
+    'Admin-login' => 'অ্যাডমিন',
     'Order-form' => 'অর্ডার ফর্ম',
     'Details' => "বিস্তারিত",
     'Buy-now' => "ক্রয় করুণ",

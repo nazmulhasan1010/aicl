@@ -49,18 +49,23 @@
             display: flex;
         }
 
-        #cropDropMenu .cropsMain {
+        .nav-drop-item .crops-items-modal .cropsMain {
+            text-transform: capitalize;
             justify-content: center;
-            align-items: center;
             padding: 15px 0;
             height: 170px;
             width: 180px;
         }
-        .nav-drop-item .crops-items-modal .cropsMain  {
-            text-transform: capitalize;
-            color: red;
+
+        .nav-drop-item .crops-items-modal .cropsMain .cropsCatItem {
+            padding: 5px 10px;
         }
 
+        .navbar-nav .nav-item .nav-link,
+        #navbarNavAltMarkup .navbar-nav .nav-link {
+            font-size: 13px;
+            padding: 6px;
+        }
     </style>
     @stack('vendor_css')
     @stack('page_css')

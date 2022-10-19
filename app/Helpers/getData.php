@@ -63,7 +63,9 @@ function getDisProduct($inst, $id)
 
 }
  function getProductDetails($id){
-     return Product::Join('product_variants', 'products.id', '=', 'product_variants.product_id')
+     return Product::select('products.*','product_variants.*','sizes.size_name')
+         ->join('product_variants', 'products.id', '=', 'product_variants.product_id')
+         ->join('sizes','sizes.id','=','product_variants.size_id')
          ->where('products.id', '=', $id)->get();
  }
 

@@ -24,8 +24,17 @@
                             </div>
                             <div class="info-div">
                                 <label for="check" class="details">
-                                    <h5>{{$disorders->disorder_name}}</h5>
-                                    <strong><u>Symptoms</u></strong><span> : {{$disorders->symptoms}}</span>
+                                    @php
+                                        if (Session::get('locale')==='bn'){
+                                               $name = $disorders->disorder_name_bn;
+                                               $symptoms = $disorders->symptoms_bn;
+                                            }else{
+                                              $name = $disorders->disorder_name;
+                                               $symptoms = $disorders->symptoms;
+                                            }
+                                    @endphp
+                                    <h5>{{$name}}</h5>
+                                    <strong><u>Symptoms</u></strong><span> : {{$symptoms}}</span>
                                 </label>
                             </div>
 
@@ -33,13 +42,21 @@
                                 @php
                                     $disProduct = getDisProduct('disId',$disorders->disorder_id);
                                     $productItem = count($disProduct)-1;
-                                     $products = getProductById($disProduct[1]->product_id);
+                                    $products = getProductById($disProduct[0]->product_id);
                                 @endphp
-                                <span><strong><u>Product</u></strong> : {{$products[0]->product_name.' / '.$productItem}}more..</span>
+                                <span><strong><u>Product</u></strong> :
+                                     @php
+                                         if (Session::get('locale')==='bn'){
+                                                echo $products[0]->product_name_bn;
+                                             }else{
+                                               echo $products[0]->product_name;
+                                             }
+                                     @endphp
+                                    {{' / '.$productItem}} more..</span>
                             </div>
                             <button type="button" class="mt-3 btn-danger modalShow"
                                     data-pid="{{$disorders->disorder_id}}" data-session="{{Session::get('locale')}}">
-                                Details
+                                @lang('messages.Details')
                             </button>
                         </div>
                     @endforeach
@@ -61,15 +78,15 @@
                         <div class="col prod-img">
                             <img id="modalDisImage" src="" alt="img-loading">
                         </div>
-                        <div class="col-12 description">
+                        <div class="col-12 description ">
                             <h5 id="modalDisName"></h5>
-                            <strong>Symptoms:</strong><span id="modalSymptoms"></span><br>
-                            <strong>Affect:</strong><span class="mb-1" id="modalAffect"></span>
+                            <strong>Symptoms : </strong><span id="modalSymptoms"></span><br>
+                            <strong>Affect : </strong><span class="mb-1" id="modalAffect"></span>
                             <p>Solution</p>
-                            <strong>Product:</strong><span id="modalProduct"></span><br>
-                            <strong>Soil/Drip:</strong><span id="modalSoil"></span>
+                            <strong>Product : </strong><span id="modalProduct"></span><br>
+                            <strong>Soil/Drip : </strong><span id="modalSoil"></span>
                             <br>
-                            <strong>Benefit: </strong><span
+                            <strong>Benefit : </strong><span
                                 id="modalBenefit"></span>
                             <div class="detailBTN" id="detailBTN"></div>
                         </div>

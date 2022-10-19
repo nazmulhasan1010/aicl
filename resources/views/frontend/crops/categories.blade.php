@@ -31,7 +31,17 @@
                 <div class="col-3 hoverCircle">
                     <a href="{{route('disorder',$categories->id)}}">
                         <img src="{{asset('storage/cropcat/'.$categories->image)}}" alt="" class="img-fluid"><br>
-                        <label><strong>{{$categories->category_name}}</strong> </label>
+                        <label>
+                            <strong>
+                                @php
+                                    if (Session::get('locale')==='bn'){
+                                            echo $categories->category_name_bn;
+                                        }else{
+                                            echo $categories->category_name;
+                                        }
+                                @endphp
+                            </strong>
+                        </label>
                     </a>
                 </div>
             @endforeach

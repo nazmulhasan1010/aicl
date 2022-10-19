@@ -18,7 +18,7 @@ return [
     'Quality' => "Quality Control",
     'Business' => "Business",
     'Login' => "Login",
-    'Admin-login' => 'Admin Login',
+    'Admin-login' => 'Admin',
     'Order-form' => "Order Form",
     'Details' => "Details",
     'Buy-now' => "Buy Now",

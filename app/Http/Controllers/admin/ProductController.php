@@ -173,7 +173,7 @@ class ProductController extends Controller
             if (!Storage::disk('public')->exists('product')) {
                 Storage::disk('public')->makeDirectory('product');
             }
-            $postImage = Image::make($product_image)->resize(190, 270)->stream();
+            $postImage = Image::make($product_image)->resize(800, 1200)->stream();
             Storage::disk('public')->put('product/' . $imageName, $postImage);
 
         } else {
