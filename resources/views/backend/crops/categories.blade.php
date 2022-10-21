@@ -99,8 +99,6 @@
                                                     </svg>
                                                 </div>
                                             </a>
-
-
                                             <button class="btn btn-danger btn-xs" type="button"
                                                     onclick="deleteItem({{$cropsCat->id }})">
                                                 <div class="icon-item">

@@ -29,9 +29,47 @@
             transition: opacity 0.5s;
             display: block;
         }
+
+        .QuantityInDe:hover {
+            opacity: .8;
+        }
+
+        .star-rating {
+            line-height: 32px;
+            font-size: 1.25em;
+        }
+
+        .star-rating .fa-star-o {
+            color: #1267a4;
+        }
+
+        .star-rating .fa-star {
+            color: #fff;
+            background-color: #1267a4;
+        }
+
+        .star-rating .fa {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #1267a4;
+        }
+
+        .modal {
+            background-color: rgba(51, 51, 51, 0.41);
+        }
+
+        @media (min-width: 960px) {
+            .modal .modal-dialog .modal-content {
+                width: 600px;
+            }
+        }
+
     </style>
 @endpush
 @section('content')
+    @php
+        $review = getReview($product[0]->product_id);
+    @endphp
     <div class="container-fluid  pt-4">
         <!-- slider and details part -->
         <div class="row">
@@ -70,7 +108,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-5 col-sm-12 col-md-12 rightmenu">
+            <div class="col-lg-5 col-sm-12 col-md-12 rightmenu" id="addCartModal">
                 <div class="card p-3" style="width: auto;">
                     <div class="card-body">
                         <h4 class="card-title">
@@ -93,22 +131,21 @@
                                 {{$product[0]->size_name.' - '.$product[0]->price.' BDT'}}
                             </span>
                         </p>
-                        <div id="delivery">
-                            <h6 style="font-size:12px; margin-top:10px">*Excludes Quebec / <a href="#">Terms and
-                                    Conditions</a> apply</h6>
-                            <hr>
-                            <h5><i class="fa-solid fa-arrow-up-from-bracket"></i> PiKup</h5>
-                            <h6>Pick up today if ordered within 10 hours (free)</h6>
-                            <h5><i class="fa-solid fa-truck-pickup"></i> Delivery</h5>
-                            <h6>Get it by Thu Jun 30 (free shipping)</h6>
-                        </div>
                         <hr>
                         <h6>Quantity:</h6>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="buton1">-</button>
-                            <h5> 1 </h5>
-                            <button type="button" class="buton2">+</button>
-                            <button type="button" class="buton3">Add to Card</button>
+                            <button type="button" class="buton1 QuantityInDe" data-inst="de">-</button>
+                            <h5 id="quantity"> 1 </h5>
+                            <button type="button" class="buton2 QuantityInDe" data-inst="in">+</button>
+                            <form action="{{ route('add-to-cart')}}" method="POST">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{$product[0]->product_id  }}">
+                                <input type="hidden" name="price" value="{{ $product[0]->price}}">
+                                <input type="hidden" name="size" value="{{$product[0]->size_name}}">
+                                <input type="hidden" name="qty" value="1" class="productQuantity">
+                                <button type="submit"
+                                        class="buton3 addCartButton">@lang('messages.Add-to-cart')</button>
+                            </form>
                         </div>
 
                         <br/>
@@ -119,8 +156,8 @@
                             </h6>
                             <hr>
                             <h6><i class="fa-solid fa-arrow-rotate-left"></i>
-                                <a style="color: #000; " href=" # ">
-                                    Free returns</a>
+                                <a style="color: #000; " href="#returnPolicy">
+                                    Return policy</a>
                             </h6>
                             <hr>
                             <h6><i class="fa-solid fa-map-location-dot "></i><a href="# " style="color: #000; ">
@@ -142,22 +179,23 @@
                                     aria-controls="flush-collapseOne"><h4>Description</h4>
                             </button>
                         </h2>
-                        <div id="flush-collapseOne" class="accordion-collapse collapse"
+                        <div id="flush-collapseOne" class="accordion-collapse collapse show"
                              aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
                                 @php
                                     if (Session::get('locale')==='bn'){
-                                        echo $product[0]->product_details;
+                                        $productDes = $product[0]->product_details;
                                     }else{
-                                        echo $product[0]->product_details_bn;
+                                        $productDes = $product[0]->product_details_bn;
                                     }
                                 @endphp
+                                {!! $productDes !!}
                             </div>
                         </div>
                     </div>
                 </div>
                 <!-- -->
-                <div class="accordion accordion-flush mt-5" id="accordionFlushExample">
+                <div class="accordion accordion-flush mt-5" id="returnPolicy">
                     <div class="accordion-item border-bottom">
                         <h2 class="accordion-header" id="flush-headingThree">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -166,7 +204,7 @@
                                 <h4>Return policy</h4>
                             </button>
                         </h2>
-                        <div id="flush-collapseThree" class="accordion-collapse collapse"
+                        <div id="flush-collapseThree" class="accordion-collapse collapse show"
                              aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
                                 <p>If you buy something online but it's not everything you dreamed it to be, no
@@ -190,7 +228,7 @@
                 <h4 class="mt-4">You may also like</h4>
                 <div class="row my-5 item-scroll g-4 owl-carousel owl-theme">
                     @php
-                        $similar_product = getProduct($product[0]->category_id);
+                        $similar_product = getProductDetailsByCat($product[0]->category_id);
                     @endphp
                     @foreach($similar_product as $smProduct)
                         <div class="col product-item  mx-auto card">
@@ -228,10 +266,10 @@
                                 </span>
                                     <span> (23)</span>
                                 </div>
-                                <p>100 gm</p>
-                                <h5 class="product-price">৳ 100.00</h5>
-
-                                <button class="atc justify-content-center" type="button"> Add to cart</button>
+                                <p>{{$smProduct->size_name}}</p>
+                                <h5 class="product-price">{{$smProduct->price.' BDT'}}</h5>
+                                <button class="atc justify-content-center"
+                                        type="button"> @lang('messages.Add-to-cart')</button>
                             </div>
 
                         </div>
@@ -421,17 +459,14 @@
                                     <tr>
                                         <th scope="row">Assembled Depth (in.)</th>
                                         <td>16.89 in</td>
-
                                     </tr>
                                     <tr>
                                         <th scope="row">Assembled Length (in.)</th>
                                         <td>21.13 in</td>
-
                                     </tr>
                                     <tr>
                                         <th scope="row">Product Type</th>
                                         <td colspan="2">Monitor, LED VA Monitor</td>
-
                                     </tr>
                                     </tbody>
                                 </table>
@@ -496,46 +531,55 @@
                                 <h4>Ratings & reviews</h4>
                             </button>
                         </h2>
-                        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse"
+
+                        <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse show"
                              aria-labelledby="panelsStayOpen-headingThree">
                             <div class="accordion-body">
+                                {{--rating star--}}
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="star-rating">
+                                                <span class="fa fa-star-o" data-rating="1"></span>
+                                                <span class="fa fa-star-o" data-rating="2"></span>
+                                                <span class="fa fa-star-o" data-rating="3"></span>
+                                                <span class="fa fa-star-o" data-rating="4"></span>
+                                                <span class="fa fa-star-o" data-rating="5"></span>
+                                                <input type="hidden" name="whatever1" class="rating-value" value="3">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>{{--rating star end --}}
+                                @php
+                                    $totalRating = count($review['allData']);
+                                    $rating = round($review['ratings']/$totalRating,1);
+                                @endphp
                                 <div class="row p-3 mt-3 border-bottom" style="background-color:#F0f0f0 ;">
                                     <div class="col-6 rStar">
-
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star checked"></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star text-li"></span>
-                                        <span>4.2</span>
-                                        <span>  | </span>
-                                        <span><a href="#"> 37 Reviews</a></span>
-                                    </div>
-                                    <div class="col-6 text-end">
-                                        <img class="img-fluid " style="height: 25px;"
-                                             src="img/trustmark_en.png ">
+                                        <span
+                                            class="fa {{$rating>0&&$rating<1?'fa-star-half-o checked':''}} {{$rating>=1?'fa-star checked':'fa-star'}}  "></span>
+                                        <span
+                                            class="fa {{$rating>1&&$rating<2?'fa-star-half-o checked':''}} {{$rating>=2?'fa-star checked':'fa-star'}} "></span>
+                                        <span
+                                            class="fa {{$rating>2&&$rating<3?'fa-star-half-o checked':''}} {{$rating>=3?'fa-star checked':'fa-star'}}"></span>
+                                        <span
+                                            class="fa {{$rating>3&&$rating<4?'fa-star-half-o checked':''}} {{$rating>=4?'fa-star checked':'fa-star'}}"></span>
+                                        <span
+                                            class="fa {{$rating>4&&$rating<5?'fa-star-half-o checked':'fa-star'}} {{$rating>=5?'fa-star checked':'fa-star'}}"></span>
+                                        <span>{{$rating}}</span>
                                     </div>
                                 </div>
                                 <div class="row border-bottom" style="background-color:#F0f0f0 ;">
-                                    <div class="col-6 pt-2">
-                                        <form class="d-flex" role="search">
-                                            <input class=" r-sr " type="search"
-                                                   placeholder="Search topics and review"
-                                                   aria-label="Search">
-                                            <button class="sbtn btn-outline-success" type="submit"><i
-                                                    class="fa-solid fa-magnifying-glass"></i></button>
-                                        </form>
-                                    </div>
-                                    <div class="col-2 pt-2 text-center">
-                                        <h6 class="reviw-h6">37</h6>
+                                    <div class="col-4 pt-2 text-center">
+                                        <h6 class="reviw-h6">{{$totalRating}}</h6>
                                         <span style="font-size: 12px;"><a href="#">Reviews</a></span>
                                     </div>
-                                    <div class="col-2 pt-2 text-center"
+                                    <div class="col-4 pt-2 text-center"
                                          style="border-left: 1px solid #bdbdbd; border-right: 1px solid #bdbdbd">
-                                        <h6 class="reviw-h6">0</h6>
+                                        <h6 class="reviw-h6">{{$totalRating}}</h6>
                                         <span style="font-size: 12px;"><a href="#">Questions</a></span>
                                     </div>
-                                    <div class="col-2 pt-2 text-center">
+                                    <div class="col-4 pt-2 text-center">
                                         <h6 class="reviw-h6">0</h6>
                                         <span style="font-size: 12px;"><a href="#">Answers</a></span>
                                     </div>
@@ -545,13 +589,10 @@
                                     <div class="col-6 text-start">
                                         <h6>Reviews</h6>
                                     </div>
-                                    <div class="col-6 text-end">
-                                        <button class="revBtn" type="button">Write a review</button>
-                                    </div>
                                 </div>
 
                                 <div class="row mt-4 p-3">
-                                    <div class="col-6 text-start">
+                                    <div class="col-md-6 text-start">
                                         <label class="revTs">Rating Snapshot</label>
                                         <p style="font-size:12px; margin-top: 5px;">Select a row below to filter
                                             reviews.</p>
@@ -561,10 +602,12 @@
                                             <div class="col-2 strf text-end">5 <span class="fa fa-star "></span>
                                             </div>
                                             <div class="col-8 text-start">
-                                                <progress class="progress" id="file" value="74" max="100"> 74%
+                                                <progress class="progress" id="file"
+                                                          value="{{$review['fiveSat']>0?($totalRating*100)/(($totalRating/$review['fiveSat'])*$totalRating):0}}"
+                                                          max="100">
                                                 </progress>
                                             </div>
-                                            <div class="col-2 strf">26</div>
+                                            <div class="col-2 strf">{{$review['fiveSat']}}</div>
                                         </div>
                                         <!--    2nd progress bar -->
 
@@ -572,52 +615,50 @@
                                             <div class="col-2 strf text-end">4 <span class="fa fa-star "></span>
                                             </div>
                                             <div class="col-8 text-start">
-                                                <progress class="progress" id="file" value="20" max="100"> 20%
+                                                <progress class="progress" id="file"
+                                                          value="{{$review['fourStar']>0?($totalRating*100)/(($totalRating/$review['fourStar'])*$totalRating):0}}"
+                                                          max="100">
                                                 </progress>
                                             </div>
-                                            <div class="col-2 strf">18</div>
+                                            <div class="col-2 strf">{{$review['fourStar']}}</div>
                                         </div>
                                         <!--    3nd progress bar -->
                                         <div class="row mt-2">
                                             <div class="col-2 strf text-end">3 <span class="fa fa-star "></span>
                                             </div>
                                             <div class="col-8 text-start">
-                                                <progress class="progress" id="file" value="15" max="100"> 15%
+                                                <progress class="progress" id="file"
+                                                          value="{{$review['threeStar']>0?($totalRating*100)/(($totalRating/$review['threeStar'])*$totalRating):0}}"
+                                                          max="100">
                                                 </progress>
                                             </div>
-                                            <div class="col-2 strf">14</div>
+                                            <div class="col-2 strf">{{$review['threeStar']}}</div>
                                         </div>
                                         <!--    4nd progress bar -->
                                         <div class="row mt-2">
                                             <div class="col-2 strf text-end">2 <span class="fa fa-star "></span>
                                             </div>
                                             <div class="col-8 text-start">
-                                                <progress class="progress" id="file" value="12" max="100"> 12%
+                                                <progress class="progress" id="file"
+                                                          value="{{$review['towStar']>0?($totalRating*100)/(($totalRating/$review['towStar'])*$totalRating):0}}"
+                                                          max="100"> 12%
                                                 </progress>
                                             </div>
-                                            <div class="col-2 strf">11</div>
+                                            <div class="col-2 strf">{{$review['towStar']}}</div>
                                         </div>
                                         <!--    5nd progress bar -->
                                         <div class="row mt-2">
                                             <div class="col-2 strf text-end">1 <span class="fa fa-star "></span>
                                             </div>
                                             <div class="col-8 text-start">
-                                                <progress class="progress" id="file" value="5" max="100"> 5%
+                                                <progress class="progress" id="file"
+                                                          value="{{$review['oneStar']>0?($totalRating*100)/(($totalRating/$review['oneStar'])*$totalRating):0}}"
+                                                          max="100">
                                                 </progress>
                                             </div>
-                                            <div class="col-2 strf">5</div>
+                                            <div class="col-2 strf">{{$review['oneStar']}}</div>
                                         </div>
 
-                                    </div>
-                                    <div class="col-6 text-start">
-                                        <label class="revTs">Average Customer Ratings</label>
-                                        <br/><br>
-                                        <span style="font-size:12px; margin-right: 20px;">Overall</span>
-                                        <span class="fa fa-star act"></span>
-                                        <span class="fa fa-star act"></span>
-                                        <span class="fa fa-star act"></span>
-                                        <span class="fa fa-star act"></span>
-                                        <span class="fa fa-star "></span>
                                     </div>
                                 </div>
 
@@ -668,49 +709,108 @@
                 </div>
                 <br/>
             </div>
-            <!--Right side section-->
-            <div class="col-lg-5 col-sm-12 col-md-12 rightmenu2" id="rightmenu2">
-                <div class="card p-3" style="width: auto;">
-                    <div class="card-body">
-                        <h4 class="card-title">
-                            @php
-                                if (Session::get('locale')==='bn'){
-                                    echo $product[0]->product_name_bn;
-                                }else{
-                                    echo $product[0]->product_name;
-                                }
-                            @endphp
-                        </h4>
-                        <p class="card-text">{{$product[0]->composition}}</p>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
-                        <p>
-                            <span style="font-size:24px; font-weight:bold">
-                                 {{$product[0]->size_name.' - '.$product[0]->price.' BDT'}}
-                            </span>
-                        </p>
-                        <hr>
-                        <h6>Quantity:</h6>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="buton1">-</button>
-                            <h5> 1 </h5>
-                            <button type="button" class="buton2">+</button>
-                            <button type="button" class="buton3 ">Add to Card</button>
+        </div>
+        <div class="row bg-light buttom-btn">
+            <div class="col bott">
+                <a href="#addCartModal" type="button" class="buton4">Add to Cart</a>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade " id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content p-3">
+                    <div class="modal-header">
+                        <div class="left d-flex">
+                            <img class="img-responsive"
+                                 src="{{asset('storage/product/'.$product[0]->image)}}" data-zoom-image=""
+                                 alt="{{$product[0]->product_name}}" style="height: 50px"/>
+                            <div class="card-title" style="margin-left: 10px">
+                                <h4 style="margin: -2px; padding: 0">
+                                    @php
+                                        if (Session::get('locale')==='bn'){
+                                            echo $product[0]->product_name_bn;
+                                        }else{
+                                            echo $product[0]->product_name;
+                                        }
+                                    @endphp
+                                </h4>
+                                <p class="card-text">{{$product[0]->composition}}</p>
+                            </div>
                         </div>
-                        <br/>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row ">
+                            <form action="{{route('ratings')}}" method="post">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{$product[0]->product_id  }}">
+                                <h5>Your review </h5>
+                                {{--rating star--}}
+                                <div class="col-md-12 ">
+                                    <div class="star-rating">
+                                        <span class="fa fa-star-o" data-rating="1"></span>
+                                        <span class="fa fa-star-o" data-rating="2"></span>
+                                        <span class="fa fa-star-o" data-rating="3"></span>
+                                        <span class="fa fa-star-o" data-rating="4"></span>
+                                        <span class="fa fa-star-o" data-rating="5"></span>
+                                        <input type="hidden" name="ratings" class="rating-value" id="ratingValue"
+                                               value="3">
+                                        <input type="hidden" class="temp-value" value="">
+                                    </div>
+                                </div>{{--rating star end --}}
+                                <p style=" margin-top:10px; font-size:15px" class="product-quality">
+                                    <span id="tRating"></span> out of 5 stars
+                                    selected. Product is <span id="pQuality"></span>.</p>
+                                <div class="form-group">
+                                    <label for="ratingsReviews">Ratings & Reviews</label>
+                                    <textarea class="form-control" id="ratingsReviews" rows="3"
+                                              name="ratingsReviews"></textarea>
+                                    <div class="requirBox d-flex " style="justify-content: right;font-size: 14px"><span
+                                            id="ratingsReviewsReq">0</span>/50
+                                        minimum
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reviewTitle">Review Title</label>
+                                    <input type="text" class="form-control" id="reviewTitle"
+                                           placeholder="Example: Great Features" name="reviewTitle">
+                                    <div class="requirBox d-flex " style="justify-content: right;font-size: 14px"><span
+                                            id="ratingTitleReq">0</span>/50
+                                        maximum
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nickName">Nickname*</label>
+                                    <input type="text" class="form-control" id="nickName" placeholder="Example: Nahid"
+                                           name="nickName">
+                                    <div class="requirBox d-flex " style="justify-content: right;font-size: 14px"><span
+                                            id="nickNameReq">0</span>/10
+                                        maximum
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email address*</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                           placeholder="name@example.com">
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
+                                           value="option1">
+                                    <label class="form-check-label" for="inlineCheckbox1">I agree to the terms &
+                                        conditions</label>
+                                </div>
+                                <div class="form-group mt-5">
+                                    <button type="submit" id="ratingSubmit" class="btn btn-secondary disabled p-2 px-5">
+                                        Submit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row bg-light buttom-btn">
-            <div class="col bott">
-                <button type="button" class="buton4">Add to Card</button>
-            </div>
-        </div>
-
     </div>
 @endsection
 @push('vendor_js')
@@ -727,8 +827,6 @@
 @endpush
 @push('page_js')
     <script type="text/javascript">
-
-
         function zoom(e) {
             var zoomed = e.currentTarget;
             e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX;
@@ -738,5 +836,147 @@
             console.log(zoomed.offsetWidth)
             zoomed.style.backgroundPosition = x + '% ' + y + '%';
         }
+
+        $('.QuantityInDe').click(function () {
+            let inst = $(this).data('inst'),
+                quantityField = $('#quantity'),
+                quantityField_2 = $('#quantityField_2'),
+                quantity = parseInt(quantityField.text());
+            if (inst === 'in') {
+                quantity++
+                quantityField.text(quantity);
+                quantityField_2.text(quantity);
+                $('.productQuantity').val(quantity)
+            } else if (inst === 'de') {
+                if (quantity > 1) {
+                    quantity--
+                    quantityField.text(quantity);
+                    quantityField_2.text(quantity);
+                    $('.productQuantity').val(quantity)
+                } else {
+                    alert('Minimum quantity')
+                }
+            }
+        });
+
+        // ratings
+        var star_rating = $('.star-rating .fa');
+        star_rating.on('mouseover', function () {
+            star_rating.siblings('input.temp-value').val($(this).data('rating'));
+            star_rating.each(function () {
+                if (parseInt(star_rating.siblings('input.temp-value').val()) >= parseInt($(this).data('rating'))) {
+                    $(this).removeClass('fa-star-o').addClass('fa-star');
+                } else {
+                    $(this).removeClass('fa-star').addClass('fa-star-o');
+                }
+            });
+        })
+        star_rating.on('mouseout', function () {
+            ratingRole();
+        })
+        ratingRole()
+
+        function ratingRole() {
+            star_rating.each(function () {
+                if (parseInt(star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+                    $(this).removeClass('fa-star-o').addClass('fa-star');
+                } else {
+                    $(this).removeClass('fa-star').addClass('fa-star-o');
+                }
+            });
+        }
+
+        star_rating.on('click', function () {
+            star_rating.siblings('input.rating-value').val($(this).data('rating'));
+            ratingRole()
+            productQualityCheck()
+            $('#reviewModal').modal('show');
+        });
+
+        function productQualityCheck() {
+            let rating = parseInt($('#ratingValue').val()),
+                quality;
+            if (rating === 1) {
+                quality = 'Poor';
+            } else if (rating === 2) {
+                quality = 'Fair';
+            } else if (rating === 3) {
+                quality = 'Average';
+            } else if (rating === 4) {
+                quality = 'Good';
+            } else if (rating === 5) {
+                quality = 'Excellent';
+            }
+            $('#tRating').text(rating);
+            $('#pQuality').text(quality);
+        }
+
+        $('#ratingsReviews').keyup(function () {
+            let value = $(this).val();
+            $('#ratingsReviewsReq').text(value.length)
+            if (value.length >= 50) {
+                $('#ratingsReviewsReq').parent('.requirBox').css('color', 'green')
+                if ($('.form-check-input').is(':checked')) {
+                    let value1 = $('#nickName').val();
+                    let value2 = $('#reviewTitle').val();
+                    if (value1.length < 10 && value2.length < 50) {
+                        $('#ratingSubmit').addClass('btn-primary').removeClass('disabled').removeClass('btn-secondary')
+                    }
+                }
+            } else {
+                $('#ratingSubmit').addClass('btn-secondary').addClass('disabled').removeClass('btn-primary')
+                $('#ratingsReviewsReq').parent('.requirBox').css('color', 'red')
+            }
+        });
+        $('#reviewTitle').keyup(function () {
+            let value = $(this).val();
+            $('#ratingTitleReq').text(value.length)
+            if (value.length > 50) {
+                $('#ratingTitleReq').parent('.requirBox').css('color', 'red')
+                $('#ratingSubmit').addClass('btn-secondary').addClass('disabled').removeClass('btn-primary')
+            } else {
+                if (value.length > 10) {
+                    $('#ratingTitleReq').parent('.requirBox').css('color', 'green')
+                }
+                if ($('.form-check-input').is(':checked')) {
+                    let value1 = $('#nickName').val();
+                    let value3 = $('#ratingsReviews').val();
+                    if (value1.length < 10 && value3.length > 50) {
+                        $('#ratingSubmit').addClass('btn-primary').removeClass('disabled').removeClass('btn-secondary')
+                    }
+                }
+            }
+        });
+        $('#nickName').keyup(function () {
+            let value = $(this).val();
+            $('#nickNameReq').text(value.length)
+            if (value.length > 10) {
+                $('#nickNameReq').parent('.requirBox').css('color', 'red')
+                $('#ratingSubmit').addClass('btn-secondary').addClass('disabled').removeClass('btn-primary')
+            } else {
+                if (value.length > 4) {
+                    $('#nickNameReq').parent('.requirBox').css('color', 'green')
+                }
+                if ($('.form-check-input').is(':checked')) {
+                    let value2 = $('#reviewTitle').val();
+                    let value3 = $('#ratingsReviews').val();
+                    if (value2.length < 50 && value3.length > 50) {
+                        $('#ratingSubmit').addClass('btn-primary').removeClass('disabled').removeClass('btn-secondary')
+                    }
+                }
+            }
+        });
+        $(".form-check-input").change(function () {
+            if ($(this).is(':checked')) {
+                let value1 = $('#nickName').val();
+                let value2 = $('#reviewTitle').val();
+                let value3 = $('#ratingsReviews').val();
+                if (value1.length < 10 && value2.length < 50 && value3.length > 50) {
+                    $('#ratingSubmit').addClass('btn-primary').removeClass('disabled').removeClass('btn-secondary')
+                }
+            } else {
+                $('#ratingSubmit').addClass('btn-secondary').addClass('disabled').removeClass('btn-primary')
+            }
+        });
     </script>
 @endpush

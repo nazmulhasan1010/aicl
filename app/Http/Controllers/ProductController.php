@@ -36,7 +36,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -47,16 +47,16 @@ class ProductController extends Controller
     // Product By Category
     public function product_by_cat($id)
     {
-        $products           = Product::where('category_id',$id)->get();
-        $categories         = Category::where('status',true)->get();
-        $page_design        = Category::where('id',$id)->first();
-        return view('frontend.product-by-category',compact('products','categories','page_design'));
+        $products = Product::where('category_id', $id)->get();
+        $categories = Category::where('status', true)->get();
+        $page_design = Category::where('id', $id)->first();
+        return view('frontend.product-by-category', compact('products', 'categories', 'page_design'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -64,22 +64,22 @@ class ProductController extends Controller
         $details = Product::findOrFail($id);
 
         SEOTools::setTitle($details->slug);
-        SEOTools::setDescription(Str::limit($details->meta,160,));
+        SEOTools::setDescription(Str::limit($details->meta, 160,));
         SEOTools::opengraph()->setUrl(url()->current());
         SEOTools::setCanonical(url()->current());
         SEOTools::opengraph()->addProperty('type', 'articles');
         SEOTools::twitter()->setSite('');
-        SEOTools::jsonLd()->addImage( asset('storage/product/'.$details->image));
+        SEOTools::jsonLd()->addImage(asset('storage/product/' . $details->image));
 
-        $pack_sizes = ProductVariant::where('product_id',$id)->get();
+        $pack_sizes = ProductVariant::where('product_id', $id)->get();
 
-        return view('frontend.product-details',compact('details','pack_sizes'));
+        return view('frontend.product-details', compact('details', 'pack_sizes'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -90,8 +90,8 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)

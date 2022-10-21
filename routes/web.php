@@ -48,7 +48,7 @@ Route::group(['middleware' => 'language'], function () {
     // Product
     Route::get('/product/{id}/{slug}', 'HomeController@products')->name('products');
     Route::resource('/product', 'ProductController');
-    Route::get('/product-by-category/{id}', 'ProductController@product_by_cat')->name('product-by-category');
+    Route::get('/product-details/{id}', 'ProductController@product_by_cat')->name('product-by-category');
     Route::get('/product-details/{id}/{slug}', 'ProductController@show')->name('product-details');
 
     // Cart
@@ -100,8 +100,7 @@ Route::group(['middleware' => 'language'], function () {
     Route::get('disorder/{id}', 'cropsUserController@disorder')->name('disorder');
     Route::post('disorder/disorderDisId/{id}', 'cropsUserController@getDisorderByDisId');
     Route::post('disorder/disorderProduct/{id}', 'cropsUserController@getDisorderProduct');
-
-
+    Route::post('ratings', 'ratingsController@ratingSubmit')->name('ratings');
 });
 Route::post('admin/getProduct', 'getproductController@getProduct');
 
