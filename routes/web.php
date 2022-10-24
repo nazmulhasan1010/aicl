@@ -101,6 +101,9 @@ Route::group(['middleware' => 'language'], function () {
     Route::post('disorder/disorderDisId/{id}', 'cropsUserController@getDisorderByDisId');
     Route::post('disorder/disorderProduct/{id}', 'cropsUserController@getDisorderProduct');
     Route::post('ratings', 'ratingsController@ratingSubmit')->name('ratings');
+    // Cart
+    Route::post('/dis-product-add-cart', 'disProductCartController@add_to_cart')->name('dis-product-add-cart');
+    Route::get('/dis-shopping-cart', 'disProductCartController@cart_item')->name('dis-shopping-cart');
 });
 Route::post('admin/getProduct', 'getproductController@getProduct');
 
@@ -148,6 +151,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'admin', 'mi
     // crops category
     Route::resource('cropsCat', 'cropsController');
     Route::resource('disorder', 'disorderController');
+    Route::resource('specification', 'specificationController');
 
 });
 

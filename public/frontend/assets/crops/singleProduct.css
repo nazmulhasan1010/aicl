@@ -320,12 +320,25 @@ body {
     max-height: 100px;
     background-color: #1976d2;
     object-fit: contain;
-    margin-bottom: 150px;
+    margin-bottom: 120px;
 }
-
+.detail {
+    margin: 0;
+    max-width: 100%;
+    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1 !important;
+    color: #000;
+    font-weight: 500;
+    height: auto;
+    font-size: 15px
+}
 .product-item {
     display: flex;
-    width: 90%;
+    width: 95%;
     margin-right: 5px;
     -webkit-box-pack: center;
     justify-content: space-around;

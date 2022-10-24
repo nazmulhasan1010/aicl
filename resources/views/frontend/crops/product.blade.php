@@ -15,8 +15,6 @@
         figure.zoom {
             background-position: 50% 50%;
             position: relative;
-            border: 5px solid white;
-            box-shadow: -1px 5px 15px black;
             overflow: hidden;
             cursor: zoom-in;
         }
@@ -64,6 +62,23 @@
             }
         }
 
+        @media (min-width: 960px) {
+            .sticky {
+                position: fixed;
+                top: 40px;
+                right: 0px;
+            }
+        }
+
+        .borderTop:nth-child(n+2) {
+            border-top: 1px solid rgba(51, 51, 51, 0.32);
+        }
+        #cartModalClose{
+            color: rgba(51, 51, 51, 0.51);
+        }
+        #cartModalClose:hover{
+            color: #333;
+        }
     </style>
 @endpush
 @section('content')
@@ -109,7 +124,7 @@
                 </div>
             </div>
             <div class="col-lg-5 col-sm-12 col-md-12 rightmenu" id="addCartModal">
-                <div class="card p-3" style="width: auto;">
+                <div class="card p-1" style="width: auto;">
                     <div class="card-body">
                         <h4 class="card-title">
                             @php
@@ -121,11 +136,24 @@
                             @endphp
                         </h4>
                         <p class="card-text">{{$product[0]->composition}}</p>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
+                        @php
+                            $totalRating = count($review['allData']);
+                            $rating = 0;
+                            if ($totalRating>0){
+                                 $rating = round($review['ratings']/$totalRating,1);
+                            }
+                        @endphp
+                        <span
+                            class="fa {{$rating>0&&$rating<1?'fa-star-half-o checked':''}} {{$rating>=1?'fa-star checked':'fa-star'}}  "></span>
+                        <span
+                            class="fa {{$rating>1&&$rating<2?'fa-star-half-o checked':''}} {{$rating>=2?'fa-star checked':'fa-star'}} "></span>
+                        <span
+                            class="fa {{$rating>2&&$rating<3?'fa-star-half-o checked':''}} {{$rating>=3?'fa-star checked':'fa-star'}}"></span>
+                        <span
+                            class="fa {{$rating>3&&$rating<4?'fa-star-half-o checked':''}} {{$rating>=4?'fa-star checked':'fa-star'}}"></span>
+                        <span
+                            class="fa {{$rating>4&&$rating<5?'fa-star-half-o checked':'fa-star'}} {{$rating>=5?'fa-star checked':'fa-star'}}"></span>
+                        <span>{{$rating}}</span>
                         <p>
                             <span style="font-size:24px;">
                                 {{$product[0]->size_name.' - '.$product[0]->price.' BDT'}}
@@ -137,33 +165,30 @@
                             <button type="button" class="buton1 QuantityInDe" data-inst="de">-</button>
                             <h5 id="quantity"> 1 </h5>
                             <button type="button" class="buton2 QuantityInDe" data-inst="in">+</button>
-                            <form action="{{ route('add-to-cart')}}" method="POST">
+                            <form action="{{ route('dis-product-add-cart')}}" method="POST">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{$product[0]->product_id  }}">
-                                <input type="hidden" name="price" value="{{ $product[0]->price}}">
-                                <input type="hidden" name="size" value="{{$product[0]->size_name}}">
+                                <input type="hidden" name="price" value="{{ $product[0]->price}}" class="productPrice">
+                                <input type="hidden" name="size" value="{{$product[0]->size_name}}" class="productSize">
                                 <input type="hidden" name="qty" value="1" class="productQuantity">
                                 <button type="submit"
                                         class="buton3 addCartButton">@lang('messages.Add-to-cart')</button>
                             </form>
+
                         </div>
 
                         <br/>
                         <div id="ot-info">
                             <br/>
                             <h6><i class="fa-solid fa-bahai"></i> Sold & shipped by
-                                <img src="img/smLogo.png" style="height: 30px;">
+                                <img src="{{asset('frontend/assets/images/logo.webp')}}" style="height: 30px;">
                             </h6>
                             <hr>
                             <h6><i class="fa-solid fa-arrow-rotate-left"></i>
                                 <a style="color: #000; " href="#returnPolicy">
                                     Return policy</a>
                             </h6>
-                            <hr>
-                            <h6><i class="fa-solid fa-map-location-dot "></i><a href="# " style="color: #000; ">
-                                    Available at nearby stores for $199.98</a></h6>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -184,9 +209,9 @@
                             <div class="accordion-body">
                                 @php
                                     if (Session::get('locale')==='bn'){
-                                        $productDes = $product[0]->product_details;
-                                    }else{
                                         $productDes = $product[0]->product_details_bn;
+                                    }else{
+                                        $productDes = $product[0]->product_details;
                                     }
                                 @endphp
                                 {!! $productDes !!}
@@ -226,19 +251,22 @@
                     </div>
                 </div>
                 <h4 class="mt-4">You may also like</h4>
-                <div class="row my-5 item-scroll g-4 owl-carousel owl-theme">
+                <div class="row my-5 item-scroll g-4 owl-carousel owl-carousel-group owl-theme">
                     @php
                         $similar_product = getProductDetailsByCat($product[0]->category_id);
                     @endphp
                     @foreach($similar_product as $smProduct)
-                        <div class="col product-item  mx-auto card">
-                            <div class="product-info p-3">
-                                <div class="img-size overflow-hidden">
-                                    <img src="{{asset('storage/product/'.$smProduct->image)}}" alt=""
-                                         class="img-fluid">
+                        <div class="col product-item card d-flex" style=" justify-content: left; padding:0">
+                            <div class="product-info" style=" width: 100%">
+                                <div class="img-size " style=" width: 100%">
+                                    <a href="{{url('disorder/product/'.$smProduct->product_id)}}"
+                                       class="d-block text-dark text-decoration-none product-name">
+                                        <img src="{{asset('storage/product/'.$smProduct->image)}}" style=" width: 100%"
+                                             alt="">
+                                    </a>
                                 </div>
-                                <a href="#"
-                                   class="d-block text-dark text-decoration-none py-2 product-name"><span>
+                                <div class="p-2">
+                                    <strong>
                                         @php
                                             if (Session::get('locale')==='bn'){
                                                 echo $smProduct->product_name_bn;
@@ -246,42 +274,49 @@
                                                 echo $smProduct->product_name;
                                             }
                                         @endphp
-                                    </span></a>
-                                <p class="card-text">{{$smProduct->composition}}</p>
-                                <div class="rating d-flex mt-1">
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                    <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                    <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                    <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                    <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                    <span> (23)</span>
-                                </div>
-                                <p>{{$smProduct->size_name}}</p>
-                                <h5 class="product-price">{{$smProduct->price.' BDT'}}</h5>
-                                <button class="atc justify-content-center"
-                                        type="button"> @lang('messages.Add-to-cart')</button>
-                            </div>
+                                    </strong>
+                                    @php
+                                        $productsRatings = getReview($smProduct->product_id);
+                                        $totalProRating = count($productsRatings['allData']);
 
+                                        $proRating = 0;
+                                        if ($totalProRating>0){
+                                            $proRating = round($productsRatings['ratings']/$totalProRating,1);
+                                        }
+                                    @endphp
+                                    <p class="card-text detail">{{$smProduct->composition}}</p>
+                                    <div class="rating d-flex">
+                                         <span
+                                             class="fa {{$proRating>0&&$proRating<1?'fa-star-half-o checked':''}} {{$proRating>=1?'fa-star checked':'fa-star'}}  "></span>
+                                        <span
+                                            class="fa {{$proRating>1&&$proRating<2?'fa-star-half-o checked':''}} {{$proRating>=2?'fa-star checked':'fa-star'}} "></span>
+                                        <span
+                                            class="fa {{$proRating>2&&$proRating<3?'fa-star-half-o checked':''}} {{$proRating>=3?'fa-star checked':'fa-star'}}"></span>
+                                        <span
+                                            class="fa {{$proRating>3&&$proRating<4?'fa-star-half-o checked':''}} {{$proRating>=4?'fa-star checked':'fa-star'}}"></span>
+                                        <span
+                                            class="fa {{$proRating>4&&$proRating<5?'fa-star-half-o checked':'fa-star'}} {{$proRating>=5?'fa-star checked':'fa-star'}}"></span>
+                                        <span> ({{$totalProRating}})</span>
+                                    </div>
+                                    <p>{{$smProduct->size_name}}</p>
+                                    <h5 class="product-price">{{$smProduct->price.' BDT'}}</h5>
+                                    <div class="addCardButtonModal"
+                                         style="display:flex; width: 100%; justify-content: center">
+                                        <button class="btn btn-primary"
+                                                type="button"> @lang('messages.Add-to-cart')</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                 </div>
                 <h4>Top items in this department</h4>
-                <div class="row my-5 item-scroll g-4 owl-carousel owl-theme">
+                <div class="row my-5 item-scroll g-4 owl-carousel owl-carousel-group owl-theme">
                     <!-- 1st item-->
                     <div class="col product-item  mx-auto">
                         <div class="product-info p-3">
                             <div class="img-size overflow-hidden">
-                                <img src="img/product4.jpeg" alt="" class="img-fluid">
+                                <img src="{{asset('frontend/assets/images/logo.webp')}}" alt="" class="img-fluid">
                             </div>
 
                             <a href="#" class="d-block text-dark text-decoration-none py-2 product-name"><span>Laptop L410, Intel Pentium Silver N5030 Processor, 14” FHD Display,</span></a>
@@ -454,72 +489,14 @@
                         <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
                              aria-labelledby="panelsStayOpen-headingOne">
                             <div class="accordion-body">
-                                <table class="table">
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row">Assembled Depth (in.)</th>
-                                        <td>16.89 in</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Assembled Length (in.)</th>
-                                        <td>21.13 in</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Product Type</th>
-                                        <td colspan="2">Monitor, LED VA Monitor</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="accordion-item border-0 border-bottom">
-                        <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                    data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
-                                    aria-controls="panelsStayOpen-collapseTwo">
-                                <h4>Find in-store</h4>
-                            </button>
-                        </h2>
-                        <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse"
-                             aria-labelledby="panelsStayOpen-headingTwo">
-                            <div class="accordion-body">
-                                <p>We always try our best to show you the most accurate in-store availability.
-                                    However,
-                                    it may vary slightly as a fellow shopper could currently have this item in
-                                    their
-                                    cart.</p>
-
-                                <table class="table">
-                                    <tbody class="fw-bold justify-content-between">
-                                    <tr>
-                                        <td scope="row">Where can you get it?</td>
-                                        <td>Is it available?</td>
-                                        <td>What is the price in-store?</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">Heartland Supercentre Matheson Blvd & Mavis Rd 0.2 km
-                                            from your
-                                            location
-                                        </td>
-                                        <td class="text-success">In stock</td>
-                                        <td>$199.98 <br/>
-                                            <del>$249.98</del>
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">Square One Supercentre Highway 10 & Highway 403 4.7 km
-                                            from your
-                                            location
-                                        </td>
-                                        <td colspan="2">Out of stock</td>
-
-                                    </tr>
-                                    </tbody>
-                                </table>
-
+                                @php
+                                    $spe =  getSpecificition($product[0]->product_id);
+                                @endphp
+                                @if(count($spe)>0)
+                                    {!! $spe[0]->specification !!}
+                                @else
+                                    <h5>No specification added</h5>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -552,7 +529,10 @@
                                 </div>{{--rating star end --}}
                                 @php
                                     $totalRating = count($review['allData']);
-                                    $rating = round($review['ratings']/$totalRating,1);
+                                    $rating = 0;
+                                    if ($totalRating>0){
+                                         $rating = round($review['ratings']/$totalRating,1);
+                                    }
                                 @endphp
                                 <div class="row p-3 mt-3 border-bottom" style="background-color:#F0f0f0 ;">
                                     <div class="col-6 rStar">
@@ -594,9 +574,6 @@
                                 <div class="row mt-4 p-3">
                                     <div class="col-md-6 text-start">
                                         <label class="revTs">Rating Snapshot</label>
-                                        <p style="font-size:12px; margin-top: 5px;">Select a row below to filter
-                                            reviews.</p>
-
                                         <!-- review raiting -->
                                         <div class="row">
                                             <div class="col-2 strf text-end">5 <span class="fa fa-star "></span>
@@ -610,7 +587,6 @@
                                             <div class="col-2 strf">{{$review['fiveSat']}}</div>
                                         </div>
                                         <!--    2nd progress bar -->
-
                                         <div class="row mt-2">
                                             <div class="col-2 strf text-end">4 <span class="fa fa-star "></span>
                                             </div>
@@ -641,7 +617,7 @@
                                             <div class="col-8 text-start">
                                                 <progress class="progress" id="file"
                                                           value="{{$review['towStar']>0?($totalRating*100)/(($totalRating/$review['towStar'])*$totalRating):0}}"
-                                                          max="100"> 12%
+                                                          max="100">
                                                 </progress>
                                             </div>
                                             <div class="col-2 strf">{{$review['towStar']}}</div>
@@ -661,11 +637,10 @@
 
                                     </div>
                                 </div>
-
                                 <div class="row"
                                      style="background-color:#f0f0f0 ; font-size: 14px; padding:5px;">
                                     <div class="col text-start">
-                                        <span>1–6 of 38 Reviews </span>
+                                        <span>1–{{$totalRating>5?5:$totalRating}} of {{$totalRating}} Reviews </span>
                                     </div>
                                     <div class="col text-end">
                                         <span>Sort by:</span>
@@ -676,10 +651,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li>
-                                                    <a href="#">Most Relevant</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Most Relevant</a>
+                                                    <a href="?">All</a>
                                                 </li>
                                                 <li>
                                                     <a href="#">Most Relevant</a>
@@ -688,6 +660,42 @@
                                         </div>
                                     </div>
                                 </div>
+                                @php
+                                    $reviews = $review['allDataSFive'];
+                                @endphp
+                                @foreach($reviews as $review)
+                                    <div class="row borderTop">
+                                        <div class="col-md-6 mt-3">
+                                            <div
+                                                style="display: flex; align-items: center; margin-bottom: 10px; background-color: #e7f1ff; padding: 5px; border-radius: 5px;">
+                                            <span>
+                                                <i class="fa-regular fa-user"
+                                                   style="border: 2px solid #333; display: flex; justify-content:center; align-items:center; font-size: 25px; height: 40px; width: 40px; border-radius:50%; margin-right:10px">
+                                                </i>
+                                            </span>
+                                                <div style="height:45px;">
+                                                    <strong>{{$review->nickname}}</strong>
+                                                    <p>a year ago</p>
+                                                </div>
+                                            </div>
+                                            <h5 class="mt-2" style="margin:15px 0">
+                                                <strong>{{$review->reviewTitle}}</strong></h5>
+                                            <div class="rating" style="margin-bottom:10px">
+                                                <span
+                                                    class="fa {{$review->ratings>0&&$review->ratings<1?'fa-star-half-o checked':''}} {{$review->ratings>=1?'fa-star checked':'fa-star'}}  "></span>
+                                                <span
+                                                    class="fa {{$review->ratings>1&&$review->ratings<2?'fa-star-half-o checked':''}} {{$review->ratings>=2?'fa-star checked':'fa-star'}} "></span>
+                                                <span
+                                                    class="fa {{$review->ratings>2&&$review->ratings<3?'fa-star-half-o checked':''}} {{$review->ratings>=3?'fa-star checked':'fa-star'}}"></span>
+                                                <span
+                                                    class="fa {{$review->ratings>3&&$review->ratings<4?'fa-star-half-o checked':''}} {{$review->ratings>=4?'fa-star checked':'fa-star'}}"></span>
+                                                <span
+                                                    class="fa {{$review->ratings>4&&$review->ratings<5?'fa-star-half-o checked':'fa-star'}} {{$review->ratings>=5?'fa-star checked':'fa-star'}}"></span>
+                                            </div>
+                                            <p>{{$review->review}}</p>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -712,10 +720,10 @@
         </div>
         <div class="row bg-light buttom-btn">
             <div class="col bott">
-                <a href="#addCartModal" type="button" class="buton4">Add to Cart</a>
+                <a href="#addCartModal" type="button" class="buton4">@lang('messages.Add-to-cart')</a>
             </div>
         </div>
-        <!-- Modal -->
+        <!-- Review Modal -->
         <div class="modal fade " id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog ">
@@ -810,173 +818,356 @@
                     </div>
                 </div>
             </div>
+        </div>  <!-- Review Modal End -->
+        <!-- Cart Modal  -->
+        <div class="modal fade " id="cartModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog ">
+                <div class="modal-content p-3">
+                    <div class="row " style="margin: 10px 0;">
+                        <div class="col-md-12 d-flex justify-content-between">
+                            <div class="message">
+                                <i class="fa-solid fa-circle-check" style="color: green"></i>
+                                @if (\Session::has('success'))
+                                    {{Session::get('success')}}
+                                @endif
+                            </div>
+                            <div class="cancel-button d-none" ><i class="fa-solid fa-xmark " id="cartModalClose"></i></div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row ">
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    @php
+                                        if (Session::get('locale')==='bn'){
+                                            echo $product[0]->product_name_bn;
+                                        }else{
+                                            echo $product[0]->product_name;
+                                        }
+                                    @endphp
+                                </h4>
+                                <p class="card-text">{{$product[0]->composition}}</p>
+                                @php
+                                    $review = getReview($product[0]->product_id);
+                                       $totalRating = count($review['allData']);
+                                       $rating = 0;
+                                       if ($totalRating>0){
+                                            $rating = round($review['ratings']/$totalRating,1);
+                                       }
+                                @endphp
+                                <span
+                                    class="fa {{$rating>0&&$rating<1?'fa-star-half-o checked':''}} {{$rating>=1?'fa-star checked':'fa-star'}}  "></span>
+                                <span
+                                    class="fa {{$rating>1&&$rating<2?'fa-star-half-o checked':''}} {{$rating>=2?'fa-star checked':'fa-star'}} "></span>
+                                <span
+                                    class="fa {{$rating>2&&$rating<3?'fa-star-half-o checked':''}} {{$rating>=3?'fa-star checked':'fa-star'}}"></span>
+                                <span
+                                    class="fa {{$rating>3&&$rating<4?'fa-star-half-o checked':''}} {{$rating>=4?'fa-star checked':'fa-star'}}"></span>
+                                <span
+                                    class="fa {{$rating>4&&$rating<5?'fa-star-half-o checked':'fa-star'}} {{$rating>=5?'fa-star checked':'fa-star'}}"></span>
+                                <span>{{$rating}}</span>
+                                <p>
+                                    <span style="font-size:24px;">
+                                        {{$product[0]->size_name.' - '.$product[0]->price.' BDT'}}
+                                     </span>
+                                </p>
+                                <div class="d-flex justify-content-between">
+                                    <div class="left">
+                                        <h6>Quantity:</h6>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <button type="button" class="buton1 QuantityInDe" data-inst="de">-</button>
+                                            <h5 id="quantity"> 1 </h5>
+                                            <button type="button" class="buton2 QuantityInDe" data-inst="in">+</button>
+                                            <form action="{{ route('add-to-cart')}}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="product_id"
+                                                       value="{{$product[0]->product_id  }}">
+                                                <input type="hidden" name="price" value="{{ $product[0]->price}}"
+                                                       class="productPrice">
+                                                <input type="hidden" name="price" value="{{ $product[0]->price}}"
+                                                       class="productActualPrice">
+                                                <input type="hidden" name="size" value="{{$product[0]->size_name}}"
+                                                       class="productSize">
+                                                <input type="hidden" name="qty" value="1" class="productQuantity">
+                                            </form>
+                                        </div>
+                                        <br/>
+                                        <div id="ot-info">
+                                            <br/>
+                                            <h6><i class="fa-solid fa-bahai"></i> Sold & shipped by
+                                                <img src="{{asset('frontend/assets/images/logo.webp')}}"
+                                                     style="height: 30px;">
+                                            </h6>
+                                        </div>
+                                    </div>
+                                    <div class="right">
+                                        <div class="card p-3">
+                                            <div class="d-flex">
+                                                <span>Subtotal:</span>
+                                                <div class="productPriceShow  "
+                                                     style="display: flex; align-items: center; padding: 0 0 0 50px; float: right"> {{ $product[0]->price}}
+                                                </div>
+                                                <span> BDT</span>
+                                            </div>
+                                            <p></p>
+                                            <a href="{{route('dis-shopping-cart')}}" class="btn btn-primary" style="border-radius: 20px; margin-bottom: 10px">Chackout</a>
+                                            <button type="button" style="border-radius: 20px" class="btn btn-outline-secondary">Continue Shopping</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h4 class="">Recomanded for you</h4>
+                                <div class="row item-scroll owl-carousel  owl-theme" id="recomandedProduct">
+                                    @php
+                                        $similar_product = getProductDetailsByCat($product[0]->category_id);
+                                    @endphp
+                                    @foreach($similar_product as $smProduct)
+                                        <div class="col product-item card " style=" padding:0">
+                                            <div class="product-info d-flex" style=" width: 100%">
+                                                <div class="" style=" width: 30%; display :flex;
+                                                justify-content: center;padding: 5px">
+                                                    <a href="{{url('disorder/product/'.$smProduct->product_id)}}">
+                                                        <img src="{{asset('storage/product/'.$smProduct->image)}}"
+                                                             style="  max-height: none; position: static; "
+                                                             alt="">
+                                                    </a>
+                                                </div>
+                                                <div style="width:70%; padding: 5px">
+                                                    <strong>
+                                                        @php
+                                                            if (Session::get('locale')==='bn'){
+                                                                echo $smProduct->product_name_bn;
+                                                            }else{
+                                                                echo $smProduct->product_name;
+                                                            }
+                                                        @endphp
+                                                    </strong>
+                                                    @php
+                                                        $productsRatings = getReview($smProduct->product_id);
+                                                        $totalProRating = count($productsRatings['allData']);
+
+                                                        $proRating = 0;
+                                                        if ($totalProRating>0){
+                                                            $proRating = round($productsRatings['ratings']/$totalProRating,1);
+                                                        }
+                                                    @endphp
+                                                    <p class="card-text detail">{{$smProduct->composition}}</p>
+                                                    <div class="rating d-flex">
+                                         <span
+                                             class="fa {{$proRating>0&&$proRating<1?'fa-star-half-o checked':''}} {{$proRating>=1?'fa-star checked':'fa-star'}}  "></span>
+                                                        <span
+                                                            class="fa {{$proRating>1&&$proRating<2?'fa-star-half-o checked':''}} {{$proRating>=2?'fa-star checked':'fa-star'}} "></span>
+                                                        <span
+                                                            class="fa {{$proRating>2&&$proRating<3?'fa-star-half-o checked':''}} {{$proRating>=3?'fa-star checked':'fa-star'}}"></span>
+                                                        <span
+                                                            class="fa {{$proRating>3&&$proRating<4?'fa-star-half-o checked':''}} {{$proRating>=4?'fa-star checked':'fa-star'}}"></span>
+                                                        <span
+                                                            class="fa {{$proRating>4&&$proRating<5?'fa-star-half-o checked':'fa-star'}} {{$proRating>=5?'fa-star checked':'fa-star'}}"></span>
+                                                        <span> ({{$totalProRating}})</span>
+                                                    </div>
+                                                    <p>{{$smProduct->size_name}}</p>
+                                                    <h5 class="product-price">{{$smProduct->price.' BDT'}}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  <!-- Cart Modal End -->
         </div>
-    </div>
-@endsection
-@push('vendor_js')
-    <!-- javaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-            crossorigin="anonymous"></script>
-    {{--    axois--}}
-    <script src="{{asset('backend/assets/js/axios.min.js')}}"></script>
+        @endsection
+        @push('vendor_js')
+            <!-- javaScript -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+                    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+                    crossorigin="anonymous"></script>
+            {{--    axois--}}
+            <script src="{{asset('backend/assets/js/axios.min.js')}}"></script>
 
-    {{--    owl--}}
-    <script src="{{asset('frontend/assets/crops/owl/owl.carousel.js')}}"></script>
-    <script src="{{asset('frontend/assets/crops/js/main.js')}}"></script>
-@endpush
-@push('page_js')
-    <script type="text/javascript">
-        function zoom(e) {
-            var zoomed = e.currentTarget;
-            e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX;
-            e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX;
-            x = offsetX / zoomed.offsetWidth * 100;
-            y = offsetY / zoomed.offsetHeight * 100;
-            console.log(zoomed.offsetWidth)
-            zoomed.style.backgroundPosition = x + '% ' + y + '%';
-        }
+            {{--    owl--}}
+            <script src="{{asset('frontend/assets/crops/owl/owl.carousel.js')}}"></script>
+            <script src="{{asset('frontend/assets/crops/js/main.js')}}"></script>
+        @endpush
 
-        $('.QuantityInDe').click(function () {
-            let inst = $(this).data('inst'),
-                quantityField = $('#quantity'),
-                quantityField_2 = $('#quantityField_2'),
-                quantity = parseInt(quantityField.text());
-            if (inst === 'in') {
-                quantity++
-                quantityField.text(quantity);
-                quantityField_2.text(quantity);
-                $('.productQuantity').val(quantity)
-            } else if (inst === 'de') {
-                if (quantity > 1) {
-                    quantity--
-                    quantityField.text(quantity);
-                    quantityField_2.text(quantity);
-                    $('.productQuantity').val(quantity)
-                } else {
-                    alert('Minimum quantity')
+        @push('page_js')
+            <script type="text/javascript">
+                @if (\Session::has('success'))
+                showModalCart('show')
+                @endif
+
+                function showModalCart(sta) {
+                    $('#cartModal').modal(sta);
                 }
-            }
-        });
+                $("#cartModalClose").on('click', function(){
+                    $('#cartModal').modal('hide');
+                });
 
-        // ratings
-        var star_rating = $('.star-rating .fa');
-        star_rating.on('mouseover', function () {
-            star_rating.siblings('input.temp-value').val($(this).data('rating'));
-            star_rating.each(function () {
-                if (parseInt(star_rating.siblings('input.temp-value').val()) >= parseInt($(this).data('rating'))) {
-                    $(this).removeClass('fa-star-o').addClass('fa-star');
-                } else {
-                    $(this).removeClass('fa-star').addClass('fa-star-o');
+                function zoom(e) {
+                    var zoomed = e.currentTarget;
+                    e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX;
+                    e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX;
+                    x = offsetX / zoomed.offsetWidth * 100;
+                    y = offsetY / zoomed.offsetHeight * 100;
+                    console.log(zoomed.offsetWidth)
+                    zoomed.style.backgroundPosition = x + '% ' + y + '%';
                 }
-            });
-        })
-        star_rating.on('mouseout', function () {
-            ratingRole();
-        })
-        ratingRole()
 
-        function ratingRole() {
-            star_rating.each(function () {
-                if (parseInt(star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
-                    $(this).removeClass('fa-star-o').addClass('fa-star');
-                } else {
-                    $(this).removeClass('fa-star').addClass('fa-star-o');
-                }
-            });
-        }
-
-        star_rating.on('click', function () {
-            star_rating.siblings('input.rating-value').val($(this).data('rating'));
-            ratingRole()
-            productQualityCheck()
-            $('#reviewModal').modal('show');
-        });
-
-        function productQualityCheck() {
-            let rating = parseInt($('#ratingValue').val()),
-                quality;
-            if (rating === 1) {
-                quality = 'Poor';
-            } else if (rating === 2) {
-                quality = 'Fair';
-            } else if (rating === 3) {
-                quality = 'Average';
-            } else if (rating === 4) {
-                quality = 'Good';
-            } else if (rating === 5) {
-                quality = 'Excellent';
-            }
-            $('#tRating').text(rating);
-            $('#pQuality').text(quality);
-        }
-
-        $('#ratingsReviews').keyup(function () {
-            let value = $(this).val();
-            $('#ratingsReviewsReq').text(value.length)
-            if (value.length >= 50) {
-                $('#ratingsReviewsReq').parent('.requirBox').css('color', 'green')
-                if ($('.form-check-input').is(':checked')) {
-                    let value1 = $('#nickName').val();
-                    let value2 = $('#reviewTitle').val();
-                    if (value1.length < 10 && value2.length < 50) {
-                        $('#ratingSubmit').addClass('btn-primary').removeClass('disabled').removeClass('btn-secondary')
+                $('.QuantityInDe').click(function () {
+                    let inst = $(this).data('inst'),
+                        quantityField = $('#quantity'),
+                        quantityField_2 = $('#quantityField_2'),
+                        quantity = parseInt(quantityField.text());
+                    if (inst === 'in') {
+                        quantity++
+                        quantityField.text(quantity);
+                        quantityField_2.text(quantity);
+                        $('.productQuantity').val(quantity)
+                        $('.productPriceShow').text($('.productPrice').val() * quantity);
+                    } else if (inst === 'de') {
+                        if (quantity > 1) {
+                            quantity--
+                            quantityField.text(quantity);
+                            quantityField_2.text(quantity);
+                            $('.productQuantity').val(quantity)
+                            $('.productPriceShow').text($('.productPrice').val() * quantity);
+                        } else {
+                            alert('Minimum quantity')
+                        }
                     }
+                });
+
+                // ratings
+                var star_rating = $('.star-rating .fa');
+                star_rating.on('mouseover', function () {
+                    star_rating.siblings('input.temp-value').val($(this).data('rating'));
+                    star_rating.each(function () {
+                        if (parseInt(star_rating.siblings('input.temp-value').val()) >= parseInt($(this).data('rating'))) {
+                            $(this).removeClass('fa-star-o').addClass('fa-star');
+                        } else {
+                            $(this).removeClass('fa-star').addClass('fa-star-o');
+                        }
+                    });
+                })
+                star_rating.on('mouseout', function () {
+                    ratingRole();
+                })
+                ratingRole()
+
+                function ratingRole() {
+                    star_rating.each(function () {
+                        if (parseInt(star_rating.siblings('input.rating-value').val()) >= parseInt($(this).data('rating'))) {
+                            $(this).removeClass('fa-star-o').addClass('fa-star');
+                        } else {
+                            $(this).removeClass('fa-star').addClass('fa-star-o');
+                        }
+                    });
                 }
-            } else {
-                $('#ratingSubmit').addClass('btn-secondary').addClass('disabled').removeClass('btn-primary')
-                $('#ratingsReviewsReq').parent('.requirBox').css('color', 'red')
-            }
-        });
-        $('#reviewTitle').keyup(function () {
-            let value = $(this).val();
-            $('#ratingTitleReq').text(value.length)
-            if (value.length > 50) {
-                $('#ratingTitleReq').parent('.requirBox').css('color', 'red')
-                $('#ratingSubmit').addClass('btn-secondary').addClass('disabled').removeClass('btn-primary')
-            } else {
-                if (value.length > 10) {
-                    $('#ratingTitleReq').parent('.requirBox').css('color', 'green')
-                }
-                if ($('.form-check-input').is(':checked')) {
-                    let value1 = $('#nickName').val();
-                    let value3 = $('#ratingsReviews').val();
-                    if (value1.length < 10 && value3.length > 50) {
-                        $('#ratingSubmit').addClass('btn-primary').removeClass('disabled').removeClass('btn-secondary')
+
+                star_rating.on('click', function () {
+                    star_rating.siblings('input.rating-value').val($(this).data('rating'));
+                    ratingRole()
+                    productQualityCheck()
+                    $('#reviewModal').modal('show');
+                });
+
+                function productQualityCheck() {
+                    let rating = parseInt($('#ratingValue').val()),
+                        quality;
+                    if (rating === 1) {
+                        quality = 'Poor';
+                    } else if (rating === 2) {
+                        quality = 'Fair';
+                    } else if (rating === 3) {
+                        quality = 'Average';
+                    } else if (rating === 4) {
+                        quality = 'Good';
+                    } else if (rating === 5) {
+                        quality = 'Excellent';
                     }
+                    $('#tRating').text(rating);
+                    $('#pQuality').text(quality);
                 }
-            }
-        });
-        $('#nickName').keyup(function () {
-            let value = $(this).val();
-            $('#nickNameReq').text(value.length)
-            if (value.length > 10) {
-                $('#nickNameReq').parent('.requirBox').css('color', 'red')
-                $('#ratingSubmit').addClass('btn-secondary').addClass('disabled').removeClass('btn-primary')
-            } else {
-                if (value.length > 4) {
-                    $('#nickNameReq').parent('.requirBox').css('color', 'green')
-                }
-                if ($('.form-check-input').is(':checked')) {
-                    let value2 = $('#reviewTitle').val();
-                    let value3 = $('#ratingsReviews').val();
-                    if (value2.length < 50 && value3.length > 50) {
-                        $('#ratingSubmit').addClass('btn-primary').removeClass('disabled').removeClass('btn-secondary')
+
+                $('#ratingsReviews').keyup(function () {
+                    let value = $(this).val();
+                    $('#ratingsReviewsReq').text(value.length)
+                    if (value.length >= 50) {
+                        $('#ratingsReviewsReq').parent('.requirBox').css('color', 'green')
+                        if ($('.form-check-input').is(':checked')) {
+                            let value1 = $('#nickName').val();
+                            let value2 = $('#reviewTitle').val();
+                            if (value1.length < 10 && value2.length < 50) {
+                                $('#ratingSubmit').addClass('btn-primary').removeClass('disabled').removeClass('btn-secondary')
+                            }
+                        }
+                    } else {
+                        $('#ratingSubmit').addClass('btn-secondary').addClass('disabled').removeClass('btn-primary')
+                        $('#ratingsReviewsReq').parent('.requirBox').css('color', 'red')
                     }
-                }
-            }
-        });
-        $(".form-check-input").change(function () {
-            if ($(this).is(':checked')) {
-                let value1 = $('#nickName').val();
-                let value2 = $('#reviewTitle').val();
-                let value3 = $('#ratingsReviews').val();
-                if (value1.length < 10 && value2.length < 50 && value3.length > 50) {
-                    $('#ratingSubmit').addClass('btn-primary').removeClass('disabled').removeClass('btn-secondary')
-                }
-            } else {
-                $('#ratingSubmit').addClass('btn-secondary').addClass('disabled').removeClass('btn-primary')
-            }
-        });
-    </script>
-@endpush
+                });
+                $('#reviewTitle').keyup(function () {
+                    let value = $(this).val();
+                    $('#ratingTitleReq').text(value.length)
+                    if (value.length > 50) {
+                        $('#ratingTitleReq').parent('.requirBox').css('color', 'red')
+                        $('#ratingSubmit').addClass('btn-secondary').addClass('disabled').removeClass('btn-primary')
+                    } else {
+                        if (value.length > 10) {
+                            $('#ratingTitleReq').parent('.requirBox').css('color', 'green')
+                        }
+                        if ($('.form-check-input').is(':checked')) {
+                            let value1 = $('#nickName').val();
+                            let value3 = $('#ratingsReviews').val();
+                            if (value1.length < 10 && value3.length > 50) {
+                                $('#ratingSubmit').addClass('btn-primary').removeClass('disabled').removeClass('btn-secondary')
+                            }
+                        }
+                    }
+                });
+                $('#nickName').keyup(function () {
+                    let value = $(this).val();
+                    $('#nickNameReq').text(value.length)
+                    if (value.length > 10) {
+                        $('#nickNameReq').parent('.requirBox').css('color', 'red')
+                        $('#ratingSubmit').addClass('btn-secondary').addClass('disabled').removeClass('btn-primary')
+                    } else {
+                        if (value.length > 4) {
+                            $('#nickNameReq').parent('.requirBox').css('color', 'green')
+                        }
+                        if ($('.form-check-input').is(':checked')) {
+                            let value2 = $('#reviewTitle').val();
+                            let value3 = $('#ratingsReviews').val();
+                            if (value2.length < 50 && value3.length > 50) {
+                                $('#ratingSubmit').addClass('btn-primary').removeClass('disabled').removeClass('btn-secondary')
+                            }
+                        }
+                    }
+                });
+                $(".form-check-input").change(function () {
+                    if ($(this).is(':checked')) {
+                        let value1 = $('#nickName').val();
+                        let value2 = $('#reviewTitle').val();
+                        let value3 = $('#ratingsReviews').val();
+                        if (value1.length < 10 && value2.length < 50 && value3.length > 50) {
+                            $('#ratingSubmit').addClass('btn-primary').removeClass('disabled').removeClass('btn-secondary')
+                        }
+                    } else {
+                        $('#ratingSubmit').addClass('btn-secondary').addClass('disabled').removeClass('btn-primary')
+                    }
+                });
+
+                var navbar = document.getElementById("addCartModal");
+                var sticky = navbar.offsetBottom;
+                window.onscroll = function () {
+                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                        navbar.classList.add("sticky")
+                    } else {
+                        navbar.classList.remove("sticky");
+                    }
+                };
+
+            </script>
+    @endpush

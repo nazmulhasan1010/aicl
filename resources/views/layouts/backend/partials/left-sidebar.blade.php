@@ -84,6 +84,27 @@
                     </a>
                 </li>
                 <li>
+                    <a href="javascript: void(0);">
+                        <div class="icon-item">
+                            <i class="fa-solid fa-carrot"></i>
+                            <span>Product Attachment</span>
+                        </div>
+                        <span class="menu-arrow"></span>
+                    </a>
+
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('admin.specification.index')}}">Product Specification</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.cropsCat.index')}}">Product Specification</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('admin.disorder.index')}}">Return Policy</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
                     <a href="{{ route('admin.order.index')}}">
                         <div class="icon-item">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"

@@ -7,6 +7,7 @@ use App\Disorderproduct;
 use App\Product;
 use App\ProductVariant;
 use App\Ratings;
+use App\Specification;
 use Illuminate\Support\Facades\DB;
 
 function getProductCategory()
@@ -85,6 +86,7 @@ function getReview($id)
 {
     $ratings = Ratings::where('product_id', '=', $id)->sum('ratings.ratings');
     $allData = Ratings::where('product_id', '=', $id)->get();
+    $allDataSFive = Ratings::where('product_id', '=', $id)->take(5)->get();
     $fiveStar = Ratings::where('product_id', '=', $id)->where('ratings', '=', 5)->count();
     $fourStar = Ratings::where('product_id', '=', $id)->where('ratings', '=', 4)->count();
     $threeStar = Ratings::where('product_id', '=', $id)->where('ratings', '=', 3)->count();
@@ -98,8 +100,14 @@ function getReview($id)
         'threeStar' => $threeStar,
         'towStar' => $towStar,
         'oneStar' => $oneStar,
+        'allDataSFive'=>$allDataSFive
     ];
 }
+
+function getSpecificition($id)
+{
+    return Specification::where('product_id', '=', $id)->get();
+ }
 
 
 
