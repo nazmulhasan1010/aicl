@@ -104,8 +104,11 @@ Route::group(['middleware' => 'language'], function () {
     // Cart
     Route::post('/dis-product-add-cart', 'disProductCartController@add_to_cart')->name('dis-product-add-cart');
     Route::get('/dis-shopping-cart', 'disProductCartController@cart_item')->name('dis-shopping-cart');
+    Route::post('/dis-update-item', 'disProductCartController@update_item')->name('dis-update-item');
+    Route::post('disorder/product/dis-update-item', 'disProductCartController@update_item');
 });
 Route::post('admin/getProduct', 'getproductController@getProduct');
+Route::post('admin/disorder/{id}/getProduct', 'getproductController@getProduct');
 
 // admin
 Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'admin', 'middleware' => ['auth', 'admin']], function () {

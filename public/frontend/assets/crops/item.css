@@ -114,6 +114,17 @@
     font-size: 15px
 }
 
+.Symptoms {
+    margin: 0;
+    max-width: 100%;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1 !important;
+    color: #000;
+}
+
 .footer {
     margin-top: 20px;
     padding-top: 20px;
@@ -163,7 +174,6 @@
     padding-right: 5px;
     text-decoration: none;
     color: white;
-    font-weight: light;
 }
 
 .arrow2 i {
@@ -185,7 +195,6 @@
     color: #fff;
     padding: 10px;
     font-size: 14px;
-    font-weight: light;
     text-align: center;
     border-radius: 20px;
     width: 80%;
@@ -223,14 +232,19 @@
     z-index: 0;
     grid-template-columns: repeat(5, 1fr);
 }
-
+.products{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 40px 0;
+    align-items: center;
+    flex-wrap: wrap;
+}
 .product {
+    width: 290px;
     position: relative;
-    margin-right: 1rem;
-    margin-left: 1rem;
-    margin-bottom: 2rem;
-    margin-top: 4rem;
     padding: 8px;
+    margin-top: 20px;
 }
 
 .product-img {
@@ -252,7 +266,6 @@
     border-radius: 0 0 50px 0;
     background-color: rgb(238, 29, 6, 0.8);
     border: 1px solid rgb(8, 128, 241);
-    font-weight: light;
     position: absolute;
     top: -10px;
     z-index: 11;
@@ -283,7 +296,6 @@
 
 .seb input::placeholder {
     color: #000;
-    font-weight: light;
 }
 
 .seb button {

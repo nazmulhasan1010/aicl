@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="{{asset('frontend/assets/crops/item.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/crops/singleProduct.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/crops/style.css')}}">
+    <link rel="stylesheet" href="{{asset('frontend/assets/crops/responsive.css')}}">
 @endpush
 @push('page_css')
 
@@ -23,14 +24,13 @@
 
     <div class="container-fluid">
         <div class="row flex-row justify-content-start m-2 mt-5">
-
             @php
                 $cropsCat = getCropsData('','','all');
             @endphp
             @foreach($cropsCat as $categories)
-                <div class="col-3 hoverCircle">
+                <div class="col-md-2 col-6 col-sm-4 hoverCircle">
                     <a href="{{route('disorder',$categories->id)}}">
-                        <img src="{{asset('storage/cropcat/'.$categories->image)}}" alt="" class="img-fluid"><br>
+                        <img src="{{asset('storage/cropcat/'.$categories->image)}}" alt="" class="img-fluid" ><br>
                         <label>
                             <strong>
                                 @php

@@ -1,0 +1,104 @@
+/* ------------------------------1315px-------------------------- */
+@media screen and (max-width: 1315px) {
+    .hoverCircle img {
+        width: 180px;
+        height: 180px;
+    }
+}
+
+/* ------------------------------1220px-------------------------- */
+@media screen and (max-width: 1220px) {
+    .hoverCircle img {
+        width: 160px;
+        height: 160px;
+    }
+}
+
+/* ------------------------------1130px-------------------------- */
+@media screen and (max-width: 1130px) {
+    .hoverCircle img {
+        width: 140px;
+        height: 140px;
+    }
+}
+
+/* ------------------------------1040px-------------------------- */
+@media screen and (max-width: 1040px) {
+    .hoverCircle img {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+/* ------------------------------980px-------------------------- */
+@media screen and (max-width: 980px) {
+
+}
+
+/* ------------------------------920px-------------------------- */
+@media screen and (max-width: 920px) {
+    .hoverCircle img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/* ------------------------------768px-------------------------- */
+@media screen and (max-width: 768px) {
+    .hoverCircle img {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+/* ------------------------------700px-------------------------- */
+@media screen and (max-width: 70px) {
+    .hoverCircle img {
+        width: 160px;
+        height: 160px;
+    }
+}
+
+/* ------------------------------662px-------------------------- */
+@media screen and (max-width: 662px) {
+    .hoverCircle img {
+        width: 140px;
+        height: 140px;
+    }
+}
+
+/* ------------------------------575px-------------------------- */
+@media screen and (max-width: 575px) {
+
+}
+
+/* ------------------------------542px-------------------------- */
+@media screen and (max-width: 542px) {
+
+
+}
+
+/* ------------------------------500px-------------------------- */
+@media screen and (max-width: 500px) {
+
+}
+
+/* ------------------------------400px-------------------------- */
+@media screen and (max-width: 400px) {
+
+}
+
+/* ------------------------------370px-------------------------- */
+@media screen and (max-width: 370px) {
+
+}
+
+/* ------------------------------350px-------------------------- */
+@media screen and (max-width: 350px) {
+    .hoverCircle img {
+        width: 120px;
+        height: 120px;
+    }
+}
+
+/*# sourceMappingURL=responsive.css.map */

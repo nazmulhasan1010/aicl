@@ -73,10 +73,12 @@
         .borderTop:nth-child(n+2) {
             border-top: 1px solid rgba(51, 51, 51, 0.32);
         }
-        #cartModalClose{
+
+        #cartModalClose {
             color: rgba(51, 51, 51, 0.51);
         }
-        #cartModalClose:hover{
+
+        #cartModalClose:hover {
             color: #333;
         }
     </style>
@@ -302,8 +304,18 @@
                                     <h5 class="product-price">{{$smProduct->price.' BDT'}}</h5>
                                     <div class="addCardButtonModal"
                                          style="display:flex; width: 100%; justify-content: center">
-                                        <button class="btn btn-primary"
-                                                type="button"> @lang('messages.Add-to-cart')</button>
+                                        <form action="{{ route('dis-product-add-cart')}}" method="POST"
+                                              style="width: 100%">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{$smProduct->product_id  }}">
+                                            <input type="hidden" name="price" value="{{$smProduct->price}}"
+                                                   class="productPrice">
+                                            <input type="hidden" name="size" value="{{$smProduct->size_name}}"
+                                                   class="productSize">
+                                            <input type="hidden" name="qty" value="1" class="productQuantity">
+                                            <button type="submit"
+                                                    class="btn btn-primary">@lang('messages.Add-to-cart')</button>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -312,168 +324,73 @@
                 </div>
                 <h4>Top items in this department</h4>
                 <div class="row my-5 item-scroll g-4 owl-carousel owl-carousel-group owl-theme">
-                    <!-- 1st item-->
-                    <div class="col product-item  mx-auto">
-                        <div class="product-info p-3">
-                            <div class="img-size overflow-hidden">
-                                <img src="{{asset('frontend/assets/images/logo.webp')}}" alt="" class="img-fluid">
-                            </div>
+                    @php
+                        $similar_product = getProductDetailsAll();
+                    @endphp
+                    @foreach($similar_product as $smProduct)
+                        <div class="col product-item card d-flex" style=" justify-content: left; padding:0">
+                            <div class="product-info" style=" width: 100%">
+                                <div class="img-size " style=" width: 100%">
+                                    <a href="{{url('disorder/product/'.$smProduct->product_id)}}"
+                                       class="d-block text-dark text-decoration-none product-name">
+                                        <img src="{{asset('storage/product/'.$smProduct->image)}}" style=" width: 100%"
+                                             alt="">
+                                    </a>
+                                </div>
+                                <div class="p-2">
+                                    <strong>
+                                        @php
+                                            if (Session::get('locale')==='bn'){
+                                                echo $smProduct->product_name_bn;
+                                            }else{
+                                                echo $smProduct->product_name;
+                                            }
+                                        @endphp
+                                    </strong>
+                                    @php
+                                        $productsRatings = getReview($smProduct->product_id);
+                                        $totalProRating = count($productsRatings['allData']);
 
-                            <a href="#" class="d-block text-dark text-decoration-none py-2 product-name"><span>Laptop L410, Intel Pentium Silver N5030 Processor, 14” FHD Display,</span></a>
-                            <div class="rating d-flex mt-1">
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span> (23)</span>
+                                        $proRating = 0;
+                                        if ($totalProRating>0){
+                                            $proRating = round($productsRatings['ratings']/$totalProRating,1);
+                                        }
+                                    @endphp
+                                    <p class="card-text detail">{{$smProduct->composition}}</p>
+                                    <div class="rating d-flex">
+                                         <span
+                                             class="fa {{$proRating>0&&$proRating<1?'fa-star-half-o checked':''}} {{$proRating>=1?'fa-star checked':'fa-star'}}  "></span>
+                                        <span
+                                            class="fa {{$proRating>1&&$proRating<2?'fa-star-half-o checked':''}} {{$proRating>=2?'fa-star checked':'fa-star'}} "></span>
+                                        <span
+                                            class="fa {{$proRating>2&&$proRating<3?'fa-star-half-o checked':''}} {{$proRating>=3?'fa-star checked':'fa-star'}}"></span>
+                                        <span
+                                            class="fa {{$proRating>3&&$proRating<4?'fa-star-half-o checked':''}} {{$proRating>=4?'fa-star checked':'fa-star'}}"></span>
+                                        <span
+                                            class="fa {{$proRating>4&&$proRating<5?'fa-star-half-o checked':'fa-star'}} {{$proRating>=5?'fa-star checked':'fa-star'}}"></span>
+                                        <span> ({{$totalProRating}})</span>
+                                    </div>
+                                    <p>{{$smProduct->size_name}}</p>
+                                    <h5 class="product-price">{{$smProduct->price.' BDT'}}</h5>
+                                    <div class="addCardButtonModal"
+                                         style="display:flex; width: 100%; justify-content: center">
+                                        <form action="{{ route('dis-product-add-cart')}}" method="POST"
+                                              style="width: 100%">
+                                            @csrf
+                                            <input type="hidden" name="product_id" value="{{$smProduct->product_id  }}">
+                                            <input type="hidden" name="price" value="{{$smProduct->price}}"
+                                                   class="productPrice">
+                                            <input type="hidden" name="size" value="{{$smProduct->size_name}}"
+                                                   class="productSize">
+                                            <input type="hidden" name="qty" value="1" class="productQuantity">
+                                            <button type="submit"
+                                                    class="btn btn-primary">@lang('messages.Add-to-cart')</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
-
-                            <h5 class="product-price">$230.50</h5>
-                            <p>Almost sold out</p>
-                            <button class="atc justify-content-center" type="button"> Add to cart</button>
                         </div>
-
-                    </div>
-                    <!-- 2nd product-->
-                    <div class="col product-item  mx-auto">
-                        <div class="product-info p-3">
-                            <div class="img-size overflow-hidden">
-                                <img src="img/product2.jpeg" alt="" class="img-fluid">
-                            </div>
-
-                            <a href="#" class="d-block text-dark text-decoration-none py-2 product-name"><span>Laptop L410, Intel Pentium Silver N5030 Processor, 14” FHD Display,</span></a>
-                            <div class="rating d-flex mt-1">
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span> (23)</span>
-                            </div>
-                            <h5 class="product-price">$120.50</h5>
-                            <p>Almost sold out</p>
-                            <button class="atc justify-content-center" type="button"> Add to cart</button>
-                        </div>
-
-                    </div>
-                    <!-- 3rd item -->
-                    <div class="col product-item  mx-auto">
-                        <div class="product-info p-3">
-                            <div class="img-size overflow-hidden">
-                                <img src="img/product1.jpeg" alt="" class="img-fluid">
-                            </div>
-
-                            <a href="#" class="d-block text-dark text-decoration-none py-2 product-name"><span>Laptop L410, Intel Pentium Silver N5030 Processor, 14” FHD Display,</span></a>
-                            <div class="rating d-flex mt-1">
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span> (23)</span>
-                            </div>
-                            <h5 class="product-price">$350.50</h5>
-                            <p>Almost sold out</p>
-                            <button class="atc justify-content-center" type="button"> Add to cart</button>
-                        </div>
-
-                    </div>
-                    <!--4th item-->
-                    <div class="col product-item  mx-auto">
-                        <div class="product-info p-3">
-                            <div class="img-size overflow-hidden">
-                                <img src="img/product4.jpeg" alt="" class="img-fluid">
-                            </div>
-
-                            <a href="#" class="d-block text-dark text-decoration-none py-2 product-name"><span>Laptop L410, Intel Pentium Silver N5030 Processor, 14” FHD Display,</span></a>
-                            <div class="rating d-flex mt-1">
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span> (23)</span>
-                            </div>
-                            <h5 class="product-price">$205.50</h5>
-                            <p>Almost sold out</p>
-                            <button class="atc justify-content-center" type="button"> Add to cart</button>
-                        </div>
-
-                    </div>
-                    <!-- 5th item-->
-                    <div class="col product-item  mx-auto">
-                        <div class="product-info p-3">
-                            <div class="img-size overflow-hidden">
-                                <img src="img/product5.jpeg" alt="" class="img-fluid">
-                            </div>
-
-                            <a href="#" class="d-block text-dark text-decoration-none py-2 product-name"><span>Laptop L410, Intel Pentium Silver N5030 Processor, 14” FHD Display,</span></a>
-                            <div class="rating d-flex mt-1">
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span>
-                                    <i class="fa fa-star"></i>
-                                </span>
-                                <span> (23)</span>
-                            </div>
-                            <h5 class="product-price">$400.50</h5>
-                            <p>Almost sold out</p>
-                            <button class="atc justify-content-center" type="button"> Add to cart</button>
-                        </div>
-
-                    </div>
-
+                    @endforeach
                 </div>
 
                 <!-- Specifications-->
@@ -709,8 +626,9 @@
                         </h2>
                         <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse"
                              aria-labelledby="panelsStayOpen-headingFour">
-                            <div class="accordion-body">
+                            <div class="accordion-body d-flex justify-content-between align-items-center">
                                 <strong>Questions</strong>
+                                <button class="btn btn-primary" type="button" id="addQuestion">Ask a question</button>
                             </div>
                         </div>
                     </div>
@@ -723,6 +641,38 @@
                 <a href="#addCartModal" type="button" class="buton4">@lang('messages.Add-to-cart')</a>
             </div>
         </div>
+
+        <!-- Question Modal -->
+        <div class="modal fade" id="questionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                        <button type="button" class="close" id="questionModalClose">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Recipient:</label>
+                                <input type="text" class="form-control" id="recipient-name">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Message:</label>
+                                <textarea class="form-control" id="message-text"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Send message</button>
+                    </div>
+                </div>
+            </div>
+        </div><!-- Question Modal end -->
+
         <!-- Review Modal -->
         <div class="modal fade " id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
@@ -746,7 +696,7 @@
                                 <p class="card-text">{{$product[0]->composition}}</p>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="close" id="reviewModalClose">&times;</button>
                     </div>
                     <div class="modal-body">
                         <div class="row ">
@@ -819,164 +769,220 @@
                 </div>
             </div>
         </div>  <!-- Review Modal End -->
+
         <!-- Cart Modal  -->
-        <div class="modal fade " id="cartModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog ">
-                <div class="modal-content p-3">
-                    <div class="row " style="margin: 10px 0;">
-                        <div class="col-md-12 d-flex justify-content-between">
-                            <div class="message">
-                                <i class="fa-solid fa-circle-check" style="color: green"></i>
-                                @if (\Session::has('success'))
-                                    {{Session::get('success')}}
-                                @endif
-                            </div>
-                            <div class="cancel-button d-none" ><i class="fa-solid fa-xmark " id="cartModalClose"></i></div>
-                        </div>
+                <div class="modal-content p-2">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><i class="fa-solid fa-circle-check"
+                                                                          style="color: green"></i>
+                            @if (\Session::has('success'))
+                                {{Session::get('success')}}
+                            @endif</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body">
-                        <div class="row ">
-                            <div class="card-body">
-                                <h4 class="card-title">
-                                    @php
-                                        if (Session::get('locale')==='bn'){
-                                            echo $product[0]->product_name_bn;
-                                        }else{
-                                            echo $product[0]->product_name;
-                                        }
-                                    @endphp
-                                </h4>
-                                <p class="card-text">{{$product[0]->composition}}</p>
-                                @php
-                                    $review = getReview($product[0]->product_id);
-                                       $totalRating = count($review['allData']);
-                                       $rating = 0;
-                                       if ($totalRating>0){
-                                            $rating = round($review['ratings']/$totalRating,1);
-                                       }
-                                @endphp
-                                <span
-                                    class="fa {{$rating>0&&$rating<1?'fa-star-half-o checked':''}} {{$rating>=1?'fa-star checked':'fa-star'}}  "></span>
-                                <span
-                                    class="fa {{$rating>1&&$rating<2?'fa-star-half-o checked':''}} {{$rating>=2?'fa-star checked':'fa-star'}} "></span>
-                                <span
-                                    class="fa {{$rating>2&&$rating<3?'fa-star-half-o checked':''}} {{$rating>=3?'fa-star checked':'fa-star'}}"></span>
-                                <span
-                                    class="fa {{$rating>3&&$rating<4?'fa-star-half-o checked':''}} {{$rating>=4?'fa-star checked':'fa-star'}}"></span>
-                                <span
-                                    class="fa {{$rating>4&&$rating<5?'fa-star-half-o checked':'fa-star'}} {{$rating>=5?'fa-star checked':'fa-star'}}"></span>
-                                <span>{{$rating}}</span>
-                                <p>
-                                    <span style="font-size:24px;">
-                                        {{$product[0]->size_name.' - '.$product[0]->price.' BDT'}}
-                                     </span>
-                                </p>
-                                <div class="d-flex justify-content-between">
-                                    <div class="left">
-                                        <h6>Quantity:</h6>
-                                        <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button type="button" class="buton1 QuantityInDe" data-inst="de">-</button>
-                                            <h5 id="quantity"> 1 </h5>
-                                            <button type="button" class="buton2 QuantityInDe" data-inst="in">+</button>
-                                            <form action="{{ route('add-to-cart')}}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="product_id"
-                                                       value="{{$product[0]->product_id  }}">
-                                                <input type="hidden" name="price" value="{{ $product[0]->price}}"
-                                                       class="productPrice">
-                                                <input type="hidden" name="price" value="{{ $product[0]->price}}"
-                                                       class="productActualPrice">
-                                                <input type="hidden" name="size" value="{{$product[0]->size_name}}"
-                                                       class="productSize">
-                                                <input type="hidden" name="qty" value="1" class="productQuantity">
-                                            </form>
+                        @if (\Session::has('data'))
+                            @php
+                                $addProductData = Session::get('data');
+                            @endphp
+                            <div class="modal-body">
+                                <div class="card-body">
+                                    <div class="row ">
+                                        <div class="col-md-2">
+                                            <img src="{{asset('storage/product/'.$addProductData[0]->image)}}"
+                                                 style="width: 100%" alt="">
                                         </div>
-                                        <br/>
-                                        <div id="ot-info">
-                                            <br/>
-                                            <h6><i class="fa-solid fa-bahai"></i> Sold & shipped by
-                                                <img src="{{asset('frontend/assets/images/logo.webp')}}"
-                                                     style="height: 30px;">
-                                            </h6>
+                                        <div class="col-md-6">
+                                            <h4 class="card-title">
+                                                @php
+                                                    if (Session::get('locale')==='bn'){
+                                                        echo $addProductData[0]->product_name_bn;
+                                                    }else{
+                                                        echo $addProductData[0]->product_name;
+                                                    }
+                                                @endphp
+                                            </h4>
+                                            <p class="card-text">{{$addProductData[0]->composition}}</p>
+                                            @php
+                                                $review = getReview($addProductData[0]->product_id);
+                                                   $totalRating = count($review['allData']);
+                                                   $rating = 0;
+                                                   if ($totalRating>0){
+                                                        $rating = round($review['ratings']/$totalRating,1);
+                                                   }
+                                            @endphp
+                                            <span
+                                                class="fa {{$rating>0&&$rating<1?'fa-star-half-o checked':''}} {{$rating>=1?'fa-star checked':'fa-star'}}  "></span>
+                                            <span
+                                                class="fa {{$rating>1&&$rating<2?'fa-star-half-o checked':''}} {{$rating>=2?'fa-star checked':'fa-star'}} "></span>
+                                            <span
+                                                class="fa {{$rating>2&&$rating<3?'fa-star-half-o checked':''}} {{$rating>=3?'fa-star checked':'fa-star'}}"></span>
+                                            <span
+                                                class="fa {{$rating>3&&$rating<4?'fa-star-half-o checked':''}} {{$rating>=4?'fa-star checked':'fa-star'}}"></span>
+                                            <span
+                                                class="fa {{$rating>4&&$rating<5?'fa-star-half-o checked':'fa-star'}} {{$rating>=5?'fa-star checked':'fa-star'}}"></span>
+                                            <span>{{$rating}}</span>
+                                            <p>
+                                                <span style="font-size:24px;">
+                                                     {{$addProductData[0]->size_name.' - '.$addProductData[0]->price.' BDT'}}
+                                                </span>
+                                            </p>
                                         </div>
-                                    </div>
-                                    <div class="right">
-                                        <div class="card p-3">
-                                            <div class="d-flex">
-                                                <span>Subtotal:</span>
-                                                <div class="productPriceShow  "
-                                                     style="display: flex; align-items: center; padding: 0 0 0 50px; float: right"> {{ $product[0]->price}}
-                                                </div>
-                                                <span> BDT</span>
-                                            </div>
-                                            <p></p>
-                                            <a href="{{route('dis-shopping-cart')}}" class="btn btn-primary" style="border-radius: 20px; margin-bottom: 10px">Chackout</a>
-                                            <button type="button" style="border-radius: 20px" class="btn btn-outline-secondary">Continue Shopping</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <h4 class="">Recomanded for you</h4>
-                                <div class="row item-scroll owl-carousel  owl-theme" id="recomandedProduct">
-                                    @php
-                                        $similar_product = getProductDetailsByCat($product[0]->category_id);
-                                    @endphp
-                                    @foreach($similar_product as $smProduct)
-                                        <div class="col product-item card " style=" padding:0">
-                                            <div class="product-info d-flex" style=" width: 100%">
-                                                <div class="" style=" width: 30%; display :flex;
-                                                justify-content: center;padding: 5px">
-                                                    <a href="{{url('disorder/product/'.$smProduct->product_id)}}">
-                                                        <img src="{{asset('storage/product/'.$smProduct->image)}}"
-                                                             style="  max-height: none; position: static; "
-                                                             alt="">
-                                                    </a>
-                                                </div>
-                                                <div style="width:70%; padding: 5px">
-                                                    <strong>
-                                                        @php
-                                                            if (Session::get('locale')==='bn'){
-                                                                echo $smProduct->product_name_bn;
-                                                            }else{
-                                                                echo $smProduct->product_name;
-                                                            }
-                                                        @endphp
-                                                    </strong>
-                                                    @php
-                                                        $productsRatings = getReview($smProduct->product_id);
-                                                        $totalProRating = count($productsRatings['allData']);
+                                        @php
+                                            $cart_items = Cart::getContent();
+                                        @endphp
+                                        <div class="col-md-4">
+                                            <div class="right">
+                                                <div class="card p-2">
+                                                    <div class="d-flex">
+                                                        <span>Subtotal:</span>
+                                                        @foreach($cart_items as $cart_item)
+                                                            @if($cart_item->id == Session::get('id'))
 
-                                                        $proRating = 0;
-                                                        if ($totalProRating>0){
-                                                            $proRating = round($productsRatings['ratings']/$totalProRating,1);
-                                                        }
-                                                    @endphp
-                                                    <p class="card-text detail">{{$smProduct->composition}}</p>
-                                                    <div class="rating d-flex">
+                                                                <div class="productPriceShow  "
+                                                                     style="display: flex; align-items: center; padding: 0 0 0 10px; float: right"> {{ $cart_item->price * $cart_item->quantity}}
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+
+                                                        <span> BDT</span>
+                                                    </div>
+                                                    <p></p>
+                                                    <a href="{{route('dis-shopping-cart')}}" class="btn btn-primary"
+                                                       style="border-radius: 20px; margin-bottom: 10px">Chackout</a>
+                                                    <button type="button" onclick="history.back()"
+                                                            style="border-radius: 20px"
+                                                            class="btn btn-outline-secondary">Continue
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="left">
+                                                    <h6>Quantity:</h6>
+                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                        <div class="countable d-flex">
+                                                            <button type="button" class="buton1 QuantityInDeModal"
+                                                                    data-inst="de">-
+                                                            </button>
+                                                            @foreach($cart_items as $cart_item)
+                                                                @if($cart_item->id == Session::get('id'))
+                                                                    <h5 class="quantity">
+                                                                        {{$cart_item->quantity}}
+                                                                    </h5>
+                                                                    <input type="hidden" class="finalQuantityEditPrice"
+                                                                           value="{{$cart_item->price}}">
+                                                                    <input type="hidden" class="finalQuantityEditId"
+                                                                           value="{{$cart_item->id}}">
+                                                                @endif
+                                                            @endforeach
+
+                                                            <button type="button" class="buton2 QuantityInDeModal"
+                                                                    data-inst="in">+
+                                                            </button>
+                                                            <input type="hidden" class="finalQuantityEdit" value="">
+
+                                                        </div>
+                                                        <form action="{{ route('add-to-cart')}}" method="POST">
+                                                            @csrf
+                                                            <input type="hidden" name="product_id"
+                                                                   value="{{$addProductData[0]->product_id  }}">
+                                                            <input type="hidden" name="price"
+                                                                   value="{{ $addProductData[0]->price}}"
+                                                                   class="productPrice">
+                                                            <input type="hidden" name="price"
+                                                                   value="{{ $addProductData[0]->price}}"
+                                                                   class="productActualPrice">
+                                                            <input type="hidden" name="size"
+                                                                   value="{{$addProductData[0]->size_name}}"
+                                                                   class="productSize">
+                                                            <input type="hidden" name="qty" value="1"
+                                                                   class="productQuantity">
+                                                        </form>
+                                                    </div>
+                                                    <br/>
+                                                    <div id="ot-info">
+                                                        <br/>
+                                                        <h6><i class="fa-solid fa-bahai"></i> Sold & shipped by
+                                                            <img src="{{asset('frontend/assets/images/logo.webp')}}"
+                                                                 style="height: 30px;">
+                                                        </h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h4 class="">Recomanded for you</h4>
+                                        <div class="row item-scroll owl-carousel  owl-theme" id="recomandedProduct">
+                                            @php
+                                                $similar_product = getProductDetailsByCat($product[0]->category_id);
+                                            @endphp
+                                            @foreach($similar_product as $smProduct)
+                                                <div class="col product-item card " style=" padding:0">
+                                                    <div class="product-info d-flex" style=" width: 100%">
+                                                        <div class="" style=" width: 30%; display :flex;
+                                                justify-content: center;padding: 5px">
+                                                            <a href="{{url('disorder/product/'.$smProduct->product_id)}}">
+                                                                <img
+                                                                    src="{{asset('storage/product/'.$smProduct->image)}}"
+                                                                    style="  max-height: none; position: static; "
+                                                                    alt="">
+                                                            </a>
+                                                        </div>
+                                                        <div style="width:70%; padding: 5px">
+                                                            <strong>
+                                                                @php
+                                                                    if (Session::get('locale')==='bn'){
+                                                                        echo $smProduct->product_name_bn;
+                                                                    }else{
+                                                                        echo $smProduct->product_name;
+                                                                    }
+                                                                @endphp
+                                                            </strong>
+                                                            @php
+                                                                $productsRatings = getReview($smProduct->product_id);
+                                                                $totalProRating = count($productsRatings['allData']);
+
+                                                                $proRating = 0;
+                                                                if ($totalProRating>0){
+                                                                    $proRating = round($productsRatings['ratings']/$totalProRating,1);
+                                                                }
+                                                            @endphp
+                                                            <p class="card-text detail">{{$smProduct->composition}}</p>
+                                                            <div class="rating d-flex">
                                          <span
                                              class="fa {{$proRating>0&&$proRating<1?'fa-star-half-o checked':''}} {{$proRating>=1?'fa-star checked':'fa-star'}}  "></span>
-                                                        <span
-                                                            class="fa {{$proRating>1&&$proRating<2?'fa-star-half-o checked':''}} {{$proRating>=2?'fa-star checked':'fa-star'}} "></span>
-                                                        <span
-                                                            class="fa {{$proRating>2&&$proRating<3?'fa-star-half-o checked':''}} {{$proRating>=3?'fa-star checked':'fa-star'}}"></span>
-                                                        <span
-                                                            class="fa {{$proRating>3&&$proRating<4?'fa-star-half-o checked':''}} {{$proRating>=4?'fa-star checked':'fa-star'}}"></span>
-                                                        <span
-                                                            class="fa {{$proRating>4&&$proRating<5?'fa-star-half-o checked':'fa-star'}} {{$proRating>=5?'fa-star checked':'fa-star'}}"></span>
-                                                        <span> ({{$totalProRating}})</span>
+                                                                <span
+                                                                    class="fa {{$proRating>1&&$proRating<2?'fa-star-half-o checked':''}} {{$proRating>=2?'fa-star checked':'fa-star'}} "></span>
+                                                                <span
+                                                                    class="fa {{$proRating>2&&$proRating<3?'fa-star-half-o checked':''}} {{$proRating>=3?'fa-star checked':'fa-star'}}"></span>
+                                                                <span
+                                                                    class="fa {{$proRating>3&&$proRating<4?'fa-star-half-o checked':''}} {{$proRating>=4?'fa-star checked':'fa-star'}}"></span>
+                                                                <span
+                                                                    class="fa {{$proRating>4&&$proRating<5?'fa-star-half-o checked':'fa-star'}} {{$proRating>=5?'fa-star checked':'fa-star'}}"></span>
+                                                                <span> ({{$totalProRating}})</span>
+                                                            </div>
+                                                            <p>{{$smProduct->size_name}}</p>
+                                                            <h5 class="product-price">{{$smProduct->price.' BDT'}}</h5>
+                                                        </div>
                                                     </div>
-                                                    <p>{{$smProduct->size_name}}</p>
-                                                    <h5 class="product-price">{{$smProduct->price.' BDT'}}</h5>
                                                 </div>
-                                            </div>
+                                            @endforeach
                                         </div>
-                                    @endforeach
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                     </div>
                 </div>
             </div>  <!-- Cart Modal End -->
+
         </div>
         @endsection
         @push('vendor_js')
@@ -996,13 +1002,18 @@
             <script type="text/javascript">
                 @if (\Session::has('success'))
                 showModalCart('show')
-                @endif
+
+                $("#cartModalClose").click(function () {
+                    $('#cartModal').modal('hide');
+                });
 
                 function showModalCart(sta) {
-                    $('#cartModal').modal(sta);
+                    $('#cartModal').modal('show');
                 }
-                $("#cartModalClose").on('click', function(){
-                    $('#cartModal').modal('hide');
+
+                @endif
+                $("#reviewModalClose").click(function () {
+                    $('#reviewModal').modal('hide');
                 });
 
                 function zoom(e) {
@@ -1169,5 +1180,59 @@
                     }
                 };
 
+                $('.QuantityInDeModal').click(function () {
+                    let inst = $(this).data('inst'),
+                        quantityField = $(this).parent('.countable').children('.quantity'),
+                        quantityInputField = $(this).parent('.countable').children('.finalQuantityEdit'),
+                        quantityId = $(this).parent('.countable').children('.finalQuantityEditId'),
+                        productTotal = $(this).parent('.countable').next('.remove-price').children('.price').children('.productTotal'),
+                        thisPrice = $('.finalQuantityEditPrice').val(),
+                        quantity = parseInt(quantityField.text());
+                    if (inst === 'in') {
+                        quantity++
+                        quantityField.text(quantity);
+                        $('.productPriceShow').text(quantity * thisPrice);
+                        quantityInputField.val(quantity);
+                        cartQuantityUpdate(quantity, quantityId.val(), productTotal);
+                    } else if (inst === 'de') {
+                        if (quantity > 1) {
+                            quantity--
+                            quantityField.text(quantity);
+                            $('.productPriceShow').text(quantity * thisPrice);
+                            quantityInputField.val(quantity);
+                            cartQuantityUpdate(quantity, quantityId.val(), productTotal);
+                        } else {
+                            alert('Minimum quantity')
+                        }
+                    }
+                });
+
+                // cart quantity upadate
+                function cartQuantityUpdate(quantity, id, pTotal) {
+                    axios.post('dis-update-item', {
+                        id: id,
+                        quantity: quantity
+                    }).then(function (response) {
+                        if (response.status === 200) {
+                            $('#sub_total_').text(response.data.total);
+                            $('#subTotal').val(response.data.total);
+                            $.each(response.data.all, function (i, item) {
+                                if (item.id === id) {
+                                    pTotal.text(item.quantity * item.price);
+                                }
+                            });
+                        }
+                    }).catch(function (error) {
+
+                    })
+                }
+
+                // question
+                $('#addQuestion').click(function () {
+                    $('#questionModal').modal('show');
+                });
+                $('#questionModalClose').click(function () {
+                    $('#questionModal').modal('hide');
+                });
             </script>
     @endpush

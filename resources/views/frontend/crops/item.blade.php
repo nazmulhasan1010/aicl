@@ -14,13 +14,12 @@
     <div class="container-fluid">
         <div class="row item-main-row">
             <div class="col-12 ">
-                <div class="row g-5 prod-list-div">
+                <div class="row products ">
                     @foreach($disorder as $disorders)
-                        <div class="product">
-                            {{--                            <div class="offer">offer show</div>--}}
+                        <div class="product card">
                             <div class="img-product">
                                 <img class="product-img" src="{{asset('storage/disorder/'.$disorders->image)}}"
-                                     class="img-fluid">
+                                     class="img-fluid" style="width: 95%; height: 50%">
                             </div>
                             <div class="info-div">
                                 <label for="check" class="details">
@@ -34,7 +33,7 @@
                                             }
                                     @endphp
                                     <h5>{{$name}}</h5>
-                                    <strong><u>Symptoms</u></strong><span> : {{$symptoms}}</span>
+                                  <strong ><u>Symptoms </u>: </strong><span class="Symptoms">  {{$symptoms}}</span>
                                 </label>
                             </div>
 
