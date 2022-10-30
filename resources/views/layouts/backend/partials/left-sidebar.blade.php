@@ -87,17 +87,17 @@
                     <a href="javascript: void(0);">
                         <div class="icon-item">
                             <i class="fa-solid fa-carrot"></i>
-                            <span>Product Attachment</span>
+                            <span>Attachment</span>
                         </div>
                         <span class="menu-arrow"></span>
                     </a>
 
                     <ul class="nav-second-level" aria-expanded="false">
                         <li>
-                            <a href="{{ route('admin.specification.index')}}">Product Specification</a>
+                            <a href="{{ route('admin.specification.index')}}">Specification</a>
                         </li>
                         <li>
-                            <a href="{{ route('admin.cropsCat.index')}}">Product Specification</a>
+                            <a href="{{ route('admin.image.index')}}">Product Image</a>
                         </li>
                         <li>
                             <a href="{{ route('admin.disorder.index')}}">Return Policy</a>

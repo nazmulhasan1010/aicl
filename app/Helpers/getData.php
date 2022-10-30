@@ -117,6 +117,10 @@ function getSpecificition($id)
 {
     return Specification::where('product_id', '=', $id)->get();
 }
+function getSpecificitionId($id)
+{
+    return Specification::where('id', '=', $id)->get();
+}
 
 function disorderDetailsById($id)
 {

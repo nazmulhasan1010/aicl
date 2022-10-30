@@ -1,5 +1,5 @@
 @extends('layouts.backend.app')
-@section('title','Product')
+@section('title','Specification')
 @push('vendor_css')
     <!-- plugin css -->
     <link href="{{ asset('backend/assets/libs/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet"
@@ -97,7 +97,7 @@
                                     @endphp</td>
                                     <td>{!! Str::limit(strip_tags($specification->specification), 50) !!}</td>
                                     <td style="text-align: center">
-                                        <a href="{{ route('admin.specification.show',$specification->id)}}"
+                                        <a href="{{ route('admin.specification.show',$specification->product_id)}}"
                                            class="btn btn-info btn-sm">
                                             <div class="icon-item">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"

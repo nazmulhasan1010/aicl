@@ -47,7 +47,7 @@ class specificationController extends Controller
         $specification->specification = $request->composition;
         $specification->save();
 
-        Toastr::success('Specification Successfully Added','Success');
+        Toastr::success('Specification Successfully Added', 'Success');
         return redirect()->back();
     }
 
@@ -56,11 +56,13 @@ class specificationController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function show($id)
     {
-        //
+        $product = getProductById($id);
+        $spe = getSpecificition($id);
+        return view('backend.productAttachments.specificationshow',compact('product','spe'));
     }
 
     /**
@@ -71,7 +73,8 @@ class specificationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $spe = getSpecificitionId($id);
+        return view('backend.productAttachments.specificationEdit',compact('spe'));
     }
 
     /**
@@ -79,21 +82,33 @@ class specificationController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+//      return $request->id;
+        $this->validate($request, [
+            'id' => 'required'
+        ]);
+        $specification = Specification::find($request->id);
+        $specification->product_id = $request->products;
+        $specification->specification = $request->composition;
+        $specification->update();
+
+        Toastr::success('Specification Updated Successfully', 'Success');
+        return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($id)
+    public function destroy(Specification $specification)
     {
-        //
+        $specification->delete();
+        Toastr::success('Specification Deleted', 'Success');
+        return redirect()->back();
     }
 }

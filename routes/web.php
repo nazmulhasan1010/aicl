@@ -155,6 +155,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'admin', 'mi
     Route::resource('cropsCat', 'cropsController');
     Route::resource('disorder', 'disorderController');
     Route::resource('specification', 'specificationController');
+    Route::resource('image', 'productImageController');
 
 });
 
