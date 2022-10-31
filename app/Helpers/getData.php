@@ -4,6 +4,7 @@ use App\Category;
 use App\Cropscat;
 use App\Disorder;
 use App\Disorderproduct;
+use App\Images;
 use App\Product;
 use App\ProductVariant;
 use App\Ratings;
@@ -62,7 +63,7 @@ function getDisProduct($inst, $id)
         return Disorderproduct::where('id', '=', $id)->get();
     } elseif ($inst === 'disId') {
         return Disorderproduct::where('disorder_id', '=', $id)->get();
-    }else {
+    } else {
         return Disorderproduct::where('product_id', '=', $id)->where('disorder_id', '=', $inst)->get();
     }
 
@@ -117,6 +118,7 @@ function getSpecificition($id)
 {
     return Specification::where('product_id', '=', $id)->get();
 }
+
 function getSpecificitionId($id)
 {
     return Specification::where('id', '=', $id)->get();
@@ -143,8 +145,14 @@ function getProductWithDisId($id)
     return $productsArray;
 }
 
-function getDisExistProduct($disId){
+function getDisExistProduct($disId)
+{
     return Disorderproduct::select('disorderproducts.product_id')->where('disorder_id', '=', $disId)->get();
+}
+
+function getProductImageByProductId($id)
+{
+    return Images::where('product_id', '=', $id)->get();
 }
 
 

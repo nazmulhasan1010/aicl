@@ -1,5 +1,5 @@
 @extends('layouts.backend.app')
-@section('title','Product Image')
+@section('title','Product Images')
 @push('vendor_css')
     <!-- plugin css -->
     <link href="{{ asset('backend/assets/libs/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet"
@@ -11,6 +11,7 @@
     <link href="{{ asset('backend/assets/libs/datatables/select.bootstrap4.min.css')}}" rel="stylesheet"
           type="text/css"/>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/2a7bedc40f.js" crossorigin="anonymous"></script>
 @endpush
 @push('page_css')
     <style>
@@ -58,10 +59,49 @@
             border-collapse: collapse;
         }
 
-        .image-upload table tr, .image-upload table tr td, .image-upload table tr th {
+        table tr, table tr td, table tr th {
             border-top: 1px solid rgba(51, 51, 51, 0.34);
             border-bottom: 1px solid rgba(51, 51, 51, 0.34);
             padding: 5px;
+        }
+
+        .imageModal {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .attachImage {
+            height: 150px;
+            width: 140px;
+            border-radius: 4px;
+        }
+
+        .imageBox {
+            height: 150px;
+            width: 140px;
+            position: relative;
+            margin: 10px 5px;
+        }
+
+        .imageDelButton {
+            position: absolute;
+            right: 5px;
+            bottom: 5px;
+            display: none;
+            background-color: red;
+            padding: 5px 15px;
+            border: none;
+            outline: none;
+            color: #fff;
+            border-radius: 5px;
+        }
+
+        .imageBox:hover .attachImage {
+            opacity: .5;
+        }
+
+        .imageBox:hover .imageDelButton {
+            display: block;
         }
     </style>
 @endpush
@@ -92,13 +132,39 @@
                         <table id="basic-datatable" class="table dt-responsive nowrap">
                             <tbody>
                             @foreach ($product as $key=> $products)
+                                @php
+                                    $image =  getProductImageByProductId($products->id);
+                                @endphp
                                 <tr>
-                                    <td>{{ $products->product_name}}</td>
+                                    <td>
+                                        <h4>{{$products->product_name}}</h4>
+                                        <div class="imageModal">
+                                            @foreach($image as $images)
+                                                <div class="imageBox">
+                                                    <img class="attachImage"
+                                                         src="{{asset('storage/product/'.$images->image)}}" alt="">
+                                                    <button class=" imageDelButton"
+                                                            style="font-size:22px"
+                                                            type="button"
+                                                            onclick="deleteItem({{$images->id }})">
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </button>
+                                                    <form id="delete-form-{{$images->id }}"
+                                                          action="{{ route('admin.disorder.destroy',$images->id) }}"
+                                                          method="POST"
+                                                          style="display: none;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                    </form>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-                        <!--  Image Add -->
+                        <!--  Images Add -->
                         <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
                              aria-labelledby="addNewSpecification" id="addNewSpecification" aria-hidden="true">
                             <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -163,28 +229,7 @@
                                                     </tr>
                                                     </thead>
                                                     <input type="hidden" id="totalField" value="1">
-                                                    <tbody id="fileInputFields">
-                                                    <tr class="image-upload-modal">
-                                                        <td class="imageFileMain">
-                                                            <label for="imageFile1" class="btn btn-primary">Chose A
-                                                                image</label>
-                                                            <input type="file" class="imageFile" hidden
-                                                                   id="imageFile1">
-                                                        </td>
-                                                        <td class="imagePreViewMain">
-                                                            <img src="" alt="" style="height:40px"
-                                                                 class="imagePreview">
-                                                        </td>
-                                                        <td class="fileSize">Size</td>
-                                                        <td class="uploadStatus">Upload</td>
-                                                        <td>
-                                                            <button class="btn btn-primary upload">Upload</button>
-                                                        </td>
-                                                        <td>
-                                                            <button class="btn btn-danger cancel">Cancel</button>
-                                                        </td>
-                                                    </tr>
-                                                    </tbody>
+                                                    <tbody id="fileInputFields"></tbody>
                                                 </table>
                                                 <button type="button" id="addMore" class="btn btn-primary mt-3">Add
                                                     More
@@ -276,7 +321,6 @@
 
         // image preview
         $('.imageFile').change(function () {
-
             var previewField = $(this).parent('.imageFileMain').parent('.image-upload-modal').children('.imagePreViewMain').children('.imagePreview'),
                 file = $(this).prop('files')[0],
                 reader = new FileReader();
@@ -325,36 +369,44 @@
                 $(this).parent('td').parent('.image-upload-modal').remove();
             })
             $('.upload').click(function () {
-                var product_id = $("#disProducts").val(),
-                    file = $(this).parent('td').parent('.image-upload-modal').children('.imageFileMain').children('.imageFile');
-                console.log(file)
+                let product_id = $("#disProducts").val(),
+                    file = $(this).parent('td').parent('.image-upload-modal').children('.imageFileMain').children('.imageFile').prop('files')[0],
+                    uploadStatus = $(this).parent('td').parent('.image-upload-modal').children('.uploadStatus');
+                let data = new FormData();
+                data.append('file', file);
+                data.append('product_id', product_id);
+                fileUpload(data, uploadStatus)
             })
         });
         $('.cancel').click(function () {
             $(this).parent('td').parent('.image-upload-modal').remove();
         })
-        $('.upload').click(function () {
-            let product_id = $("#disProducts").val(),
-                file = $(this).parent('td').parent('.image-upload-modal').children('.imageFileMain').children('.imageFile').prop('files')[0],
-                uploadStatus = $(this).parent('td').parent('.image-upload-modal').children('.uploadStatus');
-            let data = new FormData();
-            data.append('file', file);
-            data.append('product_id', product_id);
-            fileUpload(data, uploadStatus)
-        })
+        // $('.upload').click(function () {
+        //     let product_id = $("#disProducts").val(),
+        //         file = $(this).parent('td').parent('.image-upload-modal').children('.imageFileMain').children('.imageFile').prop('files')[0],
+        //         uploadStatus = $(this).parent('td').parent('.image-upload-modal').children('.uploadStatus');
+        //     let data = new FormData();
+        //     data.append('file', file);
+        //     data.append('product_id', product_id);
+        //     fileUpload(data, uploadStatus)
+        // })
 
         function fileUpload(data, uploadStatus) {
-            let config = {
-                headers: {'content-type': 'multipart/form-data'},
+            console.log(data)
+            const config = {
+                headers: {'Content-Type': 'multipart/form-data'},
                 onUploadProgress: function (progressEvent) {
-                    let parsentage = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-                    let lodaed = (progressEvent.loaded) / (1028 * 1028);
-                    let totalsize = progressEvent.total / (1028 * 1028);
-                    let duesize = totalsize - lodaed;
-                    $('#persent').html('Uploaded :' + lodaed.toFixed(2) + 'mb' + ' ' + 'Due :' + duesize.toFixed(2) + 'mb' + ' ' + 'Total :' + totalsize.toFixed(2) + 'mb');
+                    let percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total).toFixed(2);
+                    uploadStatus.text(percentage + ' %');
                 }
             };
+            axios.post('imageUpload', data, config).then(function (response) {
+                if (response.data === 1) {
+                    uploadStatus.html('<p style="color:green">Uploaded</p>')
+                }
+            }).catch(function (error) {
+                console.log(error)
+            })
         }
     </script>
-
 @endpush

@@ -170,7 +170,7 @@ return [
          */
             // SEO
             Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
-            // Intervention Image
+            // Intervention Images
             Intervention\Image\ImageServiceProvider::class,
             // Shopping Cart
             Darryldecode\Cart\CartServiceProvider::class,
@@ -235,8 +235,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         // SEO
         'SEO' => Artesaos\SEOTools\Facades\SEOTools::class,
-        // Intervention Image
-        'Image' => Intervention\Image\Facades\Image::class,
+        // Intervention Images
+        'Images' => Intervention\Image\Facades\Image::class,
         // Shopping cart
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
 

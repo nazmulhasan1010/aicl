@@ -63,10 +63,10 @@ class HomeController extends Controller
    public function distribution_image()
    {
         // onpage seo
-        $this->on_page_seo('Distribution','Distribution Center Image');
+        $this->on_page_seo('Distribution','Distribution Center Images');
         return view('frontend.dept-distribution-image');
    }
-  
+
    // corporate-structure
    public function employee()
    {
