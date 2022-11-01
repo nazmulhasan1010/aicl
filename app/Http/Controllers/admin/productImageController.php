@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Images;
+use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -40,8 +41,9 @@ class productImageController extends Controller
      */
     public function store(Request $request)
     {
-        $image = $request->file('file');
-        if ($image) {
+        $images = $request->file('file');
+        $allImage = array();
+        foreach ($images as $image) {
             $currentDate = Carbon::now()->toDateString();
             $imageName = uniqid('', true) . '-' . $currentDate . '.' . $image->getClientOriginalExtension();
 
@@ -51,11 +53,10 @@ class productImageController extends Controller
             }
             $postImage = Image::make($image)->resize(190, 270)->stream();
             Storage::disk('public')->put('product/' . $imageName, $postImage);
+            $new_data = array('product_id' => $request->input('product_id'), 'image' => $imageName);
+            array_push($allImage, $new_data);
         }
-        $image = new Images();
-        $image->product_id = $request->input('product_id');
-        $image->image = $imageName;
-        $image->save();
+        Images::insert($allImage);
 
         return 1;
 
@@ -99,10 +100,13 @@ class productImageController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
-        //
+        Storage::delete('public/product/' . Images::where('id', '=', $id)->get()[0]->image);
+        Images::Find($id)->delete();
+        Toastr::success('Successfully Deleted', 'Success');
+        return redirect()->back();
     }
 }

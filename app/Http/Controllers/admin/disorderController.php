@@ -145,8 +145,6 @@ class disorderController extends Controller
      */
     public function update(Request $request,$id)
     {
-//       return $request->all();
-//        return $id;
         $this->validate($request, [
             'disorder_name_edit' => 'string|required|max:255',
             'crops' => 'numeric|required|max:255',

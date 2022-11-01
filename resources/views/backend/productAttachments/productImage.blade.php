@@ -61,9 +61,9 @@
 
         table tr, table tr td, table tr th {
             border-top: 1px solid rgba(51, 51, 51, 0.34);
-            border-bottom: 1px solid rgba(51, 51, 51, 0.34);
             padding: 5px;
         }
+
 
         .imageModal {
             display: flex;
@@ -102,6 +102,81 @@
 
         .imageBox:hover .imageDelButton {
             display: block;
+        }
+
+        .imagePreViewMain {
+            position: relative;
+        }
+
+        .image-upload-field, .image-upload {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .images {
+            height: 120px;
+            width: 125px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(51, 51, 51, 0.25);
+        }
+
+        .imagePreview {
+            height: 120px;
+            width: 125px;
+            border-radius: 5px;
+            z-index: 1;
+        }
+
+        .count-text {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            color: #333;
+            font-size: 17px;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.53);
+            padding: 1px 5px;
+            border-radius: 2px;
+            z-index: 5;
+        }
+
+        .progress-bar {
+            width: 100%;
+            background-color: rgba(51, 51, 51, 0.33);
+            position: relative;
+            display: none;
+        }
+
+        .percentage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .indicator-bar {
+            width: 50%;
+            height: 20px;
+            background-color: #249e14;
+        }
+
+        .success-message {
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #249e14;
+            color: #fff;
+            font-size: 18px;
+            display: none;
+        }
+
+        span {
+            margin-left: 10px;
         }
     </style>
 @endpush
@@ -150,7 +225,7 @@
                                                         <i class="fa-solid fa-trash-can"></i>
                                                     </button>
                                                     <form id="delete-form-{{$images->id }}"
-                                                          action="{{ route('admin.disorder.destroy',$images->id) }}"
+                                                          action="{{ route('admin.image.destroy',$images->id) }}"
                                                           method="POST"
                                                           style="display: none;">
                                                         @csrf
@@ -169,6 +244,13 @@
                              aria-labelledby="addNewSpecification" id="addNewSpecification" aria-hidden="true">
                             <div class="modal-dialog modal-lg modal-dialog-centered">
                                 <div class="modal-content">
+                                    <div class="progress-bar">
+                                        <div class="indicator-bar"></div>
+                                        <div class="percentage"></div>
+                                    </div>
+                                    <div class="success-message">
+                                        <i class="fa-solid fa-circle-check"></i><span>Photos successfully uploaded</span>
+                                    </div>
                                     <div class="modal-header">
                                         <h5 class="modal-title mt-0">Add New Images</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×
@@ -218,31 +300,32 @@
                                             <div class="col-md-12 image-upload">
                                                 <br>
                                                 <label>Image upload </label>
-                                                <table>
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Image</th>
-                                                        <th>Preview</th>
-                                                        <th>Size</th>
-                                                        <th>Upload</th>
-                                                        <th colspan="2" class="text-center">Action</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <input type="hidden" id="totalField" value="1">
-                                                    <tbody id="fileInputFields"></tbody>
-                                                </table>
-                                                <button type="button" id="addMore" class="btn btn-primary mt-3">Add
-                                                    More
-                                                </button>
+                                                <br>
+                                                <div class="image-upload-field">
+                                                    <div class="imagePreViewMain">
+                                                        <img src="{{asset('backend/fake-image.png')}}" alt=""
+                                                             class="imagePreview"
+                                                             id="imagePreview">
+                                                    </div>
+                                                    <br>
+                                                    <div id="size"></div>
+                                                </div>
+                                                <br>
+                                                <div class="image-upload">
+                                                    <label for="imageFile" class="btn btn-primary">Chose
+                                                        images</label>
+                                                    <input type="file" class="imageFile" hidden multiple
+                                                           id="imageFile">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group mt-3">
                                             <button type="button" data-dismiss="modal"
                                                     class=" btn btn-secondary waves-effect">Cancel
                                             </button>
-                                            <button type="submit"
+                                            <button type="button" id="upload"
                                                     class="btn btn-primary waves-effect waves-light mr-1 pull-right">
-                                                Save
+                                                Upload
                                             </button>
                                         </div>
                                     </div>
@@ -319,90 +402,66 @@
             }
         })
 
+
         // image preview
-        $('.imageFile').change(function () {
-            var previewField = $(this).parent('.imageFileMain').parent('.image-upload-modal').children('.imagePreViewMain').children('.imagePreview'),
-                file = $(this).prop('files')[0],
-                reader = new FileReader();
-            $(this).parent('.imageFileMain').parent('.image-upload-modal').children('.fileSize').text(((file.size) / (1024 * 1024)).toFixed(2) + ' MB');
+        $('#imageFile').change(function () {
+            var file = $(this).prop('files')[0],
+                files = $(this).prop('files'),
+                reader = new FileReader(),
+                len = files.length - 1;
+            if (files.length > 1) {
+                $('.images').remove();
+                $('.count-text').remove();
+                $('.imagePreViewMain').append('' +
+                    ' <div class="images"></div>' +
+                    ' <div class="count-text">+' + len + '</div>'
+                )
+                $('.imagePreview').css({
+                    'position': 'absolute',
+                    'top': '-10px',
+                    'left': '-10px',
+                });
+            }
+            for (var i = 0, j = 0; i < files.length; i++) {
+                j = files[i].size + j;
+                if (i === len) {
+                    let size = (j / (1024 * 1024)).toFixed(2);
+                    $('#size').html('<p>Total: ' + size + ' mb</p>')
+                    break
+                }
+            }
             reader.readAsDataURL(file);
             reader.onload = function (event) {
                 var source = event.target.result;
-                previewField.attr('src', source);
+                $('#imagePreview').attr('src', source);
             }
         })
-        $('#addMore').click(function () {
-            var id = parseInt($('#totalField').val()) + 1;
-            $('#totalField').val(id);
-            $('#fileInputFields').append(' ' +
-                '<tr class="image-upload-modal">' +
-                '<td class="imageFileMain">' +
-                '<label for="imageFile' + id + '" class="btn btn-primary">Chose Aimage</label>' +
-                '<input type="file" class="imageFile" hidden id="imageFile' + id + '">' +
-                '</td>' +
-                '<td class="imagePreViewMain">' +
-                '<img src="" alt="" style="height:40px" class="imagePreview">' +
-                '</td>' +
-                '<td class="fileSize">Size</td>' +
-                '<td class="uploadStatus">Upload</td>' +
-                '<td>' +
-                '<button class="btn btn-primary upload">Upload</button>' +
-                '</td>' +
-                '<td>' +
-                '<button class="btn btn-danger cancel">Cancel</button>' +
-                '</td>' +
-                '</tr>');
-
-            // image preview
-            $('.imageFile').change(function () {
-                var previewField = $(this).parent('.imageFileMain').parent('.image-upload-modal').children('.imagePreViewMain').children('.imagePreview'),
-                    file = $(this).prop('files')[0],
-                    reader = new FileReader();
-                $(this).parent('.imageFileMain').parent('.image-upload-modal').children('.fileSize').text(((file.size) / (1024 * 1024)).toFixed(2) + ' MB');
-                reader.readAsDataURL(file);
-                reader.onload = function (event) {
-                    var source = event.target.result;
-                    previewField.attr('src', source);
-                }
-            })
-            $('.cancel').click(function () {
-                $(this).parent('td').parent('.image-upload-modal').remove();
-            })
-            $('.upload').click(function () {
-                let product_id = $("#disProducts").val(),
-                    file = $(this).parent('td').parent('.image-upload-modal').children('.imageFileMain').children('.imageFile').prop('files')[0],
-                    uploadStatus = $(this).parent('td').parent('.image-upload-modal').children('.uploadStatus');
-                let data = new FormData();
-                data.append('file', file);
-                data.append('product_id', product_id);
-                fileUpload(data, uploadStatus)
-            })
-        });
-        $('.cancel').click(function () {
-            $(this).parent('td').parent('.image-upload-modal').remove();
+        $('#upload').click(function () {
+            let product_id = $("#disProducts").val(),
+                files = $('#imageFile').prop('files'),
+                uploadStatus = $(this);
+            let data = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                data.append('file[]', files[i]);
+            }
+            data.append('product_id', product_id);
+            fileUpload(data)
         })
-        // $('.upload').click(function () {
-        //     let product_id = $("#disProducts").val(),
-        //         file = $(this).parent('td').parent('.image-upload-modal').children('.imageFileMain').children('.imageFile').prop('files')[0],
-        //         uploadStatus = $(this).parent('td').parent('.image-upload-modal').children('.uploadStatus');
-        //     let data = new FormData();
-        //     data.append('file', file);
-        //     data.append('product_id', product_id);
-        //     fileUpload(data, uploadStatus)
-        // })
 
-        function fileUpload(data, uploadStatus) {
-            console.log(data)
+        function fileUpload(data) {
             const config = {
                 headers: {'Content-Type': 'multipart/form-data'},
                 onUploadProgress: function (progressEvent) {
                     let percentage = Math.round((progressEvent.loaded * 100) / progressEvent.total).toFixed(2);
-                    uploadStatus.text(percentage + ' %');
+                    $('.progress-bar').css('display', 'block');
+                    $('.indicator-bar').css('width', percentage + '%');
+                    $('.percentage').text(percentage + ' %');
                 }
             };
             axios.post('imageUpload', data, config).then(function (response) {
                 if (response.data === 1) {
-                    uploadStatus.html('<p style="color:green">Uploaded</p>')
+                    $('.success-message').css('display', 'block');
+                    $('.progress-bar').css('display', 'none');
                 }
             }).catch(function (error) {
                 console.log(error)

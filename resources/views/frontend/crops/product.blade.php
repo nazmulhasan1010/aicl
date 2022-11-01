@@ -81,6 +81,44 @@
         #cartModalClose:hover {
             color: #333;
         }
+
+        #gallery_pdp {
+
+        }
+
+        #gallery_pdp .owl-carousel {
+            transform: rotate(90deg);
+            width: 400px;
+            margin-top: 140px;
+            margin-left: -140px;
+        }
+
+        #gallery_pdp .item {
+            transform: rotate(-90deg);
+            margin: 0 10px;
+            height: 100px;
+            padding: 0 10px;
+        }
+
+        .item .bookImage {
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        #gallery_pdp .owl-carousel .owl-nav {
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            width: 100%;
+            top: calc(50% - 33px);
+        }
+
+        #gallery_pdp div.owl-carousel .owl-nav .owl-prev,
+        #gallery_pdp div.owl-carousel .owl-nav .owl-next {
+            font-size: 36px;
+            top: unset;
+            bottom: 15px;
+        }
     </style>
 @endpush
 @section('content')
@@ -96,21 +134,24 @@
                     <!-- Gallery -->
                     <div class="gallery_pdp_container">
                         <div id="gallery_pdp">
-                            <a href="">
-                                <img class="img-responsive"
-                                     src="{{asset('storage/product/'.$product[0]->image)}}" data-zoom-image=""
-                                     alt="{{$product[0]->product_name}}"/>
-                            </a>
-                            <a href="">
-                                <img class="img-responsive"
-                                     src="{{asset('storage/product/'.$product[0]->image)}}" data-zoom-image=""
-                                     alt="{{$product[0]->product_name}}"/>
-                            </a>
-                            <a href="">
-                                <img class="img-responsive"
-                                     src="{{asset('storage/product/'.$product[0]->image)}}" data-zoom-image=""
-                                     alt="{{$product[0]->product_name}}"/>
-                            </a>
+                            <div class="owl-carousel owl-theme" id="imageGallerySlide">
+                                <div class="item">
+                                    <img class="  img-responsive bookImage"
+                                         src="{{asset('storage/product/'.$product[0]->image)}}" data-zoom-image=""
+                                         alt="{{$product[0]->product_name}}"/>
+                                </div>
+                                <div class="item">
+                                    <img class="  img-responsive bookImage"
+                                         src="{{asset('storage/product/'.$product[0]->image)}}" data-zoom-image=""
+                                         alt="{{$product[0]->product_name}}"/>
+                                </div>
+                                <div class="item">
+                                    <img class="  img-responsive  bookImage"
+                                         src="{{asset('storage/product/'.$product[0]->image)}}" data-zoom-image=""
+                                         alt="{{$product[0]->product_name}}"/>
+                                </div>
+
+                            </div>
                         </div>
                         <!-- Up and down button for vertical carousel -->
                         <a href="#" id="ui-carousel-next" style="display: inline;"></a>
@@ -995,6 +1036,7 @@
 
             {{--    owl--}}
             <script src="{{asset('frontend/assets/crops/owl/owl.carousel.js')}}"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
             <script src="{{asset('frontend/assets/crops/js/main.js')}}"></script>
         @endpush
 
@@ -1233,6 +1275,21 @@
                 });
                 $('#questionModalClose').click(function () {
                     $('#questionModal').modal('hide');
+                });
+
+                $("#imageGallerySlide").owlCarousel({
+                    loop: true,
+                    responsiveClass: true,
+                    items: 4,
+                    mouseDrag: true,
+                    touchDrag: true,
+                    autoplay: true,
+                    margin: 3,
+                });
+
+                $('.item').click(function () {
+                    let link = $(this).children('.bookImage').attr();
+                    alert(link)
                 });
             </script>
     @endpush
