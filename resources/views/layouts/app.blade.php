@@ -38,10 +38,9 @@
         .nav-hover .nav-drop-item {
             display: none;
             position: absolute;
-            top: 45px;
+            top: 50px;
             background-color: #fff;
-            border: 1px solid rgba(51, 51, 51, 0.35);
-            border-radius: 5px;
+            border: none;
             font-size: .8rem;
         }
 
@@ -52,7 +51,7 @@
         .nav-drop-item .crops-items-modal .cropsMain {
             text-transform: capitalize;
             justify-content: center;
-            padding: 15px 0;
+            padding: 5px 0;
             height: 170px;
             width: 180px;
         }
@@ -97,17 +96,19 @@
     @endforeach
     @endif
 
-    $('#cropsDrop').mouseover(function () {
-        $('#cropDropMenu').css('display', 'block')
+    $('.cropsDrop').mouseover(function () {
+        $('.nav-drop-item').css('display', 'none');
+        $(this).parent().children('.cropDropMenu').css('display', 'block');
+        let width =  $(this).parent().children('.cropDropMenu').width() / 2 - 50;
+        $(this).parent().children('.cropDropMenu').css('left', '-' + width + 'px')
     })
     $('.nav-drop-item').mouseleave(function () {
-        $('.nav-drop-item').css('display', 'none')
+        $(this).parent().children('.cropDropMenu').css('display', 'none')
     })
+    $(document).click(function () {
+        $('.cropDropMenu').css('display', 'none')
+    });
 
-    $(document).ready(function () {
-        let width = $('.nav-hover .nav-drop-item').width() / 2 - 50;
-        $('.nav-hover .nav-drop-item').css('left', '-' + width + 'px')
-    })
 
 </script>
 @stack('vendor_js')

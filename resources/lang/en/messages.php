@@ -215,7 +215,7 @@ return [
     'Subject' => "Subject",
     'Message' => "Message",
     'Send' => "Send",
-    'crops' => "crops",
+    'crops' => "Crops",
 
 
 ];

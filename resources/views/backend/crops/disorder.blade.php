@@ -102,8 +102,14 @@
                                     <td>{{$disorder->disorder_name}}</td>
                                     @php
                                         $crops = getCropsData('','',$disorder->crops_id);
+
                                     @endphp
-                                    <td>{{$crops[0]->category_name}}</td>
+                                    @if(count($crops)>0)
+                                        <td>{{$crops[0]->category_name}}</td>
+                                    @else
+                                        <td>Crops not found</td>
+                                    @endif
+
                                     <td>{{ $disorder->affect }}</td>
 
                                     <td style="text-align: center">

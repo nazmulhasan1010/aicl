@@ -53,10 +53,13 @@
                                      @endphp
                                     {{' / '.$productItem}} more..</span>
                             </div>
-                            <button type="button" class="mt-3 btn-danger modalShow"
-                                    data-pid="{{$disorders->disorder_id}}" data-session="{{Session::get('locale')}}">
-                                @lang('messages.Details')
-                            </button>
+                            <div class="details-button" style="width: 100%; display: flex; justify-content: center;">
+                                <button type="button" class="mt-3 btn-danger modalShow"
+                                        data-pid="{{$disorders->disorder_id}}" data-session="{{Session::get('locale')}}">
+                                    @lang('messages.Details')
+                                </button>
+                            </div>
+
                         </div>
                     @endforeach
                 </div>
