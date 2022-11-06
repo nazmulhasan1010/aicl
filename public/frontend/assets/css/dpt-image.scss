@@ -1,0 +1,134 @@
+.width-70 {
+    width: 70%;
+}
+
+.banner {
+    display: flex;
+
+    .banner-content {
+        display: flex;
+        align-items: center;
+        height: 200px;
+        width: 50%;
+
+        &:nth-child(2) {
+            justify-content: right;
+        }
+
+        .banner-img-svg {
+            position: relative;
+
+            .animation-hidden {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                background-color: #cccccc;
+                top: 0;
+                right: 0;
+                opacity: 0;
+                animation: 1s fadeOut;
+            }
+        }
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+        width: 100%;
+    }
+
+    100% {
+        opacity: 1;
+        width: 0%;
+    }
+}
+
+.dpt-img {
+    padding: 120px 0;
+
+    .image-modal {
+        &:nth-child(n+2) {
+            margin-top: 40px;
+        }
+
+        .dpt-img-main {
+            .image {
+                img {
+                    width: 100%;
+
+                }
+            }
+
+            .button {
+                button {
+                    margin-top: 20px;
+                    background-color: #070803;
+                    padding: 8px 20px;
+                    border: none;
+                    outline: none;
+                    border-radius: 20px;
+                    color: #fff;
+                    opacity: 0;
+
+                    &:hover {
+                        opacity: .5;
+                    }
+                }
+            }
+        }
+
+        .dpti-title {
+            p {
+                font-weight: 600;
+                font-size: 1.2rem;
+                opacity: 0;
+            }
+        }
+    }
+}
+
+// button animation
+@keyframes fadeUp {
+    0% {
+        opacity: 0;
+        margin-bottom: -40px;
+    }
+
+    100% {
+        opacity: 1;
+        margin-bottom: 0;
+    }
+}
+
+// show
+@keyframes titleShow {
+    0% {
+        opacity: 0;
+        color: red;
+    }
+
+    100% {
+        opacity: 1;
+        color: green;
+    }
+}
+// responsive
+
+@media only screen and (max-width:768px) {
+    .width-70 {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .banner {
+        .banner-content {
+            width: 100%;
+            justify-content: center;
+
+            &:nth-child(2) {
+                display: none;
+            }
+        }
+    }
+}
