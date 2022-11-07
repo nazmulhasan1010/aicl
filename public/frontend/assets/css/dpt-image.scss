@@ -61,7 +61,7 @@
             }
 
             .button {
-                button {
+                .view-button {
                     margin-top: 20px;
                     background-color: #070803;
                     padding: 8px 20px;
@@ -73,6 +73,7 @@
 
                     &:hover {
                         opacity: .5;
+                        background-color: #0708037a;
                     }
                 }
             }
@@ -105,14 +106,13 @@
 @keyframes titleShow {
     0% {
         opacity: 0;
-        color: red;
     }
 
     100% {
         opacity: 1;
-        color: green;
     }
 }
+
 // responsive
 
 @media only screen and (max-width:768px) {
@@ -130,5 +130,143 @@
                 display: none;
             }
         }
+    }
+}
+
+// career
+
+.container {
+    .row {
+        .corporate-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+
+            p {
+                animation: 2s fadeRight;
+                width: 180px;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+
+            h2 {
+                width: 600px;
+                animation: 2s fadeRight;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+        }
+
+        .career-modal {
+            margin-top: 40px;
+
+            .career-head {
+                font-weight: bold;
+                margin: 20px 0 25px 0;
+                animation: 1s careerRightFade;
+            }
+
+            .contact-mail {
+                animation: 1s careerLeftFade;
+            }
+
+            .job_post_1 {
+                &:nth-child(2) {
+                    margin-top: 130px;
+                }
+
+                .career-title {
+                    margin: 20px 0 30px 0;
+                }
+
+                .apply {
+                    display: flex;
+                    margin-bottom: 30px;
+                    align-items: center;
+
+                    h6 {
+                        height: 100%;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        width: 150px;
+                    }
+
+                    .apply-btn {
+                        padding: 9px 25px;
+                        border: 1.2px solid #333;
+                        border-radius: 20px;
+                        font-size: .9rem;
+                        text-decoration: none;
+                        color: #333;
+                        transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+                        margin-left: 80px;
+
+                        &:hover {
+                            background-color: #333;
+                            color: #fff;
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes fadeRight {
+    0% {
+        width: 0;
+        margin-right: -40px;
+    }
+
+    100% {
+        width: 600px;
+        margin-right: 0;
+    }
+}
+
+@keyframes applyFadeRight {
+    0% {
+        transform: translateX(400px);
+    }
+
+    100% {
+        transform: translateX(0px);
+    }
+}
+
+@keyframes careerLeftFade {
+    0% {
+        opacity: 0;
+        transform: translateX(-40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+@keyframes careerRightFade {
+    0% {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0px);
+    }
+}
+
+@keyframes careerRightWidth {
+    0% {
+        opacity: 0;
+        width: 0;
+    }
+
+    100% {
+        opacity: 1;
+        width: 150px;
     }
 }
