@@ -2,6 +2,7 @@
 
 use App\Category;
 use App\Cropscat;
+use App\Depot;
 use App\Disorder;
 use App\Disorderproduct;
 use App\Images;
@@ -153,6 +154,9 @@ function getDisExistProduct($disId)
 function getProductImageByProductId($id)
 {
     return Images::where('product_id', '=', $id)->get();
+}
+function getDepot(){
+    return Depot::get();
 }
 
 

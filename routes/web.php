@@ -156,6 +156,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'namespace' => 'admin', 'mi
     Route::resource('disorder', 'disorderController');
     Route::resource('specification', 'specificationController');
     Route::resource('image', 'productImageController');
+    Route::resource('depot', 'depotController');
     Route::post('imageUpload', 'productImageController@store');
 
 });

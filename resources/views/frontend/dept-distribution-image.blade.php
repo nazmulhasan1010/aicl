@@ -36,54 +36,29 @@
             </div>
         </div>
     </div>
+    @php
+        $depot = getDepot();
+    @endphp
     <div class="container dpt-img width-70">
-        <div class="image-modal">
-            <div class="row dpt-img-main align-items-end">
-                <div class="col-md-9 image d-flex justify-content-end">
-                    <img src="{{asset('frontend/assets/images/dpt_image/bogra.jpg')}}" alt="" class="dpt-image">
+        @foreach($depot as $depots)
+            @if($depots->status == 1)
+                <div class="image-modal">
+                    <div class="row dpt-img-main align-items-end">
+                        <div class="col-md-9 image d-flex justify-content-end">
+                            <img src="{{asset('storage/depot/'.$depots->image)}}" alt="{{$depots->image}}" class="dpt-image">
+                        </div>
+                        <div class="col-md-3 button">
+                            <a href="{{$depots->link}}" role="button" class="btn view-button">360 View</a>
+                        </div>
+                    </div>
+                    <div class="row dpti-title">
+                        <p class="col-md-10 pt-3 text-center">
+                            {{$depots->location}}
+                        </p>
+                    </div>
                 </div>
-                <div class="col-md-3 button">
-                    <button type="button" class="btn view-button">360 View</button>
-                </div>
-            </div>
-            <div class="row dpti-title">
-                <p class="col-md-10 pt-3 text-center">
-                    Boyradighi, Ranirhat, Bogra
-                </p>
-            </div>
-        </div>
-
-        <div class="image-modal">
-            <div class="row dpt-img-main align-items-end">
-                <div class="col-md-9 image d-flex justify-content-end">
-                    <img src="{{asset('frontend/assets/images/dpt_image/bogra.jpg')}}" alt="" class="dpt-image">
-                </div>
-                <div class="col-md-3 button">
-                    <button type="button" class="btn view-button">360 View</button>
-                </div>
-            </div>
-            <div class="row dpti-title">
-                <p class="col-md-10 pt-3 text-center">
-                    Boyradighi, Ranirhat, Bogra
-                </p>
-            </div>
-        </div>
-
-        <div class="image-modal">
-            <div class="row dpt-img-main align-items-end">
-                <div class="col-md-9 image d-flex justify-content-end">
-                    <img src="{{asset('frontend/assets/images/dpt_image/bogra.jpg')}}" alt="" class="dpt-image">
-                </div>
-                <div class="col-md-3 button">
-                    <button type="button" class="btn view-button">360 View</button>
-                </div>
-            </div>
-            <div class="row dpti-title">
-                <p class="col-md-10 pt-3 text-center">
-                    Boyradighi, Ranirhat, Bogra
-                </p>
-            </div>
-        </div>
+            @endif
+        @endforeach
     </div>
 @endsection
 @push('vendor_js')

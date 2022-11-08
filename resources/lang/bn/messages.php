@@ -51,7 +51,7 @@ return [
     'Company-info' => "কোম্পানী পরিচিতি",
     'Contact' => "যোগাযোগ",
 //    'Business' => "ব্যবসায় সমূহ",
-    'Business' => "ব্যবসায়",
+//    'Business' => "ব্যবসায়",
     'Jobs' => "নিয়োগ বিজ্ঞপ্তি",
     'Pesticides' => "কীটনাশক",
     'Seed' => "বীজ",

@@ -10,7 +10,7 @@
         <div class="career-parallax-window" data-parallax="scroll"
              data-image-src="{{ asset('frontend/assets/images/careers_bg.webp')}}"></div>
         <div class="container">
-            <div class="row">
+            <div class="row ">
                 <div class=" col-md-12 corporate-info">
                     <p>@lang('messages.Career-p') </p>
                     <h2>@lang('messages.Career-title') </h2>
@@ -107,6 +107,7 @@
             var reveals = $(".job_post_1"),
                 title = $(".job_post_1 .career-title"),
                 applyTxt = $(".job_post_1 .apply h6"),
+                details = $(".job_post_1 .details"),
                 btn = $(".job_post_1 .apply .apply-btn");
             for (var i = 0; i < reveals.length; i++) {
                 var windowHeight = window.innerHeight;
@@ -116,6 +117,7 @@
                     title[i].style.animation = '1s careerLeftFade';
                     applyTxt[i].style.animation = '1s careerRightWidth';
                     btn[i].style.animation = '1s applyFadeRight';
+                    details[i].style.animation = '3s visibleFade';
                 } else {
                     // reveals[i].classList.remove("active");
                 }

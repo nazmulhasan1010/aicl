@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@300;700&family=Oswald:wght@600;700&family=Roboto+Mono:wght@700&display=swap');
+
 .width-70 {
     width: 70%;
 }
@@ -141,6 +143,9 @@
             display: flex;
             flex-direction: column;
             align-items: flex-end;
+            padding: 0 100px 0 0;
+            margin-bottom: 50px;
+            bottom: 70px;
 
             p {
                 animation: 2s fadeRight;
@@ -150,10 +155,15 @@
             }
 
             h2 {
-                width: 600px;
+                width: 650px;
                 animation: 2s fadeRight;
                 overflow: hidden;
                 white-space: nowrap;
+                font-size: 2.5rem;
+                font-weight: bold;
+                font-family: 'Oswald',
+                sans-serif;
+                letter-spacing: 1px;
             }
         }
 
@@ -164,6 +174,8 @@
                 font-weight: bold;
                 margin: 20px 0 25px 0;
                 animation: 1s careerRightFade;
+                font-family: 'Oswald',
+                sans-serif;
             }
 
             .contact-mail {
@@ -177,6 +189,8 @@
 
                 .career-title {
                     margin: 20px 0 30px 0;
+                    font-family: 'Oswald',
+                    sans-serif;
                 }
 
                 .apply {
@@ -220,7 +234,7 @@
     }
 
     100% {
-        width: 600px;
+        width: 650px;
         margin-right: 0;
     }
 }
@@ -268,5 +282,14 @@
     100% {
         opacity: 1;
         width: 150px;
+    }
+}
+@keyframes visibleFade {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
     }
 }

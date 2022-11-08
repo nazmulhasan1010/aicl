@@ -70,7 +70,7 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('admin.product.index')}}">
+                    <a href="javascript: void(0);">
                         <div class="icon-item">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -81,18 +81,13 @@
                             </svg>
                             <span>Products</span>
                         </div>
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript: void(0);">
-                        <div class="icon-item">
-                            <i class="fa-solid fa-carrot"></i>
-                            <span>Attachment</span>
-                        </div>
                         <span class="menu-arrow"></span>
                     </a>
 
                     <ul class="nav-second-level" aria-expanded="false">
+                        <li>
+                            <a href="{{ route('admin.product.index')}}">Add Product</a>
+                        </li>
                         <li>
                             <a href="{{ route('admin.specification.index')}}">Specification</a>
                         </li>
@@ -136,6 +131,12 @@
                     <a href="{{ route('admin.partner.index')}}">
                         <i data-feather="calendar"></i>
                         <span> Financial Partner </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.depot.index')}}">
+                        <i class="fa-regular fa-images"></i>
+                        <span> Deport Photo </span>
                     </a>
                 </li>
                 <li>
