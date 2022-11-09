@@ -155,8 +155,26 @@ function getProductImageByProductId($id)
 {
     return Images::where('product_id', '=', $id)->get();
 }
-function getDepot(){
+
+function getDepot()
+{
     return Depot::get();
+}
+
+function getImages($id)
+{
+//    return Images::where('product_id', '=', $id)->get();
+//    return Product::select('products.image', 'images.image')->join('images', 'products.id', '=', 'images.product_id')->where('products.id', '=', $id)->get();
+    $imageAll = [];
+    $iamges = Images::select('image')->where('product_id', '=', $id)->get();
+    $pImage = Product::select('image')->where('id', '=', $id)->get();
+    if (count($iamges)>0){
+        foreach ($iamges as $iamge) {
+            array_push($imageAll, $iamge->image);
+        }
+    }
+    array_push($imageAll, $pImage[0]->image);
+    return $imageAll;
 }
 
 

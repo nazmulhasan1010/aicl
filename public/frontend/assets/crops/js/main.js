@@ -1,6 +1,6 @@
 $('.owl-carousel-group').owlCarousel({
     loop: true,
-    margin: 0,
+    margin: 20,
     responsiveClass: true,
     responsive: {
         0: {
@@ -16,7 +16,7 @@ $('.owl-carousel-group').owlCarousel({
 });
 $('#recomandedProduct').owlCarousel({
     loop: true,
-    margin: 0,
+    margin: 20,
     responsiveClass: true,
     items: 2,
     responsive: {
@@ -43,3 +43,4 @@ for (i = 0; i < acc.length; i++) {
         }
     });
 }
+

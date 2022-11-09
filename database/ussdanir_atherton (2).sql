@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2022 at 08:43 AM
+-- Generation Time: Nov 09, 2022 at 10:46 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -43,7 +43,9 @@ CREATE TABLE `careers` (
 --
 
 INSERT INTO `careers` (`id`, `title`, `description`, `deadline`, `total_vacancy`, `status`, `created_at`, `updated_at`) VALUES
-(2, 'AREA SALES MANAGER', '<p style=\"margin-right: 0px; margin-left: 0px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\">Be sure to include both educational history and experience for the position. Write a detailed overview of your recent position and responsibilities, and how your role will contribute to the success of Atherton Group. Candidates with experience in supply chain management and relevant education are encouraged to apply. Must provide clearance from the previous company.</p><p style=\"margin-right: 0px; margin-left: 0px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\">Job description included but not limited to following:</p><ul class=\"career_list\" style=\"margin-right: 0px; margin-left: 20px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\"><li style=\"margin: 0px; padding: 0px;\">Managing organizational sales by developing a business plan that covers sales, revenue and expense controls.</li><li style=\"margin: 0px; padding: 0px;\">Meeting planned sales goals.</li><li style=\"margin: 0px; padding: 0px;\">Setting individual sales targets with the sales team.</li><li style=\"margin: 0px; padding: 0px;\">Tracking sales goals and reporting results as necessary.</li><li style=\"margin: 0px; padding: 0px;\">Overseeing the activities and performance of the sales team.</li><li style=\"margin: 0px; padding: 0px;\">Coordinating with marketing on lead generation.</li><li style=\"margin: 0px; padding: 0px;\">The ongoing training of your salespeople.</li><li style=\"margin: 0px; padding: 0px;\">Promoting the organization and products.</li><li style=\"margin: 0px; padding: 0px;\">Understand our ideal customers and how they relate to our products.</li></ul><p style=\"margin-right: 0px; margin-bottom: 1rem; margin-left: 0px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\">Qualification:</p><ul class=\"career_list\" style=\"margin-right: 0px; margin-left: 20px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\"><li style=\"margin: 0px; padding: 0px;\">Bachelor’s degree in business or related field.</li><li style=\"margin: 0px; padding: 0px;\">Experience in planning and implementing sales strategies.</li><li style=\"margin: 0px; padding: 0px;\">Experience in customer relationship management.</li><li style=\"margin: 0px; padding: 0px;\">Experience managing and directing a sales team.</li><li style=\"margin: 0px; padding: 0px;\">Excellent written and verbal communication skills.</li><li style=\"margin: 0px; padding: 0px;\">Dedication to providing great customer service.</li><li style=\"margin: 0px; padding: 0px;\">Ability to lead a sale team.</li></ul>', '2021-04-21', '10', 1, '2021-04-16 00:20:47', '2021-04-16 00:20:47');
+(2, 'AREA SALES MANAGER', '<p style=\"margin-right: 0px; margin-left: 0px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\">Be sure to include both educational history and experience for the position. Write a detailed overview of your recent position and responsibilities, and how your role will contribute to the success of Atherton Group. Candidates with experience in supply chain management and relevant education are encouraged to apply. Must provide clearance from the previous company.</p><p style=\"margin-right: 0px; margin-left: 0px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\">Job description included but not limited to following:</p><ul class=\"career_list\" style=\"margin-right: 0px; margin-left: 20px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\"><li style=\"margin: 0px; padding: 0px;\">Managing organizational sales by developing a business plan that covers sales, revenue and expense controls.</li><li style=\"margin: 0px; padding: 0px;\">Meeting planned sales goals.</li><li style=\"margin: 0px; padding: 0px;\">Setting individual sales targets with the sales team.</li><li style=\"margin: 0px; padding: 0px;\">Tracking sales goals and reporting results as necessary.</li><li style=\"margin: 0px; padding: 0px;\">Overseeing the activities and performance of the sales team.</li><li style=\"margin: 0px; padding: 0px;\">Coordinating with marketing on lead generation.</li><li style=\"margin: 0px; padding: 0px;\">The ongoing training of your salespeople.</li><li style=\"margin: 0px; padding: 0px;\">Promoting the organization and products.</li><li style=\"margin: 0px; padding: 0px;\">Understand our ideal customers and how they relate to our products.</li></ul><p style=\"margin-right: 0px; margin-bottom: 1rem; margin-left: 0px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\">Qualification:</p><ul class=\"career_list\" style=\"margin-right: 0px; margin-left: 20px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\"><li style=\"margin: 0px; padding: 0px;\">Bachelor’s degree in business or related field.</li><li style=\"margin: 0px; padding: 0px;\">Experience in planning and implementing sales strategies.</li><li style=\"margin: 0px; padding: 0px;\">Experience in customer relationship management.</li><li style=\"margin: 0px; padding: 0px;\">Experience managing and directing a sales team.</li><li style=\"margin: 0px; padding: 0px;\">Excellent written and verbal communication skills.</li><li style=\"margin: 0px; padding: 0px;\">Dedication to providing great customer service.</li><li style=\"margin: 0px; padding: 0px;\">Ability to lead a sale team.</li></ul>', '2021-04-21', '10', 1, '2021-04-16 00:20:47', '2021-04-16 00:20:47'),
+(3, 'AREA SALES MANAGER', '<p style=\"margin-right: 0px; margin-left: 0px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\">Be sure to include both educational history and experience for the position. Write a detailed overview of your recent position and responsibilities, and how your role will contribute to the success of Atherton Group. Candidates with experience in supply chain management and relevant education are encouraged to apply. Must provide clearance from the previous company.</p><p style=\"margin-right: 0px; margin-left: 0px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\">Job description included but not limited to following:</p><ul class=\"career_list\" style=\"margin-right: 0px; margin-left: 20px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\"><li style=\"margin: 0px; padding: 0px;\">Managing organizational sales by developing a business plan that covers sales, revenue and expense controls.</li><li style=\"margin: 0px; padding: 0px;\">Meeting planned sales goals.</li><li style=\"margin: 0px; padding: 0px;\">Setting individual sales targets with the sales team.</li><li style=\"margin: 0px; padding: 0px;\">Tracking sales goals and reporting results as necessary.</li><li style=\"margin: 0px; padding: 0px;\">Overseeing the activities and performance of the sales team.</li><li style=\"margin: 0px; padding: 0px;\">Coordinating with marketing on lead generation.</li><li style=\"margin: 0px; padding: 0px;\">The ongoing training of your salespeople.</li><li style=\"margin: 0px; padding: 0px;\">Promoting the organization and products.</li><li style=\"margin: 0px; padding: 0px;\">Understand our ideal customers and how they relate to our products.</li></ul><p style=\"margin-right: 0px; margin-bottom: 1rem; margin-left: 0px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\">Qualification:</p><ul class=\"career_list\" style=\"margin-right: 0px; margin-left: 20px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\"><li style=\"margin: 0px; padding: 0px;\">Bachelor’s degree in business or related field.</li><li style=\"margin: 0px; padding: 0px;\">Experience in planning and implementing sales strategies.</li><li style=\"margin: 0px; padding: 0px;\">Experience in customer relationship management.</li><li style=\"margin: 0px; padding: 0px;\">Experience managing and directing a sales team.</li><li style=\"margin: 0px; padding: 0px;\">Excellent written and verbal communication skills.</li><li style=\"margin: 0px; padding: 0px;\">Dedication to providing great customer service.</li><li style=\"margin: 0px; padding: 0px;\">Ability to lead a sale team.</li></ul>', '2022-11-25', '10', 1, '2022-11-06 23:16:14', '2022-11-06 23:16:14'),
+(4, 'AREA SALES MANAGER', '<p style=\"margin-right: 0px; margin-left: 0px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\">Be sure to include both educational history and experience for the position. Write a detailed overview of your recent position and responsibilities, and how your role will contribute to the success of Atherton Group. Candidates with experience in supply chain management and relevant education are encouraged to apply. Must provide clearance from the previous company.</p><p style=\"margin-right: 0px; margin-left: 0px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\">Job description included but not limited to following:</p><ul class=\"career_list\" style=\"margin-right: 0px; margin-left: 20px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\"><li style=\"margin: 0px; padding: 0px;\">Managing organizational sales by developing a business plan that covers sales, revenue and expense controls.</li><li style=\"margin: 0px; padding: 0px;\">Meeting planned sales goals.</li><li style=\"margin: 0px; padding: 0px;\">Setting individual sales targets with the sales team.</li><li style=\"margin: 0px; padding: 0px;\">Tracking sales goals and reporting results as necessary.</li><li style=\"margin: 0px; padding: 0px;\">Overseeing the activities and performance of the sales team.</li><li style=\"margin: 0px; padding: 0px;\">Coordinating with marketing on lead generation.</li><li style=\"margin: 0px; padding: 0px;\">The ongoing training of your salespeople.</li><li style=\"margin: 0px; padding: 0px;\">Promoting the organization and products.</li><li style=\"margin: 0px; padding: 0px;\">Understand our ideal customers and how they relate to our products.</li></ul><p style=\"margin-right: 0px; margin-bottom: 1rem; margin-left: 0px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\">Qualification:</p><ul class=\"career_list\" style=\"margin-right: 0px; margin-left: 20px; padding: 0px; color: rgb(33, 37, 41); font-family: Arial, Helvetica, sans-serif; font-size: 16px;\"><li style=\"margin: 0px; padding: 0px;\">Bachelor’s degree in business or related field.</li><li style=\"margin: 0px; padding: 0px;\">Experience in planning and implementing sales strategies.</li><li style=\"margin: 0px; padding: 0px;\">Experience in customer relationship management.</li><li style=\"margin: 0px; padding: 0px;\">Experience managing and directing a sales team.</li><li style=\"margin: 0px; padding: 0px;\">Excellent written and verbal communication skills.</li><li style=\"margin: 0px; padding: 0px;\">Dedication to providing great customer service.</li><li style=\"margin: 0px; padding: 0px;\">Ability to lead a sale team.</li></ul>', '2022-11-25', '20', 1, '2022-11-06 23:16:14', '2022-11-06 23:16:14');
 
 -- --------------------------------------------------------
 
@@ -136,6 +138,29 @@ INSERT INTO `cropscats` (`id`, `auto_code`, `parent_id`, `category_name`, `categ
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `depots`
+--
+
+CREATE TABLE `depots` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `image` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `location` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `link` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `depots`
+--
+
+INSERT INTO `depots` (`id`, `image`, `location`, `link`, `status`, `created_at`, `updated_at`) VALUES
+(3, '636a13949b6f56.80233107-2022-11-08.jpg', 'Boyradighi, Ranirhat, Bogra ok', 'Link', 1, '2022-11-08 00:19:14', '2022-11-08 02:47:19');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `disorderproducts`
 --
 
@@ -152,10 +177,7 @@ CREATE TABLE `disorderproducts` (
 --
 
 INSERT INTO `disorderproducts` (`id`, `disorder_id`, `product_id`, `created_at`, `updated_at`) VALUES
-(144, '109356', '11', '2022-11-01 23:34:46', NULL),
-(145, '109356', '12', '2022-11-01 23:34:46', NULL),
-(146, '109356', '13', '2022-11-01 23:34:46', NULL),
-(147, '109356', '14', '2022-11-01 23:34:46', NULL);
+(148, '109356', '18', '2022-11-07 23:32:43', NULL);
 
 -- --------------------------------------------------------
 
@@ -187,7 +209,7 @@ CREATE TABLE `disorders` (
 --
 
 INSERT INTO `disorders` (`id`, `disorder_id`, `crops_id`, `disorder_name`, `disorder_name_bn`, `image`, `symptoms`, `symptoms_bn`, `affect`, `affect_bn`, `soil_drip`, `soil_drip_bn`, `benefit`, `benefit_bn`, `created_at`, `updated_at`) VALUES
-(27, '109356', '15', 'Quin Sandoval', 'Jana Noble', '636201725d8959.72633074-2022-11-02.jpg', 'Cupiditate dicta qui', 'Ipsum corporis dolo', 'Minim magnam et face', 'Dolorem delectus ni', 'Possimus aute sit e', 'Aute inventore et si', 'Do quod qui dolor au', 'Qui illum dolore vo', '2022-11-01 23:34:46', '2022-11-01 23:34:46');
+(27, '109356', '16', 'Quin Sandoval', 'Jana Noble', '636201725d8959.72633074-2022-11-02.jpg', 'Cupiditate dicta qui', 'Ipsum corporis dolo', 'Minim magnam et face', 'Dolorem delectus ni', 'Possimus aute sit e', 'Aute inventore et si', 'Do quod qui dolor au', 'Qui illum dolore vo', '2022-11-01 23:34:46', '2022-11-07 23:32:43');
 
 -- --------------------------------------------------------
 
@@ -361,13 +383,10 @@ CREATE TABLE `images` (
 --
 
 INSERT INTO `images` (`id`, `product_id`, `image`, `created_at`, `updated_at`) VALUES
-(65, '8', '6360e572f37f29.54618726-2022-11-01.jpg', NULL, NULL),
-(66, '8', '6360e575588fe3.73648622-2022-11-01.jpg', NULL, NULL),
-(67, '8', '6360e576730e42.69402327-2022-11-01.jpg', NULL, NULL),
-(68, '11', '6360f30fc64b71.88724000-2022-11-01.jpg', NULL, NULL),
-(69, '11', '6360f312153025.44237563-2022-11-01.jpg', NULL, NULL),
-(70, '11', '6360f314f214e9.19586255-2022-11-01.jpg', NULL, NULL),
-(71, '11', '6360f316263170.84288696-2022-11-01.jpg', NULL, NULL);
+(75, '18', '636b442d4df732.90708939-2022-11-09.jpg', NULL, NULL),
+(77, '18', '636b4431e431a6.59883104-2022-11-09.jpg', NULL, NULL),
+(79, '18', '636b44346b2025.66478736-2022-11-09.jpg', NULL, NULL),
+(80, '18', '636b4501dc9406.53903602-2022-11-09.jpg', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -396,7 +415,8 @@ CREATE TABLE `job_applications` (
 INSERT INTO `job_applications` (`id`, `fname`, `lname`, `email`, `address`, `phone`, `position`, `application_date`, `cv`, `created_at`, `updated_at`) VALUES
 (1, 'Uriah', 'Holder', 'senub@email.com', 'Rem quaerat vel mini', '+1 (501) 116-7731', 'Velit dolore nemo u', '2021-04-20', 'UriahHolder-2021-04-20.docx', NULL, NULL),
 (2, 'Brent', 'Pickett', 'pyzagiboge@email.com', 'Debitis excepteur pe', '+1 (465) 726-8724', 'Velit dolore nemo u', '2021-04-26', 'BrentPickett-2021-04-26.docx', NULL, NULL),
-(3, 'Natalie', 'Davis', 'dylo@email.com', 'Et eaque quaerat vol', '+1 (587) 908-8223', 'AREA SALES MANAGER', '2021-04-26', 'NatalieDavis-2021-04-26.docx', NULL, NULL);
+(3, 'Natalie', 'Davis', 'dylo@email.com', 'Et eaque quaerat vol', '+1 (587) 908-8223', 'AREA SALES MANAGER', '2021-04-26', 'NatalieDavis-2021-04-26.docx', NULL, NULL),
+(4, 'Nazmul', 'Hasan', 'safin@gmail.com', 'Kapaleswar, Kapasia', '017289379239', 'AREA SALES MANAGER', '2022-11-08', 'NazmulHasan-2022-11-08.pdf', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -437,7 +457,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (27, '2022_10_12_100431_create_disorders_table', 15),
 (29, '2022_10_21_130453_create_ratings_table', 16),
 (30, '2022_10_22_113448_create_specifications_table', 17),
-(31, '2022_10_30_065545_create_images_table', 18);
+(31, '2022_10_30_065545_create_images_table', 18),
+(33, '2022_11_08_053923_create_depots_table', 19);
 
 -- --------------------------------------------------------
 
@@ -727,13 +748,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `product_name`, `slug`, `product_name_bn`, `product_details`, `product_details_bn`, `composition`, `meta`, `image`, `status`, `created_at`, `updated_at`) VALUES
-(8, 8, 'Vulcan -50DF', 'vulcan-50df', 'ভালকান', '<p><span style=\"color: rgb(24, 24, 24); font-family: georgia, palatino, &quot;book antiqua&quot;, &quot;palatino linotype&quot;, serif; font-size: 16px; text-align: justify;\">Atherton Imbros Company is the sister concern of the mother company Bangladesh Agricultural Industries which was established in 1994 with a view to providing a complete solution for farmers, especially in pesticides and fertilizers.</span><br></p>', '<p><span style=\"color: rgb(24, 24, 24); font-family: georgia, palatino, &quot;book antiqua&quot;, &quot;palatino linotype&quot;, serif; font-size: 16px; text-align: justify;\">এ্যাথারটন&nbsp;ইমব্রোস কোম্পানী লিমিটেড&nbsp;হল মাতৃ সংস্থা বাংলাদেশ এগ্রিকালচারাল&nbsp;ইন্ডাস্ট্রিজ এর&nbsp;একটি সিস্টার কনসার্ন, যা কৃষকদের বিশেষত কীটনাশক ও সারের সম্পূর্ণ সমাধান দেওয়ার লক্ষ্যে ১৯৯৪ সালে প্রতিষ্ঠিত হয়েছিল।</span><br></p>', 'Carbendazim -50DF', 'Vulcan -50DF', 'vulcan-50df-60a49f8e1d0a8-2021-05-19.webp', 1, '2021-05-19 09:18:06', '2021-05-19 09:28:37'),
-(9, 8, 'Amcozole-5EC', 'amcozole-5ec', 'এ্যাকোমিল', '<p><span style=\"color: rgb(24, 24, 24); font-family: georgia, palatino, &quot;book antiqua&quot;, &quot;palatino linotype&quot;, serif; font-size: 16px; text-align: justify;\">Atherton Imbros Company is the sister concern of the mother company Bangladesh Agricultural Industries which was established in 1994 with a view to providing a complete solution for farmers, especially in pesticides and fertilizers.</span><br></p>', '<p><span style=\"color: rgb(24, 24, 24); font-family: georgia, palatino, &quot;book antiqua&quot;, &quot;palatino linotype&quot;, serif; font-size: 16px; text-align: justify;\">এ্যাথারটন&nbsp;ইমব্রোস কোম্পানী লিমিটেড&nbsp;হল মাতৃ সংস্থা বাংলাদেশ এগ্রিকালচারাল&nbsp;ইন্ডাস্ট্রিজ এর&nbsp;একটি সিস্টার কনসার্ন, যা কৃষকদের বিশেষত কীটনাশক ও সারের সম্পূর্ণ সমাধান দেওয়ার লক্ষ্যে ১৯৯৪ সালে প্রতিষ্ঠিত হয়েছিল।</span><br></p>', 'Hexaconazole- 5EC', 'Amcozole-5EC', 'amcozole-5ec-60a4a0e71f535-2021-05-19.webp', 1, '2021-05-19 09:23:51', '2021-05-19 09:28:59'),
-(10, 8, 'Tornedo-75WG', 'tornedo-75wg', 'টর্নেডো', '<p><span style=\"color: rgb(24, 24, 24); font-family: georgia, palatino, &quot;book antiqua&quot;, &quot;palatino linotype&quot;, serif; font-size: 16px; text-align: justify;\">Atherton Imbros Company is the sister concern of the mother company Bangladesh Agricultural Industries which was established in 1994 with a view to providing a complete solution for farmers, especially in pesticides and fertilizers.</span><br></p>', '<p><span style=\"color: rgb(24, 24, 24); font-family: georgia, palatino, &quot;book antiqua&quot;, &quot;palatino linotype&quot;, serif; font-size: 16px; text-align: justify;\">এ্যাথারটন&nbsp;ইমব্রোস কোম্পানী লিমিটেড&nbsp;হল মাতৃ সংস্থা বাংলাদেশ এগ্রিকালচারাল&nbsp;ইন্ডাস্ট্রিজ এর&nbsp;একটি সিস্টার কনসার্ন, যা কৃষকদের বিশেষত কীটনাশক ও সারের সম্পূর্ণ সমাধান দেওয়ার লক্ষ্যে ১৯৯৪ সালে প্রতিষ্ঠিত হয়েছিল।</span><br></p>', 'Tabuconazole+Trifloxystrobin-75WG', 'Tabuconazole+Trifloxystrobin-75WG', 'tornedo-75wg-60a4a54fd022f-2021-05-19.webp', 1, '2021-05-19 09:42:39', '2021-05-19 09:43:14'),
-(11, 7, 'Mixt-18WP', 'mixt-18wp', 'মিক্সট', '<p><span style=\"color: rgb(24, 24, 24); font-family: georgia, palatino, &quot;book antiqua&quot;, &quot;palatino linotype&quot;, serif; font-size: 16px; text-align: justify;\">Atherton Imbros Company is the sister concern of the mother company Bangladesh Agricultural Industries which was established in 1994 with a view to providing a complete solution for farmers, especially in pesticides and fertilizers.</span><br></p>', '<p><span style=\"color: rgb(24, 24, 24); font-family: georgia, palatino, &quot;book antiqua&quot;, &quot;palatino linotype&quot;, serif; font-size: 16px; text-align: justify;\">এ্যাথারটন&nbsp;ইমব্রোস কোম্পানী লিমিটেড&nbsp;হল মাতৃ সংস্থা বাংলাদেশ এগ্রিকালচারাল&nbsp;ইন্ডাস্ট্রিজ এর&nbsp;একটি সিস্টার কনসার্ন, যা কৃষকদের বিশেষত কীটনাশক ও সারের সম্পূর্ণ সমাধান দেওয়ার লক্ষ্যে ১৯৯৪ সালে প্রতিষ্ঠিত হয়েছিল।</span><br></p>', 'Bensulfuron Methyl-4% + Acetachlor- 14%', 'Atherton Imbros Company is the sister concern of the mother company Bangladesh Agricultural Industries which was established in 1994 with a view to providing a complete solution for farmers, especially in pesticides and fertilizers.', 'mixt-18wp-60a4a6cdbd965-2021-05-19.webp', 1, '2021-05-19 09:49:01', '2021-05-19 09:49:01'),
-(12, 7, 'Freeze-5SG', 'freeze-5sg', 'ফ্রিজ', '<p><span style=\"color: rgb(24, 24, 24); font-family: georgia, palatino, &quot;book antiqua&quot;, &quot;palatino linotype&quot;, serif; font-size: 16px; text-align: justify;\">Atherton Imbros Company is the sister concern of the mother company Bangladesh Agricultural Industries which was established in 1994 with a view to providing a complete solution for farmers, especially in pesticides and fertilizers.</span><br></p>', '<p><span style=\"color: rgb(24, 24, 24); font-family: georgia, palatino, &quot;book antiqua&quot;, &quot;palatino linotype&quot;, serif; font-size: 16px; text-align: justify;\">এ্যাথারটন&nbsp;ইমব্রোস কোম্পানী লিমিটেড&nbsp;হল মাতৃ সংস্থা বাংলাদেশ এগ্রিকালচারাল&nbsp;ইন্ডাস্ট্রিজ এর&nbsp;একটি সিস্টার কনসার্ন, যা কৃষকদের বিশেষত কীটনাশক ও সারের সম্পূর্ণ সমাধান দেওয়ার লক্ষ্যে ১৯৯৪ সালে প্রতিষ্ঠিত হয়েছিল।</span><br></p>', 'Emamectin Benzoate- 5SG', 'Atherton Imbros Company is the sister concern of the mother company Bangladesh Agricultural Industries which was established in 1994 with a view to providing a complete solution for farmers, especially in pesticides and fertilizers.', 'freeze-5sg-60a4a7b1d3b5c-2021-05-19.webp', 1, '2021-05-19 09:52:49', '2021-05-19 09:52:49'),
-(13, 7, 'Aroma -3GR', 'aroma-3gr', 'এ্যারোমা', '<p><span style=\"color: rgb(24, 24, 24); font-family: georgia, palatino, &quot;book antiqua&quot;, &quot;palatino linotype&quot;, serif; font-size: 16px; text-align: justify;\">Atherton Imbros Company is the sister concern of the mother company Bangladesh Agricultural Industries which was established in 1994 with a view to providing a complete solution for farmers, especially in pesticides and fertilizers.</span><br></p>', '<p><span style=\"color: rgb(24, 24, 24); font-family: georgia, palatino, &quot;book antiqua&quot;, &quot;palatino linotype&quot;, serif; font-size: 16px; text-align: justify;\">এ্যাথারটন&nbsp;ইমব্রোস কোম্পানী লিমিটেড&nbsp;হল মাতৃ সংস্থা বাংলাদেশ এগ্রিকালচারাল&nbsp;ইন্ডাস্ট্রিজ এর&nbsp;একটি সিস্টার কনসার্ন, যা কৃষকদের বিশেষত কীটনাশক ও সারের সম্পূর্ণ সমাধান দেওয়ার লক্ষ্যে ১৯৯৪ সালে প্রতিষ্ঠিত হয়েছিল।</span><br></p>', 'Fipronil- 3GR', 'Atherton Imbros Company is the sister concern of the mother company Bangladesh Agricultural Industries which was established in 1994 with a view to providing a complete solution for farmers, especially in pesticides and fertilizers.', 'aroma-3gr-60a4a848d4058-2021-05-19.webp', 1, '2021-05-19 09:55:20', '2021-05-19 09:55:20'),
-(14, 7, 'Expose-85WP', 'expose-85wp', 'এক্সপোজ', '<p><span style=\"color: rgb(24, 24, 24); font-family: georgia, palatino, &quot;book antiqua&quot;, &quot;palatino linotype&quot;, serif; font-size: 16px; text-align: justify;\">Atherton Imbros Company is the sister concern of the mother company Bangladesh Agricultural Industries which was established in 1994 with a view to providing a complete solution for farmers, especially in pesticides and fertilizers.</span><br></p>', '<p><span style=\"color: rgb(24, 24, 24); font-family: georgia, palatino, &quot;book antiqua&quot;, &quot;palatino linotype&quot;, serif; font-size: 16px; text-align: justify;\">এ্যাথারটন&nbsp;ইমব্রোস কোম্পানী লিমিটেড&nbsp;হল মাতৃ সংস্থা বাংলাদেশ এগ্রিকালচারাল&nbsp;ইন্ডাস্ট্রিজ এর&nbsp;একটি সিস্টার কনসার্ন, যা কৃষকদের বিশেষত কীটনাশক ও সারের সম্পূর্ণ সমাধান দেওয়ার লক্ষ্যে ১৯৯৪ সালে প্রতিষ্ঠিত হয়েছিল।</span><br></p>', 'Carbaryl- 85WP', 'Atherton Imbros Company is the sister concern of the mother company Bangladesh Agricultural Industries which was established in 1994 with a view to providing a complete solution for farmers, especially in pesticides and fertilizers.', 'expose-85wp-60a4a8f8c3eca-2021-05-19.webp', 1, '2021-05-19 09:56:54', '2021-05-19 09:58:16');
+(18, 8, 'Exposs', 'exposs', 'Exposs', '<p>&nbsp;fugit illum iusto magni minus perferendis porro quisquam quo ratione repellendus reprehenderit saepe sapiente ullam ut? Aperiam dolore dolorum, eveniet expedita laboriosam totam! Iusto, laborum recusandae.<br></p>', '<p>&nbsp;fugit illum iusto magni minus perferendis porro quisquam quo ratione repellendus reprehenderit saepe sapiente ullam ut? Aperiam dolore dolorum, eveniet expedita laboriosam totam! Iusto, laborum recusandae.<br></p>', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus architecto doloribus', ', ex molestiae officia quis veniam. Alias aliquid, consequuntur delectus dolores ea eius fuga', 'exposs-6369e8d5c9a45-2022-11-08.jpg', 1, '2022-11-07 23:27:51', '2022-11-07 23:27:51');
 
 -- --------------------------------------------------------
 
@@ -756,13 +771,7 @@ CREATE TABLE `product_variants` (
 --
 
 INSERT INTO `product_variants` (`id`, `product_id`, `size_id`, `qty`, `price`, `created_at`, `updated_at`) VALUES
-(17, 8, 13, '100', 100, '2021-05-19 09:28:37', NULL),
-(18, 9, 17, '10', 110, '2021-05-19 09:28:59', NULL),
-(20, 10, 13, '10', 100, '2021-05-19 09:43:14', NULL),
-(21, 11, 13, '10', 100, '2021-05-19 09:49:01', NULL),
-(22, 12, 11, '10', 100, '2021-05-19 09:52:49', NULL),
-(23, 13, 11, '10', 100, '2021-05-19 09:55:20', NULL),
-(25, 14, 11, '10', 1000, '2021-05-19 09:58:16', NULL);
+(31, 18, 13, '100', 300, '2022-11-07 23:27:51', NULL);
 
 -- --------------------------------------------------------
 
@@ -796,7 +805,8 @@ INSERT INTO `ratings` (`id`, `product_id`, `ratings`, `review`, `reviewTitle`, `
 (6, '14', '5', 'Do more with buttons. Control button states or create groups of buttons for more components like toolbars.', 'Do more with buttons', 'Nahid', 'nahid@gmail.com', NULL, '2022-10-21 08:25:37', '2022-10-21 08:25:37'),
 (7, '14', '3', 'The checked state for these buttons is only updated via click event on the button. If you use another method to update the input', 'Do more with buttons', 'Nahid', 'admin@admin.com', NULL, '2022-10-21 10:14:07', '2022-10-21 10:14:07'),
 (8, '14', '3', 'The checked state for these buttons is only updated via click event on the button. If you use another method to update the input', 'Do more with buttons', 'Nahid', 'nahid@gmail.com', NULL, '2022-10-21 10:14:31', '2022-10-21 10:14:31'),
-(9, '12', '5', 'Sed praesentium nostvbbfbzfbbvbcvbcbcbcvbcvbcvbvcbcbv', 'Dolorem irure modi ebv', 'Jenna Guer', 'qabimi@mailinator.com', NULL, '2022-10-31 00:42:50', '2022-10-31 00:42:50');
+(9, '12', '5', 'Sed praesentium nostvbbfbzfbbvbcvbcbcbcvbcvbcvbvcbcbv', 'Dolorem irure modi ebv', 'Jenna Guer', 'qabimi@mailinator.com', NULL, '2022-10-31 00:42:50', '2022-10-31 00:42:50'),
+(10, '18', '4', 'Go Make Something Awesome\r\nFont Awesome is the internet\'s icon library and toolkit used by millions of designers, developers, and content creators.\r\n\r\nMade with  and  in Bentonville, Boston, Chicago, Grand Rapids, Joplin, Kansas City, Seattle, Tampa, and Vergennes.', 'Do more with buttons', 'Nahid', 'safin@gmail.com', NULL, '2022-11-08 03:04:43', '2022-11-08 03:04:43');
 
 -- --------------------------------------------------------
 
@@ -1582,6 +1592,12 @@ ALTER TABLE `cropscats`
   ADD UNIQUE KEY `cropscats_slug_unique` (`slug`);
 
 --
+-- Indexes for table `depots`
+--
+ALTER TABLE `depots`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `disorderproducts`
 --
 ALTER TABLE `disorderproducts`
@@ -1737,7 +1753,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `careers`
 --
 ALTER TABLE `careers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1758,10 +1774,16 @@ ALTER TABLE `cropscats`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
+-- AUTO_INCREMENT for table `depots`
+--
+ALTER TABLE `depots`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `disorderproducts`
 --
 ALTER TABLE `disorderproducts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=148;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
 
 --
 -- AUTO_INCREMENT for table `disorders`
@@ -1797,19 +1819,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
 
 --
 -- AUTO_INCREMENT for table `job_applications`
 --
 ALTER TABLE `job_applications`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -1833,19 +1855,19 @@ ALTER TABLE `partners`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `product_variants`
 --
 ALTER TABLE `product_variants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `ratings`
 --
 ALTER TABLE `ratings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `roles`

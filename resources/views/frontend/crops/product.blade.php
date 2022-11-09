@@ -9,6 +9,8 @@
 
     <link rel="stylesheet" href="{{asset('frontend/assets/crops/owl/owl.carousel.css')}}">
     <link rel="stylesheet" href="{{asset('frontend/assets/crops/owl/owl.theme.default.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 @endpush
 @push('page_css')
     <style media="screen">
@@ -82,10 +84,6 @@
             color: #333;
         }
 
-        #gallery_pdp {
-
-        }
-
         #gallery_pdp .owl-carousel {
             transform: rotate(90deg);
             width: 400px;
@@ -98,32 +96,96 @@
             margin: 0 10px;
             height: 100px;
             padding: 0 10px;
+            position: relative;
         }
+
 
         .item .bookImage {
             margin: 20px 0;
             border-radius: 5px;
         }
 
-        #gallery_pdp .owl-carousel .owl-nav {
-            display: flex;
-            justify-content: space-between;
-            position: absolute;
-            width: 100%;
-            top: calc(50% - 33px);
+        #gallery_pdp {
+            position: relative;
+            height: auto;
         }
 
-        #gallery_pdp div.owl-carousel .owl-nav .owl-prev,
-        #gallery_pdp div.owl-carousel .owl-nav .owl-next {
-            font-size: 36px;
-            top: unset;
-            bottom: 15px;
+        #gallery_pdp #carousel_prev_item {
+            position: absolute;
+            top: -15px;
+            left: 20%;
+            z-index: 100;
+            padding: 0 15px;
+            border: none;
+            border-radius: 3px;
+            background-color: rgba(51, 51, 51, 0.37);
         }
+
+        #gallery_pdp #carousel_next_item {
+            background-color: red;
+            position: absolute;
+            bottom: -139px;
+            left: 20%;
+            z-index: 100;
+            padding: 0 15px;
+            border: none;
+            border-radius: 3px;
+            background-color: rgba(51, 51, 51, 0.37);
+        }
+
+        #gallery_pdp #carousel_next_item:hover {
+            background-color: rgb(51, 51, 51);
+            color: #fff;
+        }
+
+        #gallery_pdp #carousel_prev_item:hover {
+            background-color: rgb(51, 51, 51);
+            color: #fff;
+        }
+
+        #product_image_show {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        #carouselExampleControls {
+            height: 0px;
+            width: 0px;
+        }
+
+        @media screen and (max-width: 1200px) {
+            .gallery_pdp_container {
+                display: none;
+            }
+
+            #product_image_show {
+                display: none;
+            }
+
+            #carouselExampleControls {
+                height: auto;
+                width: auto;
+            }
+
+            .pdp-image-gallery-block {
+                display: flex;
+                justify-content: center;
+                padding: 0;
+            }
+
+            .gallery-viewer {
+                width: 100%;
+                padding: 0;
+            }
+
+        }
+
     </style>
 @endpush
 @section('content')
     @php
         $review = getReview($product[0]->product_id);
+        $images = getImages($product[0]->product_id);
     @endphp
     <div class="container-fluid  pt-4">
         <!-- slider and details part -->
@@ -135,34 +197,49 @@
                     <div class="gallery_pdp_container">
                         <div id="gallery_pdp">
                             <div class="owl-carousel owl-theme" id="imageGallerySlide">
-                                <div class="item">
-                                    <img class="  img-responsive bookImage"
-                                         src="{{asset('storage/product/'.$product[0]->image)}}" data-zoom-image=""
-                                         alt="{{$product[0]->product_name}}"/>
-                                </div>
-                                <div class="item">
-                                    <img class="  img-responsive bookImage"
-                                         src="{{asset('storage/product/'.$product[0]->image)}}" data-zoom-image=""
-                                         alt="{{$product[0]->product_name}}"/>
-                                </div>
-                                <div class="item">
-                                    <img class="  img-responsive  bookImage"
-                                         src="{{asset('storage/product/'.$product[0]->image)}}" data-zoom-image=""
-                                         alt="{{$product[0]->product_name}}"/>
-                                </div>
-
+                                @foreach($images as $image)
+                                    <div class="item">
+                                        <img class=" img-responsive bookImage"
+                                             src="{{asset('storage/product/'.$image)}}" data-image="{{$image}}"
+                                             alt="{{$image}}"/>
+                                    </div>
+                                @endforeach
                             </div>
+                            <!-- Up and down button for vertical carousel -->
+                            <button type="button" id="carousel_prev_item"><i class="fa-solid fa-caret-up"></i></button>
+                            <button type="button" id="carousel_next_item"><i class="fa-solid fa-caret-down"></i>
+                            </button>
                         </div>
-                        <!-- Up and down button for vertical carousel -->
-                        <a href="#" id="ui-carousel-next" style="display: inline;"></a>
-                        <a href="#" id="ui-carousel-prev" style="display: inline;"></a>
+
                     </div>
                     <!-- gallery Viewer -->
                     <div class="gallery-viewer">
-                        <figure class="zoom" onmousemove="zoom(event)"
-                                style="background-image: url({{asset('storage/product/'.$product[0]->image)}})">
-                            <img src="{{asset('storage/product/'.$product[0]->image)}}" alt=""/>
-                        </figure>
+                        {{--                       <figure id="zoom_product_image" class="zoom" --}}{{-- onmousemove="zoom(event)"--}}
+                        {{--                                style="background-image: url({{asset('storage/product/'.$product[0]->image)}})">--}}
+                        {{--                            <img id="product_image_show" src="{{asset('storage/product/'.$product[0]->image)}}" alt=""/>--}}
+                        {{--                        </figure>--}}
+                        <img id="product_image_show" src="{{asset('storage/product/'.$product[0]->image)}}" alt=""/>
+
+                        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                @foreach($images as $key=>$image)
+                                    <div class="carousel-item {{$key==0?'active':''}}">
+                                        <img class="d-block w-100" src="{{asset('storage/product/'.$image)}}"
+                                             data-image="{{$image}}" alt="First slide">
+                                    </div>
+                                @endforeach
+                            </div>
+                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button"
+                               data-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                            <a class="carousel-control-next" href="#carouselExampleControls" role="button"
+                               data-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -677,11 +754,6 @@
                 <br/>
             </div>
         </div>
-        <div class="row bg-light buttom-btn">
-            <div class="col bott">
-                <a href="#addCartModal" type="button" class="buton4">@lang('messages.Add-to-cart')</a>
-            </div>
-        </div>
 
         <!-- Question Modal -->
         <div class="modal fade" id="questionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -890,7 +962,6 @@
                                                                 </div>
                                                             @endif
                                                         @endforeach
-
                                                         <span> BDT</span>
                                                     </div>
                                                     <p></p>
@@ -997,8 +1068,8 @@
                                                             @endphp
                                                             <p class="card-text detail">{{$smProduct->composition}}</p>
                                                             <div class="rating d-flex">
-                                         <span
-                                             class="fa {{$proRating>0&&$proRating<1?'fa-star-half-o checked':''}} {{$proRating>=1?'fa-star checked':'fa-star'}}  "></span>
+                                                                <span
+                                                                    class="fa {{$proRating>0&&$proRating<1?'fa-star-half-o checked':''}} {{$proRating>=1?'fa-star checked':'fa-star'}}  "></span>
                                                                 <span
                                                                     class="fa {{$proRating>1&&$proRating<2?'fa-star-half-o checked':''}} {{$proRating>=2?'fa-star checked':'fa-star'}} "></span>
                                                                 <span
@@ -1023,14 +1094,13 @@
                     </div>
                 </div>
             </div>  <!-- Cart Modal End -->
-
         </div>
         @endsection
         @push('vendor_js')
             <!-- javaScript -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
-                    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-                    crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js "
+                    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2 "
+                    crossorigin="anonymous "></script>
             {{--    axois--}}
             <script src="{{asset('backend/assets/js/axios.min.js')}}"></script>
 
@@ -1042,6 +1112,7 @@
 
         @push('page_js')
             <script type="text/javascript">
+
                 @if (\Session::has('success'))
                 showModalCart('show')
 
@@ -1058,15 +1129,15 @@
                     $('#reviewModal').modal('hide');
                 });
 
-                function zoom(e) {
-                    var zoomed = e.currentTarget;
-                    e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX;
-                    e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX;
-                    x = offsetX / zoomed.offsetWidth * 100;
-                    y = offsetY / zoomed.offsetHeight * 100;
-                    console.log(zoomed.offsetWidth)
-                    zoomed.style.backgroundPosition = x + '% ' + y + '%';
-                }
+                // function zoom(e) {
+                //     var zoomed = e.currentTarget;
+                //     e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX;
+                //     e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX;
+                //     x = offsetX / zoomed.offsetWidth * 100;
+                //     y = offsetY / zoomed.offsetHeight * 100;
+                //     console.log(zoomed.offsetWidth)
+                //     zoomed.style.backgroundPosition = x + '% ' + y + '%';
+                // }
 
                 $('.QuantityInDe').click(function () {
                     let inst = $(this).data('inst'),
@@ -1279,17 +1350,22 @@
 
                 $("#imageGallerySlide").owlCarousel({
                     loop: true,
-                    responsiveClass: true,
                     items: 4,
-                    mouseDrag: true,
-                    touchDrag: true,
-                    autoplay: true,
                     margin: 3,
+                    dots: false,
                 });
-
-                $('.item').click(function () {
-                    let link = $(this).children('.bookImage').attr();
-                    alert(link)
+                var owl = $('#imageGallerySlide');
+                owl.owlCarousel();
+                $('#carousel_next_item').click(function () {
+                    owl.trigger('next.owl.carousel');
+                })
+                $('#carousel_prev_item').click(function () {
+                    owl.trigger('prev.owl.carousel', [300]);
+                })
+                $('.bookImage').on('click', function () {
+                    let image = $(this).data('image');
+                    $('#product_image_show').attr('src', '{{asset('storage/product')}}/' + image);
+                    $('#zoom_product_image').css('background-image', 'url({{asset('storage/product/')}})/' + image);
                 });
             </script>
     @endpush
