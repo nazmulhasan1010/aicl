@@ -16,8 +16,8 @@ class CreateDepotsTable extends Migration
         Schema::create('depots', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('image',500);
-            $table->string('location');
-            $table->longText('link');
+            $table->string('location')->nullable();
+            $table->longText('link')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

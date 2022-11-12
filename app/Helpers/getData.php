@@ -1,15 +1,18 @@
 <?php
 
+use App\Answer;
 use App\Category;
 use App\Cropscat;
 use App\Depot;
 use App\Disorder;
 use App\Disorderproduct;
+use App\Employee;
 use App\Images;
 use App\Product;
 use App\ProductVariant;
 use App\Ratings;
 use App\Specification;
+use App\Question;
 use Illuminate\Support\Facades\DB;
 
 function getProductCategory()
@@ -163,12 +166,10 @@ function getDepot()
 
 function getImages($id)
 {
-//    return Images::where('product_id', '=', $id)->get();
-//    return Product::select('products.image', 'images.image')->join('images', 'products.id', '=', 'images.product_id')->where('products.id', '=', $id)->get();
     $imageAll = [];
     $iamges = Images::select('image')->where('product_id', '=', $id)->get();
     $pImage = Product::select('image')->where('id', '=', $id)->get();
-    if (count($iamges)>0){
+    if (count($iamges) > 0) {
         foreach ($iamges as $iamge) {
             array_push($imageAll, $iamge->image);
         }
@@ -177,6 +178,24 @@ function getImages($id)
     return $imageAll;
 }
 
+function getEmployees($start, $limit, $sta)
+{
+    if ($sta === 'all') {
+        return Employee::latest()->get();
+    } elseif ($sta === 'spe') {
+        return Employee::where('id', '>', $start)->take($limit)->get();
+    }
+}
+
+function getQuestion($id)
+{
+    return Question::where('product_id', '=', $id)->get();
+}
+
+function getAns($id)
+{
+    return Answer::where('question_id', '=', $id)->get();
+}
 
 
 

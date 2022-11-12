@@ -106,6 +106,9 @@ Route::group(['middleware' => 'language'], function () {
     Route::get('/dis-shopping-cart', 'disProductCartController@cart_item')->name('dis-shopping-cart');
     Route::post('/dis-update-item', 'disProductCartController@update_item')->name('dis-update-item');
     Route::post('disorder/product/dis-update-item', 'disProductCartController@update_item');
+    Route::post('customer_question', 'ratingsController@question')->name('customer_question');
+    Route::post('question_ans', 'ratingsController@answer')->name('question_ans');
+    Route::post('question_ans_react', 'ratingsController@qnaReact')->name('question_ans_react');
 });
 Route::post('admin/getProduct', 'getproductController@getProduct');
 Route::post('admin/disorder/{id}/getProduct', 'getproductController@getProduct');

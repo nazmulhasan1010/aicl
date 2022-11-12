@@ -22,6 +22,7 @@ class CreateEmployeesTable extends Migration
             $table->string('image')->default('employee.png');
             $table->integer('position');
             $table->string('designation');
+            $table->string('degree')->nullable();
             $table->date('join_date')->nullable();
             $table->boolean('status')->default(true);
             $table->timestamps();

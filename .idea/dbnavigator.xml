@@ -44,6 +44,9 @@
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
   </component>
+  <component name="DBNavigator.Project.FileConnectionMappingManager">
+    <mapping file-url="file://$PROJECT_DIR$/database/ussdanir_atherton (2).sql" connection-id="3b93ab68-cf7b-4c81-bfed-9e9b4e1e8776" session-id="MAIN" current-schema="ussdanir_atherton" />
+  </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />
     <execution-history>

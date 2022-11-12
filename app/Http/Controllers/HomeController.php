@@ -72,8 +72,8 @@ class HomeController extends Controller
    {
         // onpage seo
         $this->on_page_seo('Employee','Employee page');
-        $employees = Employee::where('status',true)->orderBy('position','asc')->get();
-        return view('frontend.corporate-structure',compact('employees'));
+//        $employees = Employee::where('status',true)->orderBy('position','asc')->get();
+        return view('frontend.corporate-structure');
    }
    // quality-control
    public function quality_control()

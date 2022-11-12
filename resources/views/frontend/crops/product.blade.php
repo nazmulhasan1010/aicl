@@ -67,7 +67,7 @@
         @media (min-width: 960px) {
             .sticky {
                 position: fixed;
-                top: 40px;
+                top: 80px;
                 right: 0px;
             }
         }
@@ -98,7 +98,6 @@
             padding: 0 10px;
             position: relative;
         }
-
 
         .item .bookImage {
             margin: 20px 0;
@@ -180,12 +179,49 @@
 
         }
 
+        .ans-qus button {
+            margin: 0 0 10px 15px;
+            background-color: rgba(51, 51, 51, 0.05);
+            padding: 5px 10px;
+            border: none;
+            border-radius: 2px;
+        }
+
+        .ans-qus button:hover {
+            border: 1px solid #333;
+            padding: 4px 10px;
+        }
+
+        .ans-qus .ansModal {
+            margin-left: 15px;
+            background-color: rgba(51, 51, 51, 0.05);
+            color: rgba(51, 51, 51, 0.70);
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+
+        .ans-qus .ansModal .ans:nth-child(n+2) {
+            margin-top: 30px;
+        }
+
+        .ans-qus .ansModal .replayName {
+            font-weight: bold;
+            color: #0075e8;
+            margin-right: 5px;
+        }
+
+        .ans-qus .ansModal .reactModal {
+            display: flex;
+            align-items: center;
+        }
     </style>
 @endpush
 @section('content')
     @php
         $review = getReview($product[0]->product_id);
         $images = getImages($product[0]->product_id);
+        $question = getQuestion($product[0]->product_id);
     @endphp
     <div class="container-fluid  pt-4">
         <!-- slider and details part -->
@@ -564,6 +600,7 @@
                                 </div>{{--rating star end --}}
                                 @php
                                     $totalRating = count($review['allData']);
+                                    $totalQuestion = count($question);
                                     $rating = 0;
                                     if ($totalRating>0){
                                          $rating = round($review['ratings']/$totalRating,1);
@@ -587,16 +624,16 @@
                                 <div class="row border-bottom" style="background-color:#F0f0f0 ;">
                                     <div class="col-4 pt-2 text-center">
                                         <h6 class="reviw-h6">{{$totalRating}}</h6>
-                                        <span style="font-size: 12px;"><a href="#">Reviews</a></span>
+                                        <span style="font-size: 12px;"><a href="">Reviews</a></span>
                                     </div>
                                     <div class="col-4 pt-2 text-center"
                                          style="border-left: 1px solid #bdbdbd; border-right: 1px solid #bdbdbd">
-                                        <h6 class="reviw-h6">{{$totalRating}}</h6>
-                                        <span style="font-size: 12px;"><a href="#">Questions</a></span>
+                                        <h6 class="reviw-h6">{{$totalQuestion}}</h6>
+                                        <span style="font-size: 12px;"><a href="#question_modal">Questions</a></span>
                                     </div>
                                     <div class="col-4 pt-2 text-center">
                                         <h6 class="reviw-h6">0</h6>
-                                        <span style="font-size: 12px;"><a href="#">Answers</a></span>
+                                        <span style="font-size: 12px;"><a href="#question_modal">Answers</a></span>
                                     </div>
                                 </div>
 
@@ -710,7 +747,7 @@
                                             </span>
                                                 <div style="height:45px;">
                                                     <strong>{{$review->nickname}}</strong>
-                                                    <p>a year ago</p>
+                                                    <p>{{  date("d-m-y", strtotime($review->created_at)) }}</p>
                                                 </div>
                                             </div>
                                             <h5 class="mt-2" style="margin:15px 0">
@@ -734,7 +771,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="accordion-item border-0 border-bottom">
+                    <div class="accordion-item border-0 border-bottom" id="question_modal">
                         <h2 class="accordion-header" id="panelsStayOpen-headingFour">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                     data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false"
@@ -748,43 +785,127 @@
                                 <strong>Questions</strong>
                                 <button class="btn btn-primary" type="button" id="addQuestion">Ask a question</button>
                             </div>
+
+                            <div class="row p-3">
+                                @foreach($question as $questions)
+                                    <div class="col-md-12 ">
+                                        <div
+                                            style="display: flex; align-items: center; margin-bottom: 10px; background-color: #e7f1ff; padding: 5px; border-radius: 5px; color: rgba(51,51,51,0.90)">
+                                            <span>
+                                                <i class="fa-regular fa-user"
+                                                   style="border: 2px solid #333; display: flex; justify-content:center; align-items:center; font-size: 25px; height: 40px; width: 40px; border-radius:50%; margin-right:10px">
+                                                </i>
+                                            </span>
+                                            <div style="height:45px;">
+                                                <strong>{{$questions->name}}</strong>
+                                                <p>{{date("d-m-y", strtotime($questions->created_at))}}</p>
+                                            </div>
+                                        </div>
+                                        @php
+                                            $answers = getAns($questions->id);
+                                        @endphp
+                                        <div class="ans-qus">
+                                            <p style="font-weight:bold; color: rgba(51,51,51,0.70)">{{$questions->question}}</p>
+                                            <button type="button" class="ansButton" data-id="{{$questions->id}}">Answer
+                                                This Question
+                                            </button>
+                                            @if(count($answers)>0)
+                                                <div class="ansModal">
+                                                    @foreach($answers as $answer)
+                                                        <div class="ans">
+                                                            <div class="d-flex"><p
+                                                                    class="replayName">{{$answer->name}}</p>
+                                                                <span> . {{date("d-m-y", strtotime($answer->created_at))}}</span></div>
+                                                            <p>{{$answer->answer}}</p>
+                                                            <div class="reactModal">
+                                                                <p>Helpful?</p>
+                                                                <button data-id="{{$answer->id}}" class="qnaAnsReactYesNo">
+                                                                    <input type="hidden" value="yes">Yes . 0</button>
+                                                                <button data-id="{{$answer->id}}" class="qnaAnsReactYesNo"><input type="hidden" value="no">No . 0</button>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            @endif
+
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
                 <br/>
             </div>
         </div>
-
         <!-- Question Modal -->
         <div class="modal fade" id="questionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
              aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                        <button type="button" class="close" id="questionModalClose">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
+                    <form action="{{route('customer_question')}}" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Question</h5>
+                            <button type="button" class="close questionModalClose" id="questionModalClose">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{$product[0]->product_id  }}">
                             <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                <input type="text" class="form-control" id="recipient-name">
+                                <label for="sender_name" class="col-form-label">Your Name</label>
+                                <input type="text" class="form-control" id="sender_name" name="sender_name">
                             </div>
                             <div class="form-group">
-                                <label for="message-text" class="col-form-label">Message:</label>
-                                <textarea class="form-control" id="message-text"></textarea>
+                                <label for="message_text" class="col-form-label">Your Question</label>
+                                <textarea class="form-control" id="message_text" name="message_text"></textarea>
                             </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Send message</button>
-                    </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary questionModalClose" data-dismiss="modal">
+                                Close
+                            </button>
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div><!-- Question Modal end -->
+
+        <!-- Answer Modal -->
+        <div class="modal fade" id="answerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form action="{{route('question_ans')}}" method="post">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                            <button type="button" class="close ansModalClose" id="ansModalClose">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @csrf
+                            <input type="hidden" id="questionId" name="questionId">
+                            <div class="form-group">
+                                <label for="sender_name" class="col-form-label">Your Name</label>
+                                <input type="text" class="form-control" id="sender_name" name="sender_name">
+                            </div>
+                            <div class="form-group">
+                                <label for="message_text" class="col-form-label">Your Answer</label>
+                                <textarea class="form-control" id="message_text" name="message_text"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary ansModalClose" data-dismiss="modal">Close
+                            </button>
+                            <button type="submit" class="btn btn-primary">Send message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div><!-- Answer Modal end -->
 
         <!-- Review Modal -->
         <div class="modal fade " id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -838,7 +959,7 @@
                                     <textarea class="form-control" id="ratingsReviews" rows="3"
                                               name="ratingsReviews"></textarea>
                                     <div class="requirBox d-flex " style="justify-content: right;font-size: 14px"><span
-                                            id="ratingsReviewsReq">0</span>/50
+                                            id="ratingsReviewsReq">0</span>/20
                                         minimum
                                     </div>
                                 </div>
@@ -1218,7 +1339,7 @@
                 $('#ratingsReviews').keyup(function () {
                     let value = $(this).val();
                     $('#ratingsReviewsReq').text(value.length)
-                    if (value.length >= 50) {
+                    if (value.length >= 5) {
                         $('#ratingsReviewsReq').parent('.requirBox').css('color', 'green')
                         if ($('.form-check-input').is(':checked')) {
                             let value1 = $('#nickName').val();
@@ -1245,7 +1366,7 @@
                         if ($('.form-check-input').is(':checked')) {
                             let value1 = $('#nickName').val();
                             let value3 = $('#ratingsReviews').val();
-                            if (value1.length < 10 && value3.length > 50) {
+                            if (value1.length < 10 && value3.length > 20) {
                                 $('#ratingSubmit').addClass('btn-primary').removeClass('disabled').removeClass('btn-secondary')
                             }
                         }
@@ -1264,7 +1385,7 @@
                         if ($('.form-check-input').is(':checked')) {
                             let value2 = $('#reviewTitle').val();
                             let value3 = $('#ratingsReviews').val();
-                            if (value2.length < 50 && value3.length > 50) {
+                            if (value2.length < 50 && value3.length > 20) {
                                 $('#ratingSubmit').addClass('btn-primary').removeClass('disabled').removeClass('btn-secondary')
                             }
                         }
@@ -1275,7 +1396,7 @@
                         let value1 = $('#nickName').val();
                         let value2 = $('#reviewTitle').val();
                         let value3 = $('#ratingsReviews').val();
-                        if (value1.length < 10 && value2.length < 50 && value3.length > 50) {
+                        if (value1.length < 10 && value2.length < 20 && value3.length > 20) {
                             $('#ratingSubmit').addClass('btn-primary').removeClass('disabled').removeClass('btn-secondary')
                         }
                     } else {
@@ -1284,12 +1405,21 @@
                 });
 
                 var navbar = document.getElementById("addCartModal");
-                var sticky = navbar.offsetBottom;
                 window.onscroll = function () {
                     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
                         navbar.classList.add("sticky")
+                        navbar.style.top = '70px';
+                        var windowHeight = window.innerHeight;
+                        var elementTop = $(".footer")[0].getBoundingClientRect().top;
+                        var elementVisible = 100;
+                        if (elementTop < windowHeight - elementVisible) {
+                            navbar.style.top = elementTop - 430 + 'px';
+                        } else {
+                            navbar.style.top = '70px';
+                        }
                     } else {
                         navbar.classList.remove("sticky");
+                        navbar.style.top = '0px';
                     }
                 };
 
@@ -1344,7 +1474,7 @@
                 $('#addQuestion').click(function () {
                     $('#questionModal').modal('show');
                 });
-                $('#questionModalClose').click(function () {
+                $('.questionModalClose').click(function () {
                     $('#questionModal').modal('hide');
                 });
 
@@ -1366,6 +1496,30 @@
                     let image = $(this).data('image');
                     $('#product_image_show').attr('src', '{{asset('storage/product')}}/' + image);
                     $('#zoom_product_image').css('background-image', 'url({{asset('storage/product/')}})/' + image);
+                });
+
+                $('.ansButton').click(function () {
+                    $('#answerModal').modal('show');
+                    let questionId = $(this).data('id');
+                    $('#questionId').val(questionId);
+                });
+                $('.ansModalClose').click(function () {
+                    $('#answerModal').modal('hide');
+                });
+
+                $('.qnaAnsReactYesNo').click(function () {
+                   let answerId = $(this).data('id'),
+                   react = $(this).children('input').val();
+                    axios.post('question_ans_react', {
+                        id: answerId,
+                        react: react
+                    }).then(function (response) {
+                        if (response.status === 200) {
+                          alert('ok');
+                        }
+                    }).catch(function (error) {
+
+                    })
                 });
             </script>
     @endpush
