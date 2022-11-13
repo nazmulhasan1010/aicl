@@ -18,8 +18,8 @@ class CreateAnswersTable extends Migration
             $table->string('question_id')->nullable();
             $table->string('name')->nullable();
             $table->longText('answer')->nullable();
-            $table->string('like')->nullable();
-            $table->string('dislike')->nullable();
+            $table->string('like')->default(0);
+            $table->string('dislike')->default(0);
             $table->timestamps();
         });
     }

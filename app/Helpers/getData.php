@@ -196,6 +196,9 @@ function getAns($id)
 {
     return Answer::where('question_id', '=', $id)->get();
 }
+function getAnsAll(){
+    return Answer::get();
+}
 
 
 

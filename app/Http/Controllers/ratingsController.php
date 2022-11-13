@@ -45,11 +45,31 @@ class ratingsController extends Controller
 
     function qnaReact(Request $request)
     {
-        $react = Answer::where('id','=', $request->input('id'))->get();
-        if ($request->input('react')=='yes'){
-//            $react[0]->
+        $react = Answer::where('id', '=', $request->input('id'))->get();
+        $reactUp = Answer::FindOrFail($request->input('id'));
+        if ($request->input('react') == 'yes') {
+            $reactUp->like = $react[0]->like + 1;
+            $reData = $react[0]->like + 1;
+        } elseif ($request->input('react') == 'no') {
+            $reactUp->dislike = $react[0]->dislike + 1;
+            $reData = $react[0]->dislike + 1;
         }
-        $answer->save();
-        return redirect()->back();
+        $reactUp->update();
+        return $reData;
+    }
+
+    function reviewReact(Request $request)
+    {
+        $react = Ratings::where('id', '=', $request->input('id'))->get();
+        $reactUp = Ratings::FindOrFail($request->input('id'));
+        if ($request->input('react') == 'yes') {
+            $reactUp->like = $react[0]->like + 1;
+            $reData = $react[0]->like + 1;
+        } elseif ($request->input('react') == 'no') {
+            $reactUp->dislike = $react[0]->dislike + 1;
+            $reData = $react[0]->dislike + 1;
+        }
+        $reactUp->update();
+        return $reData;
     }
 }

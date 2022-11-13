@@ -215,6 +215,30 @@
             display: flex;
             align-items: center;
         }
+
+        .reviewReactModal {
+            display: flex;
+            margin: 10px;
+            align-items: center;
+        }
+
+        .reviewReactModal div {
+            margin-right: 20px;
+            color: rgba(51, 51, 51, 0.70);
+        }
+
+        .reviewReactModal button {
+            padding: 2px 8px;
+            border: none;
+            background-color: rgba(51, 51, 51, 0.07);
+            color: rgba(51, 51, 51, 0.70);
+            border-radius: 2px;
+            margin-left: 5px;
+        }
+
+        .reviewReactModal button:hover {
+            color: #333;
+        }
     </style>
 @endpush
 @section('content')
@@ -222,6 +246,7 @@
         $review = getReview($product[0]->product_id);
         $images = getImages($product[0]->product_id);
         $question = getQuestion($product[0]->product_id);
+        $answers = getAnsAll();
     @endphp
     <div class="container-fluid  pt-4">
         <!-- slider and details part -->
@@ -601,6 +626,7 @@
                                 @php
                                     $totalRating = count($review['allData']);
                                     $totalQuestion = count($question);
+                                    $totalAnswers = count($answers);
                                     $rating = 0;
                                     if ($totalRating>0){
                                          $rating = round($review['ratings']/$totalRating,1);
@@ -632,7 +658,7 @@
                                         <span style="font-size: 12px;"><a href="#question_modal">Questions</a></span>
                                     </div>
                                     <div class="col-4 pt-2 text-center">
-                                        <h6 class="reviw-h6">0</h6>
+                                        <h6 class="reviw-h6">{{$totalAnswers}}</h6>
                                         <span style="font-size: 12px;"><a href="#question_modal">Answers</a></span>
                                     </div>
                                 </div>
@@ -765,6 +791,19 @@
                                                     class="fa {{$review->ratings>4&&$review->ratings<5?'fa-star-half-o checked':'fa-star'}} {{$review->ratings>=5?'fa-star checked':'fa-star'}}"></span>
                                             </div>
                                             <p>{{$review->review}}</p>
+                                            <div class="reviewReactModal">
+                                                <div>Helpful?</div>
+                                                <button data-id="{{$review->id}}"
+                                                        class="reviewReactYesNo">
+                                                    <input type="hidden" value="yes">Yes .
+                                                    <span class="count">({{$review->like}})</span>
+                                                </button>
+                                                <button data-id="{{$review->id}}"
+                                                        class="reviewReactYesNo"><input type="hidden"
+                                                                                        value="no">No .
+                                                    <span class="count">({{$review->dislike}})</span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 @endforeach
@@ -815,13 +854,21 @@
                                                         <div class="ans">
                                                             <div class="d-flex"><p
                                                                     class="replayName">{{$answer->name}}</p>
-                                                                <span> . {{date("d-m-y", strtotime($answer->created_at))}}</span></div>
+                                                                <span> . {{date("d-m-y", strtotime($answer->created_at))}}</span>
+                                                            </div>
                                                             <p>{{$answer->answer}}</p>
                                                             <div class="reactModal">
                                                                 <p>Helpful?</p>
-                                                                <button data-id="{{$answer->id}}" class="qnaAnsReactYesNo">
-                                                                    <input type="hidden" value="yes">Yes . 0</button>
-                                                                <button data-id="{{$answer->id}}" class="qnaAnsReactYesNo"><input type="hidden" value="no">No . 0</button>
+                                                                <button data-id="{{$answer->id}}"
+                                                                        class="qnaAnsReactYesNo">
+                                                                    <input type="hidden" value="yes">Yes .
+                                                                    <span class="count">{{$answer->like}}</span>
+                                                                </button>
+                                                                <button data-id="{{$answer->id}}"
+                                                                        class="qnaAnsReactYesNo"><input type="hidden"
+                                                                                                        value="no">No .
+                                                                    <span class="count">{{$answer->dislike}}</span>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     @endforeach
@@ -1508,14 +1555,34 @@
                 });
 
                 $('.qnaAnsReactYesNo').click(function () {
-                   let answerId = $(this).data('id'),
-                   react = $(this).children('input').val();
+                    let answerId = $(this).data('id'),
+                        react = $(this).children('input').val(),
+                        counter = $(this).children('.count'),
+                        clossetBtn = $(this).parent().children('.qnaAnsReactYesNo');
                     axios.post('question_ans_react', {
                         id: answerId,
                         react: react
                     }).then(function (response) {
                         if (response.status === 200) {
-                          alert('ok');
+                            counter.html(response.data);
+                            clossetBtn.attr("disabled", true);
+                        }
+                    }).catch(function (error) {
+
+                    })
+                });
+                $('.reviewReactYesNo').click(function () {
+                    let answerId = $(this).data('id'),
+                        react = $(this).children('input').val(),
+                        counter = $(this).children('.count'),
+                        clossetBtn = $(this).parent().children('.reviewReactYesNo');
+                    axios.post('review_react', {
+                        id: answerId,
+                        react: react
+                    }).then(function (response) {
+                        if (response.status === 200) {
+                            counter.html(response.data);
+                            clossetBtn.attr("disabled", true);
                         }
                     }).catch(function (error) {
 

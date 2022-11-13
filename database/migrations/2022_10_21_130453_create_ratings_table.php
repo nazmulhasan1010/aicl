@@ -22,6 +22,8 @@ class CreateRatingsTable extends Migration
             $table->string('nickname',11)->nullable();
             $table->string('email',100);
             $table->string('user_id',100)->nullable();
+            $table->string('like')->default(0);
+            $table->string('dislike')->default(0);
             $table->timestamps();
         });
     }
